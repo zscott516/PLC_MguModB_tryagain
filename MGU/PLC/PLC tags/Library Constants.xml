@@ -1,0 +1,2960 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2021-03-04T22:04:04.3689655Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Tags.PlcTagTable ID="0">
+    <AttributeList>
+      <Name>Library Constants</Name>
+    </AttributeList>
+    <ObjectList>
+      <SW.Tags.PlcUserConstant ID="1" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_MANUAL</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="4" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_FLASHING_ENABLED</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="5" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="6" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="7" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_RETRACTING</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="8" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.rScaledMax</Name>
+          <Value>250.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.Climate.rScaledMax</Name>
+          <Value>250.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="10" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_StoppingStart</Name>
+          <Value>4000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="11" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="12" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="13" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_VerifyCenterComplete</Name>
+          <Value>7999</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="14" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="15" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="16" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.150Ohms.rScaledMax</Name>
+          <Value>150.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="17" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="18" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="19" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Bool</DataTypeName>
+          <Name>IoScaling.S7Analog.Default.bSwapBytes</Name>
+          <Value>false</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_INPUTHIGHHIGH</Name>
+          <Value>102</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMOTION_DISABLED</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="20" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="21" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Status Enumeration - Motion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="22" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.iRawMax</Name>
+          <Value>8500</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="23" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="24" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="25" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_RetractingComplete</Name>
+          <Value>5999</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="26" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="27" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="28" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMODE_MANUAL</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="29" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="2A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Mode enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="2B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_INPUTINVALID</Name>
+          <Value>101</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="2D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="2E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_HIDDEN</Name>
+          <Value>-1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="2F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="30" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="31" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_HOMEON</Name>
+          <Value>6</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="32" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="33" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="34" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.Climate.rScaledMin</Name>
+          <Value>-120.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="35" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="36" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="37" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eHOME_ABS_RET_ABS</Name>
+          <Value>7</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="38" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="39" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>See MC_Home help for details</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="3A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMOTION_ERROR</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="3B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Status Enumeration - Motion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="3D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePB_MAINTAINED</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="3E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="3F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB Type enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="40" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_LENGTH_OF_PATHDATA_NAME</Name>
+          <Value>10</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="41" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="42" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="43" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_PATHDATA_ELEMENTS</Name>
+          <Value>15</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="44" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="45" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="46" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.Climate.iRawMax</Name>
+          <Value>13000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="47" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="48" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="49" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_ERROR</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="4B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="4C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.Pt100.Climate</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="4E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="4F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMODE_INDEPENDENT</Name>
+          <Value>10</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="50" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="51" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Mode</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="52" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.600Ohms.rScaledMax</Name>
+          <Value>600.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="53" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="54" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="55" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMOTION_RUNNING</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="56" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="57" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Status Enumeration - Motion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="58" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.Climate.rScaledMin</Name>
+          <Value>-60.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="59" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="5B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMOTION_STOPPED</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="5C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Status Enumeration - Motion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="5E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMOTION_MAINTENANCE</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="5F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="60" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Status Enumeration - Motion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="61" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.rScaledMin</Name>
+          <Value>-60.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="62" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="63" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="64" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_STOPPING</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="65" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="66" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="67" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.Climate.rScaledMax</Name>
+          <Value>130.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="68" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="69" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="6A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.rScaledMax</Name>
+          <Value>850.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="6B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="6C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="6D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.Ni100.Climate</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="6E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="6F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="70" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePB_UNLATCH</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="71" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="72" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB Type enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="73" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.Climate.iRawMax</Name>
+          <Value>25000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="74" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="75" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="76" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_BladeChangeStart</Name>
+          <Value>6000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="77" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="78" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="79" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.300Ohms.rScaledMin</Name>
+          <Value>0.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="7A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="7B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="7C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.Pt100</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="7D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="7E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="7F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>LReal</DataTypeName>
+          <Name>LKINCTRL_PI</Name>
+          <Value>3.1415926535897932846264</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="80" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="81" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="82" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_WORKPOSITION</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="83" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="84" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="85" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eCAM_SYNCDIRECTION_SHORTESTWAY</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="86" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="87" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>See MC_CamIn help for details</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="88" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.+-V/mA</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="89" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="8A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="8B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_FLASHING_DISABLED</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="8C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="8D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="8E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.150Ohms.rScaledMin</Name>
+          <Value>0.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="8F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="90" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="91" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eHOME_ACCEPT_CURRENT</Name>
+          <Value>11</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="92" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="93" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Used when the configured and current encoders don't match</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="94" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_START_EXECUTE_CMDS</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="95" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="96" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="97" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_TRANSITIONING</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="98" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="99" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="9A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SM_ACTIVE_DYNAMICS</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="9C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="9D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_WORKON</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="9F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="A0" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.+-V/mA.iRawMax</Name>
+          <Value>27648</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="A1" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A2" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="A3" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_INITIALIZATION</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="A4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="A6" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_PATHDATA_PREBUFFER_ELEMENTS</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="A7" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="A9" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eHOME_ABS_RET_OFFSET</Name>
+          <Value>6</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="AA" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="AB" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>See MC_Home help for details</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="AC" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_BladeChangeComplete</Name>
+          <Value>6999</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="AD" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="AE" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="AF" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_RunningComplete</Name>
+          <Value>3999</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="B0" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="B1" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="B2" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_READY</Name>
+          <Value>100</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="B3" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="B4" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="B5" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_ENABLED</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="B6" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="B7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="B8" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.Climate.iRawMin</Name>
+          <Value>-12000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="B9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="BA" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="BB" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_RUNNING</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="BC" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="BD" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="BE" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_LAST_FLAG</Name>
+          <Value>15</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="BF" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="C0" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="C1" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.iRawMax</Name>
+          <Value>2500</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="C2" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="C3" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="C4" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.Default</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="C5" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="C6" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="C7" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eHOME_ACCEPT_CONFIG</Name>
+          <Value>12</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="C8" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="C9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Used when the configured and current encoders don't match</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="CA" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_RunningStart</Name>
+          <Value>3000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="CB" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="CC" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="CD" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Default.iRawMin</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="CE" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="CF" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="D0" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_ACTIVE</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="D1" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="D2" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="D3" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Types.Ni100</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="D4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="D5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="D6" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eMODE_AUTO</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="D7" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="D8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Mode enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="D9" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Default.iRawMax</Name>
+          <Value>27648</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="DA" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="DB" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="DC" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePBLT_DISABLED</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="DD" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="DE" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB LT enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="DF" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_SEQ_EXECUTE_CMDS</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E0" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="E1" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="E2" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_StoppingComplete</Name>
+          <Value>4999</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E3" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="E4" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="E5" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.Climate.iRawMin</Name>
+          <Value>-6000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E6" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="E7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="E8" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.iRawMin</Name>
+          <Value>-2000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="EA" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="EB" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePB_LATCH</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="EC" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="ED" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB Type enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="EE" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_ESTOP</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="EF" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F0" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="F1" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_RetractingStart</Name>
+          <Value>5000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="F2" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F3" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="F4" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.300Ohms.rScaledMax</Name>
+          <Value>300.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="F5" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F6" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="F7" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_INPUTLOW</Name>
+          <Value>105</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="F8" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="FA" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.Pt100.rScaledMin</Name>
+          <Value>-200.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="FB" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="FC" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="FD" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_BLADECHANGE</Name>
+          <Value>6</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="FE" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="FF" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="100" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>IoScaling.S7Analog.600Ohms.rScaledMin</Name>
+          <Value>0.0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="101" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="102" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="103" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTATE_VERIFYCENTER</Name>
+          <Value>7</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="104" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="105" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="106" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_STOPPED</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="107" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="108" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="109" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eCAM_SYNCPROFILEREFERENCE_LEADINGVALUEDISTANCE</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="10A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="10B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>See MC_CamIn help for details</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="10C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.Ni100.iRawMin</Name>
+          <Value>-600</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="10D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="10E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="10F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePB_HELD</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="110" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="111" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB Type enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="112" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>LKINCTRL_NO_OF_CMD_SETFLAGS</Name>
+          <Value>8</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="113" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="114" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="115" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eSTEP_VerifyCenterStart</Name>
+          <Value>7000</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="116" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="117" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>State Machine enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="118" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eVALVE_HOMEPOSITION</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="119" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="11A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="11B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_INPUTHIGH</Name>
+          <Value>104</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="11C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="11D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="11E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>eANALOG_INPUTLOWLOW</Name>
+          <Value>103</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="11F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="120" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="121" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>IoScaling.S7Analog.+-V/mA.iRawMin</Name>
+          <Value>-27648</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="122" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="123" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="124" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>ePB_MOMENTARY</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="125" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="126" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>HMI PB Type enumeration</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="127" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.PID.Pretuning</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="128" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="129" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="12A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>TotalizerTimeUnits.DAYS</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="12B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="12C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="12D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.ForwardWork</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="12E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="12F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="130" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>FIFO.iQueueDisabled</Name>
+          <Value>-1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="131" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="132" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="133" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Handshakes.iSize</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="134" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="135" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="136" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.Auto</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="137" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="138" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="139" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic1</Name>
+          <Value>101</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="13B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="13C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Simocode.Types.DirectStarter</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="13E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="13F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Estop.MinSetPoint</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="140" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="141" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="142" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Simocode.Types.OverloadRelay</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="143" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="144" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="145" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.SimulatedReverseHome</Name>
+          <Value>8</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="146" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="147" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="148" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>TotalizerTimeUnits.MILLISECONDS</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="149" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="14B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic4</Name>
+          <Value>104</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="14C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="14E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.EStop</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="14F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="150" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="151" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.OnForwardWork</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="152" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="153" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="154" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>DataTypes.iMaxInt</Name>
+          <Value>32767</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="155" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="156" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="157" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>FIFO.iQueueSize</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="158" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="159" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="15A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.PID.ManualMode</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="15B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="15C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="15D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>TotalizerTimeUnits.SECONDS</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="15E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="15F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="160" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.Types.3RW30</Name>
+          <Value>30</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="161" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="162" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="163" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic3</Name>
+          <Value>103</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="164" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="165" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="166" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.OnReverseHome</Name>
+          <Value>6</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="167" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="168" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="169" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Estop</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="16A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="16B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="16C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.Error</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="16D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="16E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="16F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic6</Name>
+          <Value>106</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="170" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="171" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="172" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>DataTypes.rMaxReal</Name>
+          <Value>3.402823e38</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="173" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="174" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="175" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.Off</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="176" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="177" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="178" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.PID.Inactive</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="179" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="17A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="17B" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.GenericNone</Name>
+          <Value>100</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="17C" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="17D" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="17E" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic2</Name>
+          <Value>102</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="17F" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="180" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="181" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.PID.AutoMode</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="182" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="183" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="184" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.On</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="185" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="186" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="187" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Estop.HMISetPoint</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="188" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="189" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="18A" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.ReverseHome</Name>
+          <Value>4</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="18B" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="18C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="18D" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Real</DataTypeName>
+          <Name>DataTypes.rMinReal</Name>
+          <Value>-3.402823e38</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="18E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="18F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="190" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>TotalizerTimeUnits.MINUTES</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="191" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="192" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="193" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.PID.FineTuning</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="194" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="195" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="196" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>TotalizerTimeUnits.HOURS</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="197" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="198" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="199" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Ramp.Timed</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="19A" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="19B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="19C" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Estop.MaxSetPoint</Name>
+          <Value>1</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="19D" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="19E" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="19F" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.Types.3RW40</Name>
+          <Value>40</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1A0" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1A1" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1A2" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Ramp.Continuous</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1A3" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1A4" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1A5" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Generic5</Name>
+          <Value>105</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1A6" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1A7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1A8" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.Manual</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1A9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1AA" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1AB" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.Stop</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1AC" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1AD" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1AE" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.SimulatedOnReverseHome</Name>
+          <Value>10</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1AF" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1B0" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1B1" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Simocode.Types.ReversingStarter</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1B2" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1B3" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1B4" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>Modes.Independent</Name>
+          <Value>10</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1B5" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1B6" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1B7" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>DataTypes.iMinInt</Name>
+          <Value>-32768</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1B8" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1B9" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1BA" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.RampUp</Name>
+          <Value>3</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1BB" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1BC" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1BD" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>SoftStarter.HMI.Status.RampDown</Name>
+          <Value>5</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1BE" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1BF" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1C0" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Error</Name>
+          <Value>2</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1C1" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1C2" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1C3" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.SimulatedOnForwardWork</Name>
+          <Value>9</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1C4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1C5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1C6" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.SimulatedForwardWork</Name>
+          <Value>7</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1C7" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1C8" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+      <SW.Tags.PlcUserConstant ID="1C9" CompositionName="UserConstants">
+        <AttributeList>
+          <DataTypeName>Int</DataTypeName>
+          <Name>HMI.Status.Stopped</Name>
+          <Value>0</Value>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="1CA" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="1CB" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Tags.PlcUserConstant>
+    </ObjectList>
+  </SW.Tags.PlcTagTable>
+</Document>

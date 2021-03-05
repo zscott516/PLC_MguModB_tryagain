@@ -1,0 +1,32 @@
+﻿FUNCTION "fcDigitalOutput" : Bool
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      bInAutoVal : Bool;   // Value automatically set by the program
+   END_VAR
+
+   VAR_IN_OUT 
+      InOutUdt : "udtDigitalOutput";
+   END_VAR
+
+
+BEGIN
+	
+	IF #InOutUdt.bOverrideEnable THEN
+	    // if override is active, use override vallue
+	    #InOutUdt.bStatus := #InOutUdt.bOverrideVal;
+	ELSE
+	    // if override is not active, make override value track auto
+	    // so that simply activating override mode does not
+	    // change the output value
+	    #InOutUdt.bOverrideVal := #bInAutoVal;
+	    #InOutUdt.bStatus := #bInAutoVal;
+	END_IF;
+	
+	// map requested auto value to udt for monitoring
+	#InOutUdt.bAutoVal := #bInAutoVal;
+	
+	// set FC return value for actual physical output
+	#fcDigitalOutput := #InOutUdt.bStatus;
+END_FUNCTION
+

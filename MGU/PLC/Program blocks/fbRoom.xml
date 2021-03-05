@@ -1,0 +1,1635 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2021-03-04T22:04:00.0558032Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FB ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="arrAI" Datatype="Array[1..&quot;NUM_AI_ROOM&quot;] of Int" Remanence="SetInIDB" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute></AttributeList></Member>
+    <Member Name="AI" Datatype="&quot;udtRoomAI&quot;"><AttributeList><StringAttribute Name="At" SystemDefined="true">arrAI</StringAttribute></AttributeList><Sections><Section Name="None"><Member Name="IW_RoomTemperature_1" Datatype="Int" /><Member Name="IW_RoomTemperature_2" Datatype="Int" /><Member Name="IW_RoomHumidity_1" Datatype="Int" /><Member Name="IW_RoomHumidity_2" Datatype="Int" /><Member Name="IW_TankLevel" Datatype="Int" /><Member Name="IW_NutrientALevel" Datatype="Int" /><Member Name="IW_NutrientBLevel" Datatype="Int" /><Member Name="IW_NutrientAcidLevel" Datatype="Int" /><Member Name="IW_pHSensor" Datatype="Int" /><Member Name="IW_ECSensor" Datatype="Int" /><Member Name="IW_ISESensor" Datatype="Int" /><Member Name="IW_ORPSensor" Datatype="Int" /><Member Name="IW_CO2Sensor" Datatype="Int" /></Section></Sections></Member>
+  </Section>
+  <Section Name="Output">
+    <Member Name="arrDQ" Datatype="Array[1..&quot;NUM_DQ_ROOM&quot;] of Bool" Remanence="SetInIDB" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute></AttributeList></Member>
+    <Member Name="DQ" Datatype="&quot;udtRoomDQ&quot;"><AttributeList><StringAttribute Name="At" SystemDefined="true">arrDQ</StringAttribute></AttributeList><Sections><Section Name="None"><Member Name="Q_MPathSolenoid" Datatype="Bool" /><Member Name="Q_FreshWaterSolenoid" Datatype="Bool" /><Member Name="Q_DischargeSolenoid" Datatype="Bool" /><Member Name="Q_TankReturnSolenoid" Datatype="Bool" /><Member Name="Q_NutrientAEnable" Datatype="Bool" /><Member Name="Q_NutrientBEnable" Datatype="Bool" /><Member Name="Q_NutrientAcidEnable" Datatype="Bool" /><Member Name="Q_NutrientMixingPumps" Datatype="Bool" /><Member Name="Q_CO2Solenoid" Datatype="Bool" /></Section></Sections></Member>
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Static">
+    <Member Name="Rack" Datatype="Array[1..&quot;MAX_RACKS_PER_ROOM&quot;] of &quot;fbRack&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInMutexLockConfirmation" Datatype="Int" /><Member Name="udtInLastNutrientReading" Datatype="&quot;udtNutrientReading&quot;"><Sections><Section Name="None"><Member Name="rISEReading" Datatype="Real" /><Member Name="rORPReading" Datatype="Real" /><Member Name="rECReading" Datatype="Real" /><Member Name="rpHReading" Datatype="Real" /></Section></Sections></Member><Member Name="bInSupplySolenoidFromRoomFertigation" Datatype="Bool" /><Member Name="bInReturnSolenoidFromRoomFertigation" Datatype="Bool" /><Member Name="iInLightsDelaySecs" Datatype="Int" /><Member Name="rInCurrentTemperature" Datatype="Real" /><Member Name="arrAI" Datatype="Array[1..&quot;NUM_AI_RACK&quot;] of Int" /></Section><Section Name="Output"><Member Name="iOutMutexRequest" Datatype="Int" /><Member Name="OutFertigationSettings" Datatype="&quot;udtFertigationSettings&quot;"><Sections><Section Name="None"><Member Name="tMeasurementTime" Datatype="Time" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="tNutrientDosingDuration" Datatype="Time" /><Member Name="bDosingActive" Datatype="Bool" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /><Member Name="rMinReservoirVolume" Datatype="Real" /><Member Name="rRackCurrentVolume" Datatype="Real" /><Member Name="bPumpAtStandstill" Datatype="Bool" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="tDischargeTime" Datatype="Time" /><Member Name="bEnableIncomingRotate" Datatype="Bool" /></Section></Sections></Member><Member Name="arrDQ" Datatype="Array[1..&quot;NUM_DQ_RACK&quot;] of Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Lighting" Datatype="&quot;fbRackLights&quot;"><Sections><Section Name="Input"><Member Name="iInDelaySecs" Datatype="Int" /><Member Name="rInCurrentTemperature" Datatype="Real" /></Section><Section Name="Output"><Member Name="bOutLights" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Controls" Datatype="Struct"><Member Name="iMode" Datatype="Int" /><Member Name="diOffTime" Datatype="DInt" /><Member Name="diOnTime" Datatype="DInt" /><Member Name="rHighTemperatureLimit" Datatype="Real" /></Member><Member Name="Status" Datatype="Struct"><Member Name="diSecondsElapsed" Datatype="DInt" /></Member><Member Name="bLightsCommand" Datatype="Bool" /><Member Name="TON_OnDelay" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="Fertigation" Datatype="&quot;fbRackFertigation&quot;"><Sections><Section Name="Input"><Member Name="iInMutexLockConfirmation" Datatype="Int" /><Member Name="InLastNutrientReading" Datatype="&quot;udtNutrientReading&quot;"><Sections><Section Name="None"><Member Name="rISEReading" Datatype="Real" /><Member Name="rORPReading" Datatype="Real" /><Member Name="rECReading" Datatype="Real" /><Member Name="rpHReading" Datatype="Real" /></Section></Sections></Member><Member Name="rInReservoirLevel" Datatype="Real" /><Member Name="bInReturnSolenoidStatus" Datatype="Bool" /><Member Name="bInShelfSolenoidStatus" Datatype="Bool" /></Section><Section Name="Output"><Member Name="iOutMutexRequest" Datatype="Int" /><Member Name="OutFertigationSettings" Datatype="&quot;udtFertigationSettings&quot;"><Sections><Section Name="None"><Member Name="tMeasurementTime" Datatype="Time" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="tNutrientDosingDuration" Datatype="Time" /><Member Name="bDosingActive" Datatype="Bool" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /><Member Name="rMinReservoirVolume" Datatype="Real" /><Member Name="rRackCurrentVolume" Datatype="Real" /><Member Name="bPumpAtStandstill" Datatype="Bool" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="tDischargeTime" Datatype="Time" /><Member Name="bEnableIncomingRotate" Datatype="Bool" /></Section></Sections></Member><Member Name="bOutShelfSolenoid" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Controls" Datatype="Struct"><Member Name="iModeCommand" Datatype="Int" /><Member Name="dtLastMeasurement" Datatype="Date_And_Time" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="diDischargeTimeSecs" Datatype="DInt" /><Member Name="rPumpReservoirInterlockLevel" Datatype="Real" /><Member Name="rPumpContinousSpeed" Datatype="Real" /><Member Name="rPumpReturnSpeed" Datatype="Real" /><Member Name="rPumpDischargeSpeed" Datatype="Real" /><Member Name="diMeasurementSecs" Datatype="DInt" /><Member Name="diDosingIntervalMins" Datatype="DInt" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="iISEModeCommand" Datatype="Int" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="diNutrientDosingSecs" Datatype="DInt" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /></Member><Member Name="Status" Datatype="Struct"><Member Name="iState" Datatype="Int" /><Member Name="NutrientLevels" Datatype="&quot;udtNutrientReading&quot;"><Sections><Section Name="None"><Member Name="rISEReading" Datatype="Real" /><Member Name="rORPReading" Datatype="Real" /><Member Name="rECReading" Datatype="Real" /><Member Name="rpHReading" Datatype="Real" /></Section></Sections></Member></Member><Member Name="Pump" Datatype="&quot;fbRackPump&quot;"><Sections><Section Name="Input"><Member Name="rInSpeedCommand" Datatype="Real" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="Controls" Datatype="Struct"><Member Name="rPrimeSpeed" Datatype="Real" /><Member Name="diPrimingSecs" Datatype="DInt" /><Member Name="bOverrideEnable" Datatype="Bool" /><Member Name="rOverrideSpeed" Datatype="Real" /></Member><Member Name="Status" Datatype="Struct"><Member Name="iState" Datatype="Int" /><Member Name="rCommandSpeed" Datatype="Real" /><Member Name="rActualSpeed" Datatype="Real" /><Member Name="rVoltage" Datatype="Real" /><Member Name="rCurrent" Datatype="Real" /><Member Name="rPower" Datatype="Real" /><Member Name="rPowerFactor" Datatype="Real" /><Member Name="bError" Datatype="Bool" /><Member Name="ErrorDetail" Datatype="&quot;udtError_VFD&quot;"><Sections><Section Name="None"><Member Name="MotorProtectorTripped" Datatype="Bool" /><Member Name="LocalDisconnectOff" Datatype="Bool" /><Member Name="ClutchTripped" Datatype="Bool" /><Member Name="NoContactorFeedback" Datatype="Bool" /><Member Name="ContactorStillOn" Datatype="Bool" /><Member Name="NoSignalForward" Datatype="Bool" /><Member Name="NoSignalReverse" Datatype="Bool" /><Member Name="MotorNotStopped" Datatype="Bool" /><Member Name="MaxFrequencyReached" Datatype="Bool" /><Member Name="Overcurrent" Datatype="Bool" /><Member Name="MotorOverload" Datatype="Bool" /><Member Name="VFDOverload" Datatype="Bool" /><Member Name="GeneralFault" Datatype="Bool" /><Member Name="NoCoolingFanFeedback" Datatype="Bool" /></Section></Sections></Member></Member><Member Name="fbVFD" Datatype="&quot;fbVFD_GSeries&quot;"><Sections><Section Name="Input"><Member Name="tInTimeout" Datatype="Time" /><Member Name="iInMode" Datatype="Int" /><Member Name="hwInTelegram" Datatype="HW_SUBMODULE" /><Member Name="bInEstop" Datatype="Bool" /><Member Name="bInSignalContactor" Datatype="Bool" /><Member Name="bInEnableForward" Datatype="Bool" /><Member Name="bInEnableReverse" Datatype="Bool" /><Member Name="rInCommandSpeed" Datatype="Real" /><Member Name="bInCommandForward" Datatype="Bool" /><Member Name="bInCommandReverse" Datatype="Bool" /><Member Name="bInResetError" Datatype="Bool" /><Member Name="bInMotorProtector" Datatype="Bool" /><Member Name="bInLocalDisconnect" Datatype="Bool" /><Member Name="bInClutch" Datatype="Bool" /><Member Name="bInCoolingFan" Datatype="Bool" /><Member Name="bInUseCurrentAlarm" Datatype="Bool" /><Member Name="bInUseMaxFrequencyAlarm" Datatype="Bool" /><Member Name="bInSimulate" Datatype="Bool" /></Section><Section Name="Output"><Member Name="rOutSpeed" Datatype="Real" /><Member Name="bOutContactor" Datatype="Bool" /><Member Name="bOutCommandForward" Datatype="Bool" /><Member Name="bOutCommandReverse" Datatype="Bool" /><Member Name="bOutActiveForward" Datatype="Bool" /><Member Name="bOutActiveReverse" Datatype="Bool" /><Member Name="bOutAuto" Datatype="Bool" /><Member Name="bOutError" Datatype="Bool" /><Member Name="ERROR_VFD" Datatype="&quot;udtError_VFD&quot;"><Sections><Section Name="None"><Member Name="MotorProtectorTripped" Datatype="Bool" /><Member Name="LocalDisconnectOff" Datatype="Bool" /><Member Name="ClutchTripped" Datatype="Bool" /><Member Name="NoContactorFeedback" Datatype="Bool" /><Member Name="ContactorStillOn" Datatype="Bool" /><Member Name="NoSignalForward" Datatype="Bool" /><Member Name="NoSignalReverse" Datatype="Bool" /><Member Name="MotorNotStopped" Datatype="Bool" /><Member Name="MaxFrequencyReached" Datatype="Bool" /><Member Name="Overcurrent" Datatype="Bool" /><Member Name="MotorOverload" Datatype="Bool" /><Member Name="VFDOverload" Datatype="Bool" /><Member Name="GeneralFault" Datatype="Bool" /><Member Name="NoCoolingFanFeedback" Datatype="Bool" /></Section></Sections></Member></Section><Section Name="InOut"><Member Name="HMI_VFD_Control" Datatype="&quot;udtHMI_VFD_Control&quot;"><Sections><Section Name="None" /></Sections></Member></Section><Section Name="Static"><Member Name="ErrorScroller" Datatype="&quot;fbErrorScroller&quot;"><Sections><Section Name="Input"><Member Name="bInError01" Datatype="Bool" /><Member Name="bInError02" Datatype="Bool" /><Member Name="bInError03" Datatype="Bool" /><Member Name="bInError04" Datatype="Bool" /><Member Name="bInError05" Datatype="Bool" /><Member Name="bInError06" Datatype="Bool" /><Member Name="bInError07" Datatype="Bool" /><Member Name="bInError08" Datatype="Bool" /><Member Name="bInError09" Datatype="Bool" /><Member Name="bInError10" Datatype="Bool" /><Member Name="bInError11" Datatype="Bool" /><Member Name="bInError12" Datatype="Bool" /><Member Name="bInError13" Datatype="Bool" /><Member Name="bInError14" Datatype="Bool" /><Member Name="bInError15" Datatype="Bool" /><Member Name="bInError16" Datatype="Bool" /><Member Name="bInError17" Datatype="Bool" /><Member Name="bInError18" Datatype="Bool" /><Member Name="bInError19" Datatype="Bool" /><Member Name="bInError20" Datatype="Bool" /><Member Name="bInError21" Datatype="Bool" /><Member Name="bInError22" Datatype="Bool" /><Member Name="bInError23" Datatype="Bool" /><Member Name="bInError24" Datatype="Bool" /><Member Name="bInError25" Datatype="Bool" /><Member Name="bInError26" Datatype="Bool" /><Member Name="bInError27" Datatype="Bool" /><Member Name="bInError28" Datatype="Bool" /><Member Name="bInError29" Datatype="Bool" /><Member Name="bInError30" Datatype="Bool" /></Section><Section Name="Output"><Member Name="bOutErrorExists" Datatype="Bool" /><Member Name="iOutScrollingErrorNumber" Datatype="Int" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="TON_ErrorDelay" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="abErrors" Datatype="Array[1..30] of Bool" /><Member Name="iNextScrollNum" Datatype="Int" /><Member Name="iErrorsScrollNum" Datatype="Int" /><Member Name="bScrolling" Datatype="Bool" /><Member Name="bTON_ErrorDelay" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_TimeOut" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_ContactorDelay" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_CoolingFan" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_CurrentLimitDebounce" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="iLastMode" Datatype="Int" /><Member Name="wStatusWord" Datatype="Word" /><Member Name="iActualSpeed" Datatype="Int" /><Member Name="wControlWord" Datatype="Word" /><Member Name="iSpeedSetPoint" Datatype="Int" /><Member Name="rCommandSpeed" Datatype="Real" /><Member Name="bNewMode" Datatype="Bool" /><Member Name="bEnableForward" Datatype="Bool" /><Member Name="bEnableReverse" Datatype="Bool" /><Member Name="bManualMode" Datatype="Bool" /><Member Name="bAutoMode" Datatype="Bool" /><Member Name="bRunTimeoutTimer" Datatype="Bool" /><Member Name="bReset" Datatype="Bool" /><Member Name="bTON_TimeOut" Datatype="Bool" /><Member Name="bTON_ContactorDelay" Datatype="Bool" /><Member Name="bTON_CoolingFan" Datatype="Bool" /><Member Name="bTON_CurrentLimitDebounce" Datatype="Bool" /><Member Name="bPB_Forward" Datatype="Bool" /><Member Name="bPB_Reverse" Datatype="Bool" /><Member Name="bPB_Stop" Datatype="Bool" /><Member Name="bPB_ResetError" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_Priming" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="dummyUdt" Datatype="&quot;udtHMI_VFD_Control&quot;"><Sections><Section Name="None"><Member Name="iMode" Datatype="Int" /><Member Name="iErrorCode" Datatype="Int" /><Member Name="iStatus" Datatype="Int" /><Member Name="rManualSpeedSP" Datatype="Real" /><Member Name="rAutoSpeedSP" Datatype="Real" /><Member Name="rActualSpeed" Datatype="Real" /><Member Name="rActualCurrent" Datatype="Real" /><Member Name="rActualPower" Datatype="Real" /><Member Name="bPB_ResetError" Datatype="Bool" /><Member Name="bPB_Forward" Datatype="Bool" /><Member Name="bPB_Reverse" Datatype="Bool" /><Member Name="bPB_Stop" Datatype="Bool" /><Member Name="bPBEN_ResetError" Datatype="Bool" /><Member Name="bPBEN_Forward" Datatype="Bool" /><Member Name="bPBEN_Reverse" Datatype="Bool" /><Member Name="bPBEN_Stop" Datatype="Bool" /><Member Name="bForwardOn" Datatype="Bool" /><Member Name="bReverseOn" Datatype="Bool" /><Member Name="bSignalForward" Datatype="Bool" /><Member Name="bSignalReverse" Datatype="Bool" /><Member Name="bError" Datatype="Bool" /><Member Name="bInterlock" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="bShelfSolenoidCommand" Datatype="Bool" /><Member Name="bLockConfirmedModeActive" Datatype="Bool" /><Member Name="iNextMode" Datatype="Int" /><Member Name="rInitialVolume" Datatype="Real" /><Member Name="NutrientReadingReady" Datatype="F_TRIG" Version="1.0"><Sections><Section Name="Input"><Member Name="CLK" Datatype="Bool" /></Section><Section Name="Output"><Member Name="Q" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Stat_Bit" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_Circulate" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="AI_ReservoirLevel" Datatype="&quot;fbAlarmedSetpoint&quot;"><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member><Member Name="DQ_SupplySolenoid" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member><Member Name="DQ_ReturnSolenoid" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member><Member Name="DQ_ShelfSolenoid" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member><Member Name="DQ_Lights" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member>
+    <Member Name="Fertigation" Datatype="&quot;fbRoomFertigation&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="arrInMutexRequests" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of Int" /><Member Name="arrInFertigationSettings" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of &quot;udtFertigationSettings&quot;"><Sections><Section Name="None"><Member Name="tMeasurementTime" Datatype="Time" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="tNutrientDosingDuration" Datatype="Time" /><Member Name="bDosingActive" Datatype="Bool" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /><Member Name="rMinReservoirVolume" Datatype="Real" /><Member Name="rRackCurrentVolume" Datatype="Real" /><Member Name="bPumpAtStandstill" Datatype="Bool" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="tDischargeTime" Datatype="Time" /><Member Name="bEnableIncomingRotate" Datatype="Bool" /></Section></Sections></Member><Member Name="rInTankLevel" Datatype="Real" /><Member Name="rInNutrientALevel" Datatype="Real" /><Member Name="rInNutrientBLevel" Datatype="Real" /><Member Name="rInNutrientAcidLevel" Datatype="Real" /><Member Name="rInpHSensor" Datatype="Real" /><Member Name="rInECSensor" Datatype="Real" /><Member Name="rInISESensor" Datatype="Real" /><Member Name="rInORPReading" Datatype="Real" /><Member Name="iInNumRacks" Datatype="Int" /></Section><Section Name="Output"><Member Name="bOutTankReturnSolenoid" Datatype="Bool" /><Member Name="bOutMPathSolenoid" Datatype="Bool" /><Member Name="bOutFreshWaterSolenoid" Datatype="Bool" /><Member Name="bOutDischargeSolenoid" Datatype="Bool" /><Member Name="bOutNutrientMixing" Datatype="Bool" /><Member Name="bOutNutrientA" Datatype="Bool" /><Member Name="bOutNutrientB" Datatype="Bool" /><Member Name="bOutNutrientAcid" Datatype="Bool" /><Member Name="arrOutNutrientReading" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of &quot;udtNutrientReading&quot;"><Sections><Section Name="None"><Member Name="rISEReading" Datatype="Real" /><Member Name="rORPReading" Datatype="Real" /><Member Name="rECReading" Datatype="Real" /><Member Name="rpHReading" Datatype="Real" /></Section></Sections></Member><Member Name="arrOutMutexLocks" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of Int" /><Member Name="arrOutSupplySolenoids" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of Bool" /><Member Name="arrOutReturnSolenoids" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Controls" Datatype="Struct"><Member Name="bPauseFertigation" Datatype="Bool" /><Member Name="rFloorPumpSpeedSP" Datatype="Real" /><Member Name="iNutrientMixingMode" Datatype="Int" /><Member Name="rFreshLevelForMeasurementLoop" Datatype="Real" /><Member Name="rFillLevelToPreviousShelf" Datatype="Real" /><Member Name="rReturnPathVolume" Datatype="Real" /><Member Name="rTankEmptyLevel" Datatype="Real" /><Member Name="rTankMaxVolume" Datatype="Real" /><Member Name="bNutrientAgitation" Datatype="Bool" /><Member Name="tNutrientAgitationInterval" Datatype="Time" /><Member Name="tNutrientAgitationDuration" Datatype="Time" /><Member Name="rNutrientTanksLowerLimit" Datatype="Real" /></Member><Member Name="Status" Datatype="Struct"><Member Name="iState" Datatype="Int" /><Member Name="iActiveRack" Datatype="Int" /><Member Name="iLastMDRack" Datatype="Int" /></Member><Member Name="bTankReturnSolenoidCommand" Datatype="Bool" /><Member Name="bMPathSolenoidCommand" Datatype="Bool" /><Member Name="bFreshWaterSolenoidCommand" Datatype="Bool" /><Member Name="bDischargeSolenoidCommand" Datatype="Bool" /><Member Name="bNutrientMixingCommand" Datatype="Bool" /><Member Name="bNutrientACommand" Datatype="Bool" /><Member Name="bNutrientBCommand" Datatype="Bool" /><Member Name="bNutrientAcidCommand" Datatype="Bool" /><Member Name="TON_Discharge" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_24HourNutrientMix" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="fbRoomMeasurementDosing" Datatype="&quot;fbRoomMeasurementDosing&quot;"><Sections><Section Name="Input"><Member Name="bInStart" Datatype="Bool" /><Member Name="iInActiveRack" Datatype="Int" /><Member Name="iInPreviousRack" Datatype="Int" /><Member Name="rInTankLevel" Datatype="Real" /><Member Name="rInISEReading" Datatype="Real" /><Member Name="rInECReading" Datatype="Real" /><Member Name="rInpHReading" Datatype="Real" /><Member Name="rInORPReading" Datatype="Real" /><Member Name="rInRackLevel" Datatype="Real" /><Member Name="rInFreshLevelForMLoop" Datatype="Real" /><Member Name="rInFillLevelToPreviousShelf" Datatype="Real" /><Member Name="rInReturnPathVolume" Datatype="Real" /><Member Name="rInTankEmptyLevel" Datatype="Real" /><Member Name="InFertigationSettings" Datatype="&quot;udtFertigationSettings&quot;"><Sections><Section Name="None"><Member Name="tMeasurementTime" Datatype="Time" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="tNutrientDosingDuration" Datatype="Time" /><Member Name="bDosingActive" Datatype="Bool" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /><Member Name="rMinReservoirVolume" Datatype="Real" /><Member Name="rRackCurrentVolume" Datatype="Real" /><Member Name="bPumpAtStandstill" Datatype="Bool" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="tDischargeTime" Datatype="Time" /><Member Name="bEnableIncomingRotate" Datatype="Bool" /></Section></Sections></Member></Section><Section Name="Output"><Member Name="bOutTankReturnSolenoidCommand" Datatype="Bool" /><Member Name="bOutActiveRackReturnSolenoidCommand" Datatype="Bool" /><Member Name="bOutActiveRackSupplySolenoidCommand" Datatype="Bool" /><Member Name="bOutPreviousRackReturnSolenoidCommand" Datatype="Bool" /><Member Name="bOutPreviousRackSupplySolenoidCommand" Datatype="Bool" /><Member Name="bOutFreshWaterSolenoidCommand" Datatype="Bool" /><Member Name="bOutDischargeSolenoidCommand" Datatype="Bool" /><Member Name="bOutMPathSolenoidCommand" Datatype="Bool" /><Member Name="bOutNutrientACommand" Datatype="Bool" /><Member Name="bOutNutrientBCommand" Datatype="Bool" /><Member Name="OutNutrientReadings" Datatype="&quot;udtNutrientReading&quot;"><Sections><Section Name="None"><Member Name="rISEReading" Datatype="Real" /><Member Name="rORPReading" Datatype="Real" /><Member Name="rECReading" Datatype="Real" /><Member Name="rpHReading" Datatype="Real" /></Section></Sections></Member><Member Name="bOutDone" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="iState" Datatype="Int" /><Member Name="iNextState" Datatype="Int" /><Member Name="rTankStartingLevel" Datatype="Real" /><Member Name="TON_MeasurementTimer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_NutrientATimer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_NutrientBTimer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_TankLowLimitTimer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="bTransferring" Datatype="Bool" /><Member Name="rTransferredVolume" Datatype="Real" /><Member Name="rVolumeToTransfer" Datatype="Real" /><Member Name="bEndDischarge" Datatype="Bool" /><Member Name="TON_PeriodicNutrientAgitation" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TP_PeriodicNutrientAgitation" Datatype="TP_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member>
+    <Member Name="HVAC" Datatype="&quot;fbRoomHVAC&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInCO2ReadingRaw" Datatype="Int" /></Section><Section Name="Output"><Member Name="bOutCO2Solenoid" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Temperature_Cooling" Datatype="&quot;fbAlarmedSetpoint&quot;"><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member><Member Name="Humidity" Datatype="&quot;fbAlarmedSetpoint&quot;"><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member><Member Name="Controls" Datatype="Struct"><Member Name="rHeatingSP" Datatype="Real" /><Member Name="bResetAlarm" Datatype="Bool" /><Member Name="bResetModbus" Datatype="Bool" /><Member Name="rDehum_SAT_SP" Datatype="Real" /><Member Name="rDehum_MOD_SP" Datatype="Real" /></Member><Member Name="Status" Datatype="Struct"><Member Name="SupplyAirTemperature" Datatype="Real" /><Member Name="bModbusError" Datatype="Bool" /><Member Name="wLastModbusErrorCode" Datatype="Word" /><Member Name="Compressor_1_Percentage" Datatype="Real" /><Member Name="Compressor_2_Percentage" Datatype="Real" /><Member Name="ZoneAirEnthalpy" Datatype="Real" /><Member Name="Compressor_1_Command" Datatype="Bool" /><Member Name="Compressor_1_Enabled" Datatype="Bool" /><Member Name="Compressor_1_Alarm" Datatype="Bool" /><Member Name="Compressor_2_Command" Datatype="Bool" /><Member Name="Compressor_2_Enabled" Datatype="Bool" /><Member Name="Compressor_2_Alarm" Datatype="Bool" /><Member Name="LPS1_Alarm" Datatype="Bool" /><Member Name="LPS2_Alarm" Datatype="Bool" /><Member Name="HPS1_Alarm" Datatype="Bool" /><Member Name="HPS2_Alarm" Datatype="Bool" /><Member Name="Dehum_1_Enabled" Datatype="Bool" /><Member Name="Dehum_2_Enabled" Datatype="Bool" /><Member Name="HGRH_Modulation" Datatype="Real" /><Member Name="Freeze_Alarm_1" Datatype="Bool" /><Member Name="Freeze_Alarm_2" Datatype="Bool" /><Member Name="DX_LAT_1" Datatype="Real" /><Member Name="DX_LAT_2" Datatype="Real" /></Member><Member Name="Config" Datatype="Struct"><Member Name="ModbusServerAddr" Datatype="IP_V4" Version="1.0"><Sections><Section Name="None"><Member Name="ADDR" Datatype="Array[1..4] of Byte" /></Section></Sections></Member><Member Name="ID" Datatype="UInt" /></Member><Member Name="CO2Control" Datatype="&quot;fbRoomCO2Control&quot;"><Sections><Section Name="Input"><Member Name="iInCO2ReadingRaw" Datatype="Int" /></Section><Section Name="Output"><Member Name="bOutSolenoid" Datatype="Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="AI_CO2Sensor" Datatype="&quot;fbAlarmedSetpoint&quot;"><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member><Member Name="Controls" Datatype="Struct"><Member Name="iModeCommand" Datatype="Int" /><Member Name="tMeasurementInterval" Datatype="Time" /><Member Name="tDosingDuration" Datatype="Time" /></Member><Member Name="Status" Datatype="Struct"><Member Name="tElapsedMeasurement" Datatype="Time" /><Member Name="tElapsedDosing" Datatype="Time" /></Member><Member Name="TON_MeasurementCycle" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TP_Dosing" Datatype="TP_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="TCPConnection" Datatype="TCON_IP_v4" Version="1.0"><Sections><Section Name="None"><Member Name="InterfaceId" Datatype="HW_ANY" /><Member Name="ID" Datatype="CONN_OUC" /><Member Name="ConnectionType" Datatype="Byte" /><Member Name="ActiveEstablished" Datatype="Bool" /><Member Name="RemoteAddress" Datatype="IP_V4" Version="1.0"><Sections><Section Name="None"><Member Name="ADDR" Datatype="Array[1..4] of Byte" /></Section></Sections></Member><Member Name="RemotePort" Datatype="UInt" /><Member Name="LocalPort" Datatype="UInt" /></Section></Sections></Member><Member Name="fbModbusTCPClient_Instance" Datatype="&quot;fbModbusTCPClient&quot;"><Sections><Section Name="Input"><Member Name="bInRequest" Datatype="Bool" /><Member Name="bInReset" Datatype="Bool" /><Member Name="iInSlaveId" Datatype="UInt" /></Section><Section Name="Output"><Member Name="bOutError" Datatype="Bool" /><Member Name="wOutLastErrorCode" Datatype="Word" /></Section><Section Name="InOut"><Member Name="InOutConnect" Datatype="TCON_IP_v4" Version="1.0"><Sections><Section Name="None" /></Sections></Member><Member Name="InOutReadDiscreteData" Datatype="Array[*] of &quot;udtModbusValBool&quot;"><Sections><Section Name="None" /></Sections></Member><Member Name="InOutWriteCoilData" Datatype="Array[*] of &quot;udtModbusValBool&quot;"><Sections><Section Name="None" /></Sections></Member><Member Name="InOutReadRegisterData" Datatype="Array[*] of &quot;udtModbusValReal&quot;"><Sections><Section Name="None" /></Sections></Member><Member Name="InOutWriteRegisterData" Datatype="Array[*] of &quot;udtModbusValReal&quot;"><Sections><Section Name="None" /></Sections></Member></Section><Section Name="Static"><Member Name="iState" Datatype="Int" /><Member Name="iNextState" Datatype="Int" /><Member Name="insModbusClient_TCP" Datatype="MB_CLIENT" Version="5.1"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="DISCONNECT" Datatype="Bool" /><Member Name="MB_MODE" Datatype="USInt" /><Member Name="MB_DATA_ADDR" Datatype="UDInt" /><Member Name="MB_DATA_LEN" Datatype="UInt" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut"><Member Name="MB_DATA_PTR" Datatype="Variant" /><Member Name="CONNECT" Datatype="Variant" /></Section><Section Name="Static"><Member Name="TCON" Datatype="TCON" Version="4.0"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut"><Member Name="CONNECT" Datatype="Variant" /></Section><Section Name="Static" /></Sections></Member><Member Name="TDISCON" Datatype="TDISCON" Version="2.1"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut" /><Section Name="Static" /></Sections></Member><Member Name="TSEND" Datatype="TSEND" Version="4.0"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /><Member Name="LEN" Datatype="UDInt" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut"><Member Name="DATA" Datatype="Variant" /><Member Name="ADDR" Datatype="Variant" /></Section><Section Name="Static" /></Sections></Member><Member Name="TRECEIVE" Datatype="TRCV" Version="4.0"><Sections><Section Name="Input"><Member Name="EN_R" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /><Member Name="LEN" Datatype="UDInt" /><Member Name="ADHOC" Datatype="Bool" /></Section><Section Name="Output"><Member Name="NDR" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /><Member Name="RCVD_LEN" Datatype="UDInt" /></Section><Section Name="InOut"><Member Name="DATA" Datatype="Variant" /><Member Name="ADDR" Datatype="Variant" /></Section><Section Name="Static" /></Sections></Member><Member Name="TRESET" Datatype="T_RESET" Version="1.2"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut" /><Section Name="Static" /></Sections></Member><Member Name="TDIAG" Datatype="T_DIAG" Version="1.2"><Sections><Section Name="Input"><Member Name="REQ" Datatype="Bool" /><Member Name="ID" Datatype="CONN_OUC" /></Section><Section Name="Output"><Member Name="DONE" Datatype="Bool" /><Member Name="BUSY" Datatype="Bool" /><Member Name="ERROR" Datatype="Bool" /><Member Name="STATUS" Datatype="Word" /></Section><Section Name="InOut"><Member Name="RESULT" Datatype="Variant" /></Section><Section Name="Static" /></Sections></Member><Member Name="TDIAG_Status" Datatype="TDiag_Status" Version="1.0"><Sections><Section Name="None"><Member Name="InterfaceId" Datatype="HW_ANY" /><Member Name="ID" Datatype="CONN_OUC" /><Member Name="ConnectionType" Datatype="Byte" /><Member Name="ActiveEstablished" Datatype="Bool" /><Member Name="State" Datatype="Byte" /><Member Name="Kind" Datatype="Byte" /><Member Name="SentBytes" Datatype="UDInt" /><Member Name="ReceivedBytes" Datatype="UDInt" /></Section></Sections></Member><Member Name="Blocked_Proc_Timeout" Datatype="Real" /><Member Name="Rcv_Timeout" Datatype="Real" /><Member Name="MB_Unit_ID" Datatype="Byte" /><Member Name="MB_Transaction_ID" Datatype="Word" /><Member Name="MB_State" Datatype="Word" /><Member Name="SAVED_MB_DATA_ADDR" Datatype="UDInt" /><Member Name="SAVED_DATA_LEN" Datatype="UInt" /><Member Name="SAVED_MB_MODE" Datatype="USInt" /><Member Name="Connection_ID" Datatype="Word" /><Member Name="Retries" Datatype="Word" /><Member Name="TEMP_DATA" Datatype="Array[1..263] of Byte" /><Member Name="rcv_timer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="wd_timer" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="Connected" Datatype="Bool" /><Member Name="Active" Datatype="Bool" /></Section></Sections></Member><Member Name="bTrigReset" Datatype="Bool" /><Member Name="bTrigReq" Datatype="Bool" /><Member Name="iNumReadRegisters" Datatype="DInt" /><Member Name="iNumWriteRegisters" Datatype="DInt" /><Member Name="iCurrentRegisterReadIndex" Datatype="DInt" /><Member Name="iCurrentRegisterWriteIndex" Datatype="DInt" /><Member Name="arrDataWords" Datatype="Array[0..1] of Word" /><Member Name="iNumReadDiscrete" Datatype="DInt" /><Member Name="iCurrentDiscreteReadIndex" Datatype="DInt" /><Member Name="iCurrentCoilWriteIndex" Datatype="DInt" /><Member Name="iNumWriteCoils" Datatype="DInt" /></Section></Sections></Member><Member Name="Read_Discrete" Datatype="Array[0..13] of &quot;udtModbusValBool&quot;"><Sections><Section Name="None"><Member Name="iAddr" Datatype="UInt" /><Member Name="bVal" Datatype="Bool" /></Section></Sections></Member><Member Name="Write_Discrete" Datatype="Array[0..0] of &quot;udtModbusValBool&quot;"><Sections><Section Name="None"><Member Name="iAddr" Datatype="UInt" /><Member Name="bVal" Datatype="Bool" /></Section></Sections></Member><Member Name="Read_Registers" Datatype="Array[0..9] of &quot;udtModbusValReal&quot;"><Sections><Section Name="None"><Member Name="iRegister" Datatype="UInt" /><Member Name="rVal" Datatype="Real" /></Section></Sections></Member><Member Name="Write_Registers" Datatype="Array[0..4] of &quot;udtModbusValReal&quot;"><Sections><Section Name="None"><Member Name="iRegister" Datatype="UInt" /><Member Name="rVal" Datatype="Real" /></Section></Sections></Member><Member Name="TON_ModbusReset" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="mbreset" Datatype="Bool" /><Member Name="TP_ModbusResetPulse" Datatype="TP_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member>
+    <Member Name="Config" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="iNumRacks" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>1</StartValue></Member></Member>
+    <Member Name="AI_Temperature_1" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>-40.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>140.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_Temperature_2" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>-40.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>140.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_Humidity_1" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>100.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_Humidity_2" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>100.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_TankLevel" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>1085.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_NutrientALevel" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>200.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_NutrientBLevel" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>200.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_NutrientAcidLevel" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>200.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_pHSensor" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>14.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_ECSensor" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>5.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_ISESensor" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>0.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>10000.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="AI_ORPSensor" Datatype="&quot;fbAlarmedSetpoint&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="iInRawValue" Datatype="Int" /></Section><Section Name="Output" /><Section Name="InOut" /><Section Name="Static"><Member Name="arrSetpoints" Datatype="Array[1..10] of &quot;udtTimeOfDaySetpoint&quot;"><Sections><Section Name="None"><Member Name="TimeOfDaySeconds" Datatype="DInt" /><Member Name="rSetpoint" Datatype="Real" /></Section></Sections></Member><Member Name="rSetpoint" Datatype="Real" /><Member Name="rActual" Datatype="Real" /><Member Name="Alarms" Datatype="Struct"><Member Name="bHigh" Datatype="Bool" /><Member Name="bLow" Datatype="Bool" /><Member Name="bRate" Datatype="Bool" /><Member Name="bSetpoint" Datatype="Bool" /></Member><Member Name="Config" Datatype="Struct"><Member Name="rLowCalibration" Datatype="Real"><StartValue>-1500.0</StartValue></Member><Member Name="rHighCalibration" Datatype="Real"><StartValue>1500.0</StartValue></Member><Member Name="Alarms" Datatype="Struct"><Member Name="rLowLimit" Datatype="Real" /><Member Name="rHighLimit" Datatype="Real" /><Member Name="rRateLimit" Datatype="Real" /><Member Name="rDeadband" Datatype="Real" /><Member Name="iSettlingSecs" Datatype="Int" /></Member></Member><Member Name="TON_RateCheck" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rActual_Prev" Datatype="Real" /><Member Name="TON_Settling" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="rSetpoint_Prev" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="DQ_MPathSolenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_FreshWaterSolenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_DischargeSolenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_TankReturnSolenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_NutrientA" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_NutrientB" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_NutrientAcid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_NutrientMixing" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_CO2Solenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="arrFertigationSettings" Datatype="Array[0..&quot;MAX_RACKS_PER_ROOM&quot;] of &quot;udtFertigationSettings&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="tMeasurementTime" Datatype="Time" /><Member Name="rMeasurementVolume" Datatype="Real" /><Member Name="bNutrientAEnable" Datatype="Bool" /><Member Name="bNutrientBEnable" Datatype="Bool" /><Member Name="rISELowSP" Datatype="Real" /><Member Name="rISEHighSP" Datatype="Real" /><Member Name="tNutrientDosingDuration" Datatype="Time" /><Member Name="bDosingActive" Datatype="Bool" /><Member Name="rOperatingVolume" Datatype="Real" /><Member Name="rTotalShelfVolume" Datatype="Real" /><Member Name="rMaxReservoirVolume" Datatype="Real" /><Member Name="rMinReservoirVolume" Datatype="Real" /><Member Name="rRackCurrentVolume" Datatype="Real" /><Member Name="bPumpAtStandstill" Datatype="Bool" /><Member Name="bEndDischargeCommand" Datatype="Bool" /><Member Name="tDischargeTime" Datatype="Time" /><Member Name="bEnableIncomingRotate" Datatype="Bool" /></Section></Sections></Member>
+  </Section>
+  <Section Name="Temp">
+    <Member Name="i" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Index for iterating through racks</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="max_temp" Datatype="Int" />
+  </Section>
+  <Section Name="Constant" />
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <IsRetainMemResEnabled>false</IsRetainMemResEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>fbRoom</Name>
+      <Number>3</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="Call" UId="21">
+    <CallInfo UId="22" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="23">
+        <Component Name="AI_Temperature_1" UId="24" />
+      </Instance>
+      <Token Text="(" UId="25" />
+      <NamelessParameter UId="26">
+        <Access Scope="LocalVariable" UId="27">
+          <Symbol UId="28">
+            <Component Name="AI" UId="29" />
+            <Token Text="." UId="30" />
+            <Component Name="IW_RoomTemperature_1" UId="31" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="32" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="33" />
+  <NewLine Num="1" UId="34" />
+  <Access Scope="Call" UId="35">
+    <CallInfo UId="36" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="37">
+        <Component Name="AI_Temperature_2" UId="38" />
+      </Instance>
+      <Token Text="(" UId="39" />
+      <NamelessParameter UId="40">
+        <Access Scope="LocalVariable" UId="41">
+          <Symbol UId="42">
+            <Component Name="AI" UId="43" />
+            <Token Text="." UId="44" />
+            <Component Name="IW_RoomTemperature_2" UId="45" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="46" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="47" />
+  <NewLine Num="1" UId="48" />
+  <Access Scope="Call" UId="49">
+    <CallInfo UId="50" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="51">
+        <Component Name="AI_Humidity_1" UId="52" />
+      </Instance>
+      <Token Text="(" UId="53" />
+      <NamelessParameter UId="54">
+        <Access Scope="LocalVariable" UId="55">
+          <Symbol UId="56">
+            <Component Name="AI" UId="57" />
+            <Token Text="." UId="58" />
+            <Component Name="IW_RoomHumidity_1" UId="59" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="60" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="61" />
+  <NewLine Num="1" UId="62" />
+  <Access Scope="Call" UId="63">
+    <CallInfo UId="64" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="65">
+        <Component Name="AI_Humidity_2" UId="66" />
+      </Instance>
+      <Token Text="(" UId="67" />
+      <NamelessParameter UId="68">
+        <Access Scope="LocalVariable" UId="69">
+          <Symbol UId="70">
+            <Component Name="AI" UId="71" />
+            <Token Text="." UId="72" />
+            <Component Name="IW_RoomHumidity_2" UId="73" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="74" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="75" />
+  <NewLine Num="1" UId="76" />
+  <Access Scope="Call" UId="77">
+    <CallInfo UId="78" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="79">
+        <Component Name="AI_TankLevel" UId="80" />
+      </Instance>
+      <Token Text="(" UId="81" />
+      <NamelessParameter UId="82">
+        <Access Scope="LocalVariable" UId="83">
+          <Symbol UId="84">
+            <Component Name="AI" UId="85" />
+            <Token Text="." UId="86" />
+            <Component Name="IW_TankLevel" UId="87" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="88" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="89" />
+  <NewLine Num="1" UId="90" />
+  <Access Scope="Call" UId="91">
+    <CallInfo UId="92" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="93">
+        <Component Name="AI_NutrientALevel" UId="94" />
+      </Instance>
+      <Token Text="(" UId="95" />
+      <NamelessParameter UId="96">
+        <Access Scope="LocalVariable" UId="97">
+          <Symbol UId="98">
+            <Component Name="AI" UId="99" />
+            <Token Text="." UId="100" />
+            <Component Name="IW_NutrientALevel" UId="101" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="102" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="103" />
+  <NewLine Num="1" UId="104" />
+  <Access Scope="Call" UId="105">
+    <CallInfo UId="106" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="107">
+        <Component Name="AI_NutrientBLevel" UId="108" />
+      </Instance>
+      <Token Text="(" UId="109" />
+      <NamelessParameter UId="110">
+        <Access Scope="LocalVariable" UId="111">
+          <Symbol UId="112">
+            <Component Name="AI" UId="113" />
+            <Token Text="." UId="114" />
+            <Component Name="IW_NutrientBLevel" UId="115" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="116" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="117" />
+  <NewLine Num="1" UId="118" />
+  <Access Scope="Call" UId="119">
+    <CallInfo UId="120" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="121">
+        <Component Name="AI_NutrientAcidLevel" UId="122" />
+      </Instance>
+      <Token Text="(" UId="123" />
+      <NamelessParameter UId="124">
+        <Access Scope="LocalVariable" UId="125">
+          <Symbol UId="126">
+            <Component Name="AI" UId="127" />
+            <Token Text="." UId="128" />
+            <Component Name="IW_NutrientAcidLevel" UId="129" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="130" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="131" />
+  <NewLine Num="1" UId="132" />
+  <Access Scope="Call" UId="133">
+    <CallInfo UId="134" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="135">
+        <Component Name="AI_pHSensor" UId="136" />
+      </Instance>
+      <Token Text="(" UId="137" />
+      <NamelessParameter UId="138">
+        <Access Scope="LocalVariable" UId="139">
+          <Symbol UId="140">
+            <Component Name="AI" UId="141" />
+            <Token Text="." UId="142" />
+            <Component Name="IW_pHSensor" UId="143" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="144" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="145" />
+  <NewLine Num="1" UId="146" />
+  <Access Scope="Call" UId="147">
+    <CallInfo UId="148" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="149">
+        <Component Name="AI_ECSensor" UId="150" />
+      </Instance>
+      <Token Text="(" UId="151" />
+      <NamelessParameter UId="152">
+        <Access Scope="LocalVariable" UId="153">
+          <Symbol UId="154">
+            <Component Name="AI" UId="155" />
+            <Token Text="." UId="156" />
+            <Component Name="IW_ECSensor" UId="157" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="158" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="159" />
+  <NewLine Num="1" UId="160" />
+  <Access Scope="Call" UId="161">
+    <CallInfo UId="162" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="163">
+        <Component Name="AI_ISESensor" UId="164" />
+      </Instance>
+      <Token Text="(" UId="165" />
+      <NamelessParameter UId="166">
+        <Access Scope="LocalVariable" UId="167">
+          <Symbol UId="168">
+            <Component Name="AI" UId="169" />
+            <Token Text="." UId="170" />
+            <Component Name="IW_ISESensor" UId="171" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="172" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="173" />
+  <NewLine Num="1" UId="174" />
+  <Access Scope="Call" UId="175">
+    <CallInfo UId="176" BlockType="FB" Name="fbAlarmedSetpoint">
+      <Instance Scope="LocalVariable" UId="177">
+        <Component Name="AI_ORPSensor" UId="178" />
+      </Instance>
+      <Token Text="(" UId="179" />
+      <NamelessParameter UId="180">
+        <Access Scope="LocalVariable" UId="181">
+          <Symbol UId="182">
+            <Component Name="AI" UId="183" />
+            <Token Text="." UId="184" />
+            <Component Name="IW_ORPSensor" UId="185" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="186" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="187" />
+  <NewLine Num="1" UId="188" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="189">
+    <Text UId="190">#AI_CO2Sensor(#AI.IW_CO2Sensor);</Text>
+  </LineComment>
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>
+
+</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Process room-level analog inputs</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="LocalVariable" UId="21">
+    <Symbol UId="22">
+      <Component Name="max_temp" UId="23" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="24" />
+  <Token Text=":=" UId="25" />
+  <Blank Num="1" UId="26" />
+  <Access Scope="Call" UId="27">
+    <Instruction Name="MAX" UId="28">
+      <Token Text="(" UId="29" />
+      <Parameter Name="IN1" UId="30">
+        <Blank Num="1" UId="31" />
+        <Token Text=":=" UId="32" />
+        <Blank Num="1" UId="33" />
+        <Access Scope="LocalVariable" UId="34">
+          <Symbol UId="35">
+            <Component Name="AI_Temperature_1" UId="36" />
+            <Token Text="." UId="37" />
+            <Component Name="rActual" UId="38" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="39" />
+      <Blank Num="1" UId="40" />
+      <Parameter Name="IN2" UId="41">
+        <Blank Num="1" UId="42" />
+        <Token Text=":=" UId="43" />
+        <Blank Num="1" UId="44" />
+        <Access Scope="LocalVariable" UId="45">
+          <Symbol UId="46">
+            <Component Name="AI_Temperature_2" UId="47" />
+            <Token Text="." UId="48" />
+            <Component Name="rActual" UId="49" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="51" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="52" />
+  <NewLine Num="1" UId="53" />
+  <Access Scope="LocalVariable" UId="54">
+    <Symbol UId="55">
+      <Component Name="max_temp" UId="56" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="57" />
+  <Token Text=":=" UId="58" />
+  <Blank Num="1" UId="59" />
+  <Access Scope="Call" UId="60">
+    <Instruction Name="MAX" UId="61">
+      <Token Text="(" UId="62" />
+      <Parameter Name="IN1" UId="63">
+        <Blank Num="1" UId="64" />
+        <Token Text=":=" UId="65" />
+        <Blank Num="1" UId="66" />
+        <Access Scope="LocalVariable" UId="67">
+          <Symbol UId="68">
+            <Component Name="max_temp" UId="69" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="70" />
+      <Blank Num="1" UId="71" />
+      <Parameter Name="IN2" UId="72">
+        <Blank Num="1" UId="73" />
+        <Token Text=":=" UId="74" />
+        <Blank Num="1" UId="75" />
+        <Access Scope="LocalVariable" UId="76">
+          <Symbol UId="77">
+            <Component Name="HVAC" UId="78" />
+            <Token Text="." UId="79" />
+            <Component Name="Temperature_Cooling" UId="80" />
+            <Token Text="." UId="81" />
+            <Component Name="rActual" UId="82" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="84" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="85" />
+  <NewLine Num="2" UId="86" />
+  <Token Text="FOR" UId="87" />
+  <Blank Num="1" UId="88" />
+  <Access Scope="LocalVariable" UId="89">
+    <Symbol UId="90">
+      <Component Name="i" UId="91" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="92" />
+  <Token Text=":=" UId="93" />
+  <Blank Num="1" UId="94" />
+  <Access Scope="LiteralConstant" UId="95">
+    <Constant UId="96">
+      <ConstantValue UId="98">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="99" />
+  <Token Text="TO" UId="100" />
+  <Blank Num="1" UId="101" />
+  <Access Scope="LocalVariable" UId="102">
+    <Symbol UId="103">
+      <Component Name="Config" UId="104" />
+      <Token Text="." UId="105" />
+      <Component Name="iNumRacks" UId="106" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="107" />
+  <Token Text="DO" UId="108" />
+  <NewLine Num="1" UId="109" />
+  <Blank Num="4" UId="110" />
+  <NewLine Num="1" UId="111" />
+  <Blank Num="4" UId="112" />
+  <Access Scope="Call" UId="113">
+    <CallInfo UId="114" BlockType="FB" Name="fbRack">
+      <Instance Scope="LocalVariable" UId="115">
+        <Component Name="Rack" UId="116">
+          <Token Text="[" UId="117" />
+          <Access Scope="LocalVariable" UId="118">
+            <Symbol UId="119">
+              <Component Name="i" UId="120" />
+            </Symbol>
+          </Access>
+          <Token Text="]" UId="121" />
+        </Component>
+      </Instance>
+      <Token Text="(" UId="122" />
+      <Parameter Name="iInMutexLockConfirmation" UId="123">
+        <Blank Num="1" UId="124" />
+        <Token Text=":=" UId="125" />
+        <Blank Num="1" UId="126" />
+        <Access Scope="LocalVariable" UId="127">
+          <Symbol UId="128">
+            <Component Name="Fertigation" UId="129" />
+            <Token Text="." UId="130" />
+            <Component Name="arrOutMutexLocks" UId="131">
+              <Token Text="[" UId="132" />
+              <Access Scope="LocalVariable" UId="133">
+                <Symbol UId="134">
+                  <Component Name="i" UId="135" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="136" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="137" />
+      <NewLine Num="1" UId="138" />
+      <Blank Num="14" UId="139" />
+      <Parameter Name="udtInLastNutrientReading" UId="140">
+        <Blank Num="1" UId="141" />
+        <Token Text=":=" UId="142" />
+        <Blank Num="1" UId="143" />
+        <Access Scope="LocalVariable" UId="144">
+          <Symbol UId="145">
+            <Component Name="Fertigation" UId="146" />
+            <Token Text="." UId="147" />
+            <Component Name="arrOutNutrientReading" UId="148">
+              <Token Text="[" UId="149" />
+              <Access Scope="LocalVariable" UId="150">
+                <Symbol UId="151">
+                  <Component Name="i" UId="152" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="153" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="154" />
+      <NewLine Num="1" UId="155" />
+      <Blank Num="14" UId="156" />
+      <Parameter Name="bInSupplySolenoidFromRoomFertigation" UId="157">
+        <Blank Num="1" UId="158" />
+        <Token Text=":=" UId="159" />
+        <Blank Num="1" UId="160" />
+        <Access Scope="LocalVariable" UId="161">
+          <Symbol UId="162">
+            <Component Name="Fertigation" UId="163" />
+            <Token Text="." UId="164" />
+            <Component Name="arrOutSupplySolenoids" UId="165">
+              <Token Text="[" UId="166" />
+              <Access Scope="LocalVariable" UId="167">
+                <Symbol UId="168">
+                  <Component Name="i" UId="169" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="170" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="171" />
+      <NewLine Num="1" UId="172" />
+      <Blank Num="14" UId="173" />
+      <Parameter Name="bInReturnSolenoidFromRoomFertigation" UId="174">
+        <Blank Num="1" UId="175" />
+        <Token Text=":=" UId="176" />
+        <Blank Num="1" UId="177" />
+        <Access Scope="LocalVariable" UId="178">
+          <Symbol UId="179">
+            <Component Name="Fertigation" UId="180" />
+            <Token Text="." UId="181" />
+            <Component Name="arrOutReturnSolenoids" UId="182">
+              <Token Text="[" UId="183" />
+              <Access Scope="LocalVariable" UId="184">
+                <Symbol UId="185">
+                  <Component Name="i" UId="186" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="187" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="188" />
+      <NewLine Num="1" UId="189" />
+      <Blank Num="14" UId="190" />
+      <Parameter Name="iInLightsDelaySecs" UId="191">
+        <Blank Num="1" UId="192" />
+        <Token Text=":=" UId="193" />
+        <Blank Num="1" UId="194" />
+        <Access Scope="LocalVariable" UId="195">
+          <Symbol UId="196">
+            <Component Name="i" UId="197" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="198" />
+        <Token Text="*" UId="199" />
+        <Blank Num="1" UId="200" />
+        <Access Scope="LiteralConstant" UId="201">
+          <Constant UId="202">
+            <ConstantValue UId="204">5000</ConstantValue>
+          </Constant>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="205" />
+      <Blank Num="1" UId="206" />
+      <LineComment Inserted="false" NoClosingBracket="false" UId="207">
+        <Text UId="208"> delay each rack by 5 seconds to prevent current spike</Text>
+      </LineComment>
+      <NewLine Num="1" UId="209" />
+      <Blank Num="14" UId="210" />
+      <Parameter Name="arrAI" UId="211">
+        <Blank Num="1" UId="212" />
+        <Token Text=":=" UId="213" />
+        <Blank Num="1" UId="214" />
+        <Access Scope="LocalVariable" UId="215">
+          <Symbol UId="216">
+            <Component Name="Rack" UId="217">
+              <Token Text="[" UId="218" />
+              <Access Scope="LocalVariable" UId="219">
+                <Symbol UId="220">
+                  <Component Name="i" UId="221" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="222" />
+            </Component>
+            <Token Text="." UId="223" />
+            <Component Name="arrAI" UId="224" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="225" />
+      <NewLine Num="1" UId="226" />
+      <Blank Num="14" UId="227" />
+      <Parameter Name="rInCurrentTemperature" UId="228">
+        <Blank Num="1" UId="229" />
+        <Token Text=":=" UId="230" />
+        <Blank Num="1" UId="231" />
+        <Access Scope="LocalVariable" UId="232">
+          <Symbol UId="233">
+            <Component Name="max_temp" UId="234" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="235" />
+      <NewLine Num="1" UId="236" />
+      <Blank Num="14" UId="237" />
+      <Parameter Name="iOutMutexRequest" UId="238">
+        <Blank Num="1" UId="239" />
+        <Token Text="=&gt;" UId="240" />
+        <Blank Num="1" UId="241" />
+        <Access Scope="LocalVariable" UId="242">
+          <Symbol UId="243">
+            <Component Name="Fertigation" UId="244" />
+            <Token Text="." UId="245" />
+            <Component Name="arrInMutexRequests" UId="246">
+              <Token Text="[" UId="247" />
+              <Access Scope="LocalVariable" UId="248">
+                <Symbol UId="249">
+                  <Component Name="i" UId="250" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="251" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="252" />
+      <NewLine Num="1" UId="253" />
+      <Blank Num="14" UId="254" />
+      <Parameter Name="OutFertigationSettings" UId="255">
+        <Blank Num="1" UId="256" />
+        <Token Text="=&gt;" UId="257" />
+        <Blank Num="1" UId="258" />
+        <Access Scope="LocalVariable" UId="259">
+          <Symbol UId="260">
+            <Component Name="arrFertigationSettings" UId="261">
+              <Token Text="[" UId="262" />
+              <Access Scope="LocalVariable" UId="263">
+                <Symbol UId="264">
+                  <Component Name="i" UId="265" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="266" />
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="267" />
+      <NewLine Num="1" UId="268" />
+      <Blank Num="14" UId="269" />
+      <Parameter Name="arrDQ" UId="270">
+        <Blank Num="1" UId="271" />
+        <Token Text="=&gt;" UId="272" />
+        <Blank Num="1" UId="273" />
+        <Access Scope="LocalVariable" UId="274">
+          <Symbol UId="275">
+            <Component Name="Rack" UId="276">
+              <Token Text="[" UId="277" />
+              <Access Scope="LocalVariable" UId="278">
+                <Symbol UId="279">
+                  <Component Name="i" UId="280" />
+                </Symbol>
+              </Access>
+              <Token Text="]" UId="281" />
+            </Component>
+            <Token Text="." UId="282" />
+            <Component Name="arrDQ" UId="283" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="284" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="285" />
+  <NewLine Num="1" UId="286" />
+  <Token Text="END_FOR" UId="287" />
+  <Token Text=";" UId="288" />
+  <NewLine Num="1" UId="289" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Call rack FBs</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="Call" UId="21">
+    <CallInfo UId="22" BlockType="FB" Name="fbRoomFertigation">
+      <Instance Scope="LocalVariable" UId="23">
+        <Component Name="Fertigation" UId="24" />
+      </Instance>
+      <Token Text="(" UId="25" />
+      <Parameter Name="arrInMutexRequests" UId="26">
+        <Token Text=":=" UId="27" />
+        <Access Scope="LocalVariable" UId="28">
+          <Symbol UId="29">
+            <Component Name="Fertigation" UId="30" />
+            <Token Text="." UId="31" />
+            <Component Name="arrInMutexRequests" UId="32" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="33" />
+      <NewLine Num="1" UId="34" />
+      <Blank Num="13" UId="35" />
+      <Parameter Name="arrInFertigationSettings" UId="36">
+        <Token Text=":=" UId="37" />
+        <Access Scope="LocalVariable" UId="38">
+          <Symbol UId="39">
+            <Component Name="arrFertigationSettings" UId="40" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="41" />
+      <NewLine Num="1" UId="42" />
+      <Blank Num="13" UId="43" />
+      <Parameter Name="rInTankLevel" UId="44">
+        <Token Text=":=" UId="45" />
+        <Access Scope="LocalVariable" UId="46">
+          <Symbol UId="47">
+            <Component Name="AI_TankLevel" UId="48" />
+            <Token Text="." UId="49" />
+            <Component Name="rActual" UId="50" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="51" />
+      <NewLine Num="1" UId="52" />
+      <Blank Num="13" UId="53" />
+      <Parameter Name="rInNutrientALevel" UId="54">
+        <Token Text=":=" UId="55" />
+        <Access Scope="LocalVariable" UId="56">
+          <Symbol UId="57">
+            <Component Name="AI_NutrientALevel" UId="58" />
+            <Token Text="." UId="59" />
+            <Component Name="rActual" UId="60" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="61" />
+      <NewLine Num="1" UId="62" />
+      <Blank Num="13" UId="63" />
+      <Parameter Name="rInNutrientBLevel" UId="64">
+        <Token Text=":=" UId="65" />
+        <Access Scope="LocalVariable" UId="66">
+          <Symbol UId="67">
+            <Component Name="AI_NutrientBLevel" UId="68" />
+            <Token Text="." UId="69" />
+            <Component Name="rActual" UId="70" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="71" />
+      <NewLine Num="1" UId="72" />
+      <Blank Num="13" UId="73" />
+      <Parameter Name="rInNutrientAcidLevel" UId="74">
+        <Token Text=":=" UId="75" />
+        <Access Scope="LocalVariable" UId="76">
+          <Symbol UId="77">
+            <Component Name="AI_NutrientAcidLevel" UId="78" />
+            <Token Text="." UId="79" />
+            <Component Name="rActual" UId="80" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="81" />
+      <NewLine Num="1" UId="82" />
+      <Blank Num="13" UId="83" />
+      <Parameter Name="rInpHSensor" UId="84">
+        <Token Text=":=" UId="85" />
+        <Access Scope="LocalVariable" UId="86">
+          <Symbol UId="87">
+            <Component Name="AI_pHSensor" UId="88" />
+            <Token Text="." UId="89" />
+            <Component Name="rActual" UId="90" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="91" />
+      <NewLine Num="1" UId="92" />
+      <Blank Num="13" UId="93" />
+      <Parameter Name="rInECSensor" UId="94">
+        <Token Text=":=" UId="95" />
+        <Access Scope="LocalVariable" UId="96">
+          <Symbol UId="97">
+            <Component Name="AI_ECSensor" UId="98" />
+            <Token Text="." UId="99" />
+            <Component Name="rActual" UId="100" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="101" />
+      <NewLine Num="1" UId="102" />
+      <Blank Num="13" UId="103" />
+      <Parameter Name="rInISESensor" UId="104">
+        <Token Text=":=" UId="105" />
+        <Access Scope="LocalVariable" UId="106">
+          <Symbol UId="107">
+            <Component Name="AI_ISESensor" UId="108" />
+            <Token Text="." UId="109" />
+            <Component Name="rActual" UId="110" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="111" />
+      <NewLine Num="1" UId="112" />
+      <Blank Num="13" UId="113" />
+      <Parameter Name="rInORPReading" UId="114">
+        <Token Text=":=" UId="115" />
+        <Access Scope="LocalVariable" UId="116">
+          <Symbol UId="117">
+            <Component Name="AI_ORPSensor" UId="118" />
+            <Token Text="." UId="119" />
+            <Component Name="rActual" UId="120" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="121" />
+      <NewLine Num="1" UId="122" />
+      <Blank Num="13" UId="123" />
+      <Parameter Name="iInNumRacks" UId="124">
+        <Token Text=":=" UId="125" />
+        <Access Scope="LocalVariable" UId="126">
+          <Symbol UId="127">
+            <Component Name="Config" UId="128" />
+            <Token Text="." UId="129" />
+            <Component Name="iNumRacks" UId="130" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="131" />
+      <NewLine Num="1" UId="132" />
+      <Blank Num="13" UId="133" />
+      <Parameter Name="bOutTankReturnSolenoid" UId="134">
+        <Token Text="=&gt;" UId="135" />
+        <Access Scope="LocalVariable" UId="136">
+          <Symbol UId="137">
+            <Component Name="Fertigation" UId="138" />
+            <Token Text="." UId="139" />
+            <Component Name="bOutTankReturnSolenoid" UId="140" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="141" />
+      <NewLine Num="1" UId="142" />
+      <Blank Num="13" UId="143" />
+      <Parameter Name="bOutMPathSolenoid" UId="144">
+        <Token Text="=&gt;" UId="145" />
+        <Access Scope="LocalVariable" UId="146">
+          <Symbol UId="147">
+            <Component Name="Fertigation" UId="148" />
+            <Token Text="." UId="149" />
+            <Component Name="bOutMPathSolenoid" UId="150" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="151" />
+      <NewLine Num="1" UId="152" />
+      <Blank Num="13" UId="153" />
+      <Parameter Name="bOutFreshWaterSolenoid" UId="154">
+        <Token Text="=&gt;" UId="155" />
+        <Access Scope="LocalVariable" UId="156">
+          <Symbol UId="157">
+            <Component Name="Fertigation" UId="158" />
+            <Token Text="." UId="159" />
+            <Component Name="bOutFreshWaterSolenoid" UId="160" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="161" />
+      <NewLine Num="1" UId="162" />
+      <Blank Num="13" UId="163" />
+      <Parameter Name="bOutDischargeSolenoid" UId="164">
+        <Token Text="=&gt;" UId="165" />
+        <Access Scope="LocalVariable" UId="166">
+          <Symbol UId="167">
+            <Component Name="Fertigation" UId="168" />
+            <Token Text="." UId="169" />
+            <Component Name="bOutDischargeSolenoid" UId="170" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="171" />
+      <NewLine Num="1" UId="172" />
+      <Blank Num="13" UId="173" />
+      <Parameter Name="bOutNutrientMixing" UId="174">
+        <Token Text="=&gt;" UId="175" />
+        <Access Scope="LocalVariable" UId="176">
+          <Symbol UId="177">
+            <Component Name="Fertigation" UId="178" />
+            <Token Text="." UId="179" />
+            <Component Name="bOutNutrientMixing" UId="180" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="181" />
+      <NewLine Num="1" UId="182" />
+      <Blank Num="13" UId="183" />
+      <Parameter Name="bOutNutrientA" UId="184">
+        <Token Text="=&gt;" UId="185" />
+        <Access Scope="LocalVariable" UId="186">
+          <Symbol UId="187">
+            <Component Name="Fertigation" UId="188" />
+            <Token Text="." UId="189" />
+            <Component Name="bOutNutrientA" UId="190" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="191" />
+      <NewLine Num="1" UId="192" />
+      <Blank Num="13" UId="193" />
+      <Parameter Name="bOutNutrientB" UId="194">
+        <Token Text="=&gt;" UId="195" />
+        <Access Scope="LocalVariable" UId="196">
+          <Symbol UId="197">
+            <Component Name="Fertigation" UId="198" />
+            <Token Text="." UId="199" />
+            <Component Name="bOutNutrientB" UId="200" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="201" />
+      <NewLine Num="1" UId="202" />
+      <Blank Num="13" UId="203" />
+      <Parameter Name="bOutNutrientAcid" UId="204">
+        <Token Text="=&gt;" UId="205" />
+        <Access Scope="LocalVariable" UId="206">
+          <Symbol UId="207">
+            <Component Name="Fertigation" UId="208" />
+            <Token Text="." UId="209" />
+            <Component Name="bOutNutrientAcid" UId="210" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="211" />
+      <NewLine Num="1" UId="212" />
+      <Blank Num="13" UId="213" />
+      <Parameter Name="arrOutNutrientReading" UId="214">
+        <Token Text="=&gt;" UId="215" />
+        <Access Scope="LocalVariable" UId="216">
+          <Symbol UId="217">
+            <Component Name="Fertigation" UId="218" />
+            <Token Text="." UId="219" />
+            <Component Name="arrOutNutrientReading" UId="220" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="221" />
+      <NewLine Num="1" UId="222" />
+      <Blank Num="13" UId="223" />
+      <Parameter Name="arrOutMutexLocks" UId="224">
+        <Token Text="=&gt;" UId="225" />
+        <Access Scope="LocalVariable" UId="226">
+          <Symbol UId="227">
+            <Component Name="Fertigation" UId="228" />
+            <Token Text="." UId="229" />
+            <Component Name="arrOutMutexLocks" UId="230" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="231" />
+      <NewLine Num="1" UId="232" />
+      <Blank Num="13" UId="233" />
+      <Parameter Name="arrOutSupplySolenoids" UId="234">
+        <Token Text="=&gt;" UId="235" />
+        <Access Scope="LocalVariable" UId="236">
+          <Symbol UId="237">
+            <Component Name="Fertigation" UId="238" />
+            <Token Text="." UId="239" />
+            <Component Name="arrOutSupplySolenoids" UId="240" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="241" />
+      <NewLine Num="1" UId="242" />
+      <Blank Num="13" UId="243" />
+      <Parameter Name="arrOutReturnSolenoids" UId="244">
+        <Token Text="=&gt;" UId="245" />
+        <Access Scope="LocalVariable" UId="246">
+          <Symbol UId="247">
+            <Component Name="Fertigation" UId="248" />
+            <Token Text="." UId="249" />
+            <Component Name="arrOutReturnSolenoids" UId="250" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="251" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="252" />
+  <NewLine Num="1" UId="253" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Call room-level fertigation control logic and map rack supply and return solenoids</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="12" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="Call" UId="21">
+    <CallInfo UId="22" BlockType="FB" Name="fbRoomHVAC">
+      <Instance Scope="LocalVariable" UId="23">
+        <Component Name="HVAC" UId="24" />
+      </Instance>
+      <Token Text="(" UId="25" />
+      <Parameter Name="iInCO2ReadingRaw" UId="26">
+        <Blank Num="1" UId="27" />
+        <Token Text=":=" UId="28" />
+        <Blank Num="1" UId="29" />
+        <Access Scope="LocalVariable" UId="30">
+          <Symbol UId="31">
+            <Component Name="AI" UId="32" />
+            <Token Text="." UId="33" />
+            <Component Name="IW_CO2Sensor" UId="34" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="35" />
+      <NewLine Num="1" UId="36" />
+      <Blank Num="6" UId="37" />
+      <Parameter Name="bOutCO2Solenoid" UId="38">
+        <Token Text="=&gt;" UId="39" />
+        <Access Scope="LocalVariable" UId="40">
+          <Symbol UId="41">
+            <Component Name="HVAC" UId="42" />
+            <Token Text="." UId="43" />
+            <Component Name="bOutCO2Solenoid" UId="44" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="45" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="46" />
+  <NewLine Num="1" UId="47" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="15" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Call HVAC and CO2 control logic</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="17" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="LocalVariable" UId="21">
+    <Symbol UId="22">
+      <Component Name="DQ" UId="23" />
+      <Token Text="." UId="24" />
+      <Component Name="Q_MPathSolenoid" UId="25" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="26" />
+  <Token Text=":=" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Access Scope="Call" UId="29">
+    <CallInfo UId="30" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="32">
+        <Component Name="fcDigitalOutput" UId="31" />
+      </Instance>
+      <Token Text="(" UId="33" />
+      <Parameter Name="bInAutoVal" UId="34">
+        <Blank Num="1" UId="35" />
+        <Token Text=":=" UId="36" />
+        <Blank Num="1" UId="37" />
+        <Access Scope="LocalVariable" UId="38">
+          <Symbol UId="39">
+            <Component Name="Fertigation" UId="40" />
+            <Token Text="." UId="41" />
+            <Component Name="bOutMPathSolenoid" UId="42" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="43" />
+      <Blank Num="1" UId="44" />
+      <Parameter Name="InOutUdt" UId="45">
+        <Blank Num="1" UId="46" />
+        <Token Text=":=" UId="47" />
+        <Blank Num="1" UId="48" />
+        <Access Scope="LocalVariable" UId="49">
+          <Symbol UId="50">
+            <Component Name="DQ_MPathSolenoid" UId="51" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="53" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="54" />
+  <NewLine Num="1" UId="55" />
+  <Access Scope="LocalVariable" UId="56">
+    <Symbol UId="57">
+      <Component Name="DQ" UId="58" />
+      <Token Text="." UId="59" />
+      <Component Name="Q_FreshWaterSolenoid" UId="60" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="61" />
+  <Token Text=":=" UId="62" />
+  <Blank Num="1" UId="63" />
+  <Access Scope="Call" UId="64">
+    <CallInfo UId="65" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="67">
+        <Component Name="fcDigitalOutput" UId="66" />
+      </Instance>
+      <Token Text="(" UId="68" />
+      <Parameter Name="bInAutoVal" UId="69">
+        <Blank Num="1" UId="70" />
+        <Token Text=":=" UId="71" />
+        <Blank Num="1" UId="72" />
+        <Access Scope="LocalVariable" UId="73">
+          <Symbol UId="74">
+            <Component Name="Fertigation" UId="75" />
+            <Token Text="." UId="76" />
+            <Component Name="bOutFreshWaterSolenoid" UId="77" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="78" />
+      <Blank Num="1" UId="79" />
+      <Parameter Name="InOutUdt" UId="80">
+        <Blank Num="1" UId="81" />
+        <Token Text=":=" UId="82" />
+        <Blank Num="1" UId="83" />
+        <Access Scope="LocalVariable" UId="84">
+          <Symbol UId="85">
+            <Component Name="DQ_FreshWaterSolenoid" UId="86" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="88" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="89" />
+  <NewLine Num="1" UId="90" />
+  <Access Scope="LocalVariable" UId="91">
+    <Symbol UId="92">
+      <Component Name="DQ" UId="93" />
+      <Token Text="." UId="94" />
+      <Component Name="Q_DischargeSolenoid" UId="95" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="96" />
+  <Token Text=":=" UId="97" />
+  <Blank Num="1" UId="98" />
+  <Access Scope="Call" UId="99">
+    <CallInfo UId="100" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="102">
+        <Component Name="fcDigitalOutput" UId="101" />
+      </Instance>
+      <Token Text="(" UId="103" />
+      <Parameter Name="bInAutoVal" UId="104">
+        <Blank Num="1" UId="105" />
+        <Token Text=":=" UId="106" />
+        <Blank Num="1" UId="107" />
+        <Access Scope="LocalVariable" UId="108">
+          <Symbol UId="109">
+            <Component Name="Fertigation" UId="110" />
+            <Token Text="." UId="111" />
+            <Component Name="bOutDischargeSolenoid" UId="112">
+              <BooleanAttribute Name="HasHash" UId="113">true</BooleanAttribute>
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="114" />
+      <Blank Num="1" UId="115" />
+      <Parameter Name="InOutUdt" UId="116">
+        <Blank Num="1" UId="117" />
+        <Token Text=":=" UId="118" />
+        <Blank Num="1" UId="119" />
+        <Access Scope="LocalVariable" UId="120">
+          <Symbol UId="121">
+            <Component Name="DQ_DischargeSolenoid" UId="122" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="124" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="125" />
+  <NewLine Num="1" UId="126" />
+  <Access Scope="LocalVariable" UId="127">
+    <Symbol UId="128">
+      <Component Name="DQ" UId="129" />
+      <Token Text="." UId="130" />
+      <Component Name="Q_TankReturnSolenoid" UId="131" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="132" />
+  <Token Text=":=" UId="133" />
+  <Blank Num="1" UId="134" />
+  <Access Scope="Call" UId="135">
+    <CallInfo UId="136" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="138">
+        <Component Name="fcDigitalOutput" UId="137" />
+      </Instance>
+      <Token Text="(" UId="139" />
+      <Parameter Name="bInAutoVal" UId="140">
+        <Blank Num="1" UId="141" />
+        <Token Text=":=" UId="142" />
+        <Blank Num="1" UId="143" />
+        <Access Scope="LocalVariable" UId="144">
+          <Symbol UId="145">
+            <Component Name="Fertigation" UId="146" />
+            <Token Text="." UId="147" />
+            <Component Name="bOutTankReturnSolenoid" UId="148" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="149" />
+      <Blank Num="1" UId="150" />
+      <Parameter Name="InOutUdt" UId="151">
+        <Blank Num="1" UId="152" />
+        <Token Text=":=" UId="153" />
+        <Blank Num="1" UId="154" />
+        <Access Scope="LocalVariable" UId="155">
+          <Symbol UId="156">
+            <Component Name="DQ_TankReturnSolenoid" UId="157" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="159" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="160" />
+  <NewLine Num="1" UId="161" />
+  <Access Scope="LocalVariable" UId="162">
+    <Symbol UId="163">
+      <Component Name="DQ" UId="164" />
+      <Token Text="." UId="165" />
+      <Component Name="Q_NutrientAEnable" UId="166" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="167" />
+  <Token Text=":=" UId="168" />
+  <Blank Num="1" UId="169" />
+  <Access Scope="Call" UId="170">
+    <CallInfo UId="171" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="173">
+        <Component Name="fcDigitalOutput" UId="172" />
+      </Instance>
+      <Token Text="(" UId="174" />
+      <Parameter Name="bInAutoVal" UId="175">
+        <Blank Num="1" UId="176" />
+        <Token Text=":=" UId="177" />
+        <Blank Num="1" UId="178" />
+        <Access Scope="LocalVariable" UId="179">
+          <Symbol UId="180">
+            <Component Name="Fertigation" UId="181" />
+            <Token Text="." UId="182" />
+            <Component Name="bOutNutrientA" UId="183">
+              <BooleanAttribute Name="HasHash" UId="184">true</BooleanAttribute>
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="185" />
+      <Blank Num="1" UId="186" />
+      <Parameter Name="InOutUdt" UId="187">
+        <Blank Num="1" UId="188" />
+        <Token Text=":=" UId="189" />
+        <Blank Num="1" UId="190" />
+        <Access Scope="LocalVariable" UId="191">
+          <Symbol UId="192">
+            <Component Name="DQ_NutrientA" UId="193" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="195" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="196" />
+  <NewLine Num="1" UId="197" />
+  <Access Scope="LocalVariable" UId="198">
+    <Symbol UId="199">
+      <Component Name="DQ" UId="200" />
+      <Token Text="." UId="201" />
+      <Component Name="Q_NutrientBEnable" UId="202" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="203" />
+  <Token Text=":=" UId="204" />
+  <Blank Num="1" UId="205" />
+  <Access Scope="Call" UId="206">
+    <CallInfo UId="207" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="209">
+        <Component Name="fcDigitalOutput" UId="208" />
+      </Instance>
+      <Token Text="(" UId="210" />
+      <Parameter Name="bInAutoVal" UId="211">
+        <Blank Num="1" UId="212" />
+        <Token Text=":=" UId="213" />
+        <Blank Num="1" UId="214" />
+        <Access Scope="LocalVariable" UId="215">
+          <Symbol UId="216">
+            <Component Name="Fertigation" UId="217" />
+            <Token Text="." UId="218" />
+            <Component Name="bOutNutrientB" UId="219">
+              <BooleanAttribute Name="HasHash" UId="220">true</BooleanAttribute>
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="221" />
+      <Blank Num="1" UId="222" />
+      <Parameter Name="InOutUdt" UId="223">
+        <Blank Num="1" UId="224" />
+        <Token Text=":=" UId="225" />
+        <Blank Num="1" UId="226" />
+        <Access Scope="LocalVariable" UId="227">
+          <Symbol UId="228">
+            <Component Name="DQ_NutrientB" UId="229" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="231" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="232" />
+  <NewLine Num="1" UId="233" />
+  <Access Scope="LocalVariable" UId="234">
+    <Symbol UId="235">
+      <Component Name="DQ" UId="236" />
+      <Token Text="." UId="237" />
+      <Component Name="Q_NutrientAcidEnable" UId="238" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="239" />
+  <Token Text=":=" UId="240" />
+  <Blank Num="1" UId="241" />
+  <Access Scope="Call" UId="242">
+    <CallInfo UId="243" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="245">
+        <Component Name="fcDigitalOutput" UId="244" />
+      </Instance>
+      <Token Text="(" UId="246" />
+      <Parameter Name="bInAutoVal" UId="247">
+        <Blank Num="1" UId="248" />
+        <Token Text=":=" UId="249" />
+        <Blank Num="1" UId="250" />
+        <Access Scope="LocalVariable" UId="251">
+          <Symbol UId="252">
+            <Component Name="Fertigation" UId="253" />
+            <Token Text="." UId="254" />
+            <Component Name="bOutNutrientAcid" UId="255">
+              <BooleanAttribute Name="HasHash" UId="256">true</BooleanAttribute>
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="257" />
+      <Blank Num="1" UId="258" />
+      <Parameter Name="InOutUdt" UId="259">
+        <Blank Num="1" UId="260" />
+        <Token Text=":=" UId="261" />
+        <Blank Num="1" UId="262" />
+        <Access Scope="LocalVariable" UId="263">
+          <Symbol UId="264">
+            <Component Name="DQ_NutrientAcid" UId="265" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="267" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="268" />
+  <NewLine Num="1" UId="269" />
+  <Access Scope="LocalVariable" UId="270">
+    <Symbol UId="271">
+      <Component Name="DQ" UId="272" />
+      <Token Text="." UId="273" />
+      <Component Name="Q_NutrientMixingPumps" UId="274" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="275" />
+  <Token Text=":=" UId="276" />
+  <Blank Num="1" UId="277" />
+  <Access Scope="Call" UId="278">
+    <CallInfo UId="279" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="281">
+        <Component Name="fcDigitalOutput" UId="280" />
+      </Instance>
+      <Token Text="(" UId="282" />
+      <Parameter Name="bInAutoVal" UId="283">
+        <Blank Num="1" UId="284" />
+        <Token Text=":=" UId="285" />
+        <Blank Num="1" UId="286" />
+        <Access Scope="LocalVariable" UId="287">
+          <Symbol UId="288">
+            <Component Name="Fertigation" UId="289" />
+            <Token Text="." UId="290" />
+            <Component Name="bOutNutrientMixing" UId="291">
+              <BooleanAttribute Name="HasHash" UId="292">true</BooleanAttribute>
+            </Component>
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="293" />
+      <Blank Num="1" UId="294" />
+      <Parameter Name="InOutUdt" UId="295">
+        <Blank Num="1" UId="296" />
+        <Token Text=":=" UId="297" />
+        <Blank Num="1" UId="298" />
+        <Access Scope="LocalVariable" UId="299">
+          <Symbol UId="300">
+            <Component Name="DQ_NutrientMixing" UId="301" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="303" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="304" />
+  <NewLine Num="2" UId="305" />
+  <Access Scope="LocalVariable" UId="306">
+    <Symbol UId="307">
+      <Component Name="DQ" UId="308" />
+      <Token Text="." UId="309" />
+      <Component Name="Q_CO2Solenoid" UId="310" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="311" />
+  <Token Text=":=" UId="312" />
+  <Blank Num="1" UId="313" />
+  <Access Scope="Call" UId="314">
+    <CallInfo UId="315" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="317">
+        <Component Name="fcDigitalOutput" UId="316" />
+      </Instance>
+      <Token Text="(" UId="318" />
+      <Parameter Name="bInAutoVal" UId="319">
+        <Blank Num="1" UId="320" />
+        <Token Text=":=" UId="321" />
+        <Blank Num="1" UId="322" />
+        <Access Scope="LocalVariable" UId="323">
+          <Symbol UId="324">
+            <Component Name="HVAC" UId="325" />
+            <Token Text="." UId="326" />
+            <Component Name="bOutCO2Solenoid" UId="327" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="328" />
+      <Blank Num="1" UId="329" />
+      <Parameter Name="InOutUdt" UId="330">
+        <Blank Num="1" UId="331" />
+        <Token Text=":=" UId="332" />
+        <Blank Num="1" UId="333" />
+        <Access Scope="LocalVariable" UId="334">
+          <Symbol UId="335">
+            <Component Name="DQ_CO2Solenoid" UId="336" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="338" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="339" />
+  <NewLine Num="1" UId="340" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="18" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="19" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="1A" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="1B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Set room-level outputs</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="1C" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="1D" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FB>
+</Document>

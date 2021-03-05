@@ -1,0 +1,1652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2021-03-05T14:22:12.6455613Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FB ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="activeShelf" Datatype="Int" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute></AttributeList></Member>
+    <Member Name="shelfNumber" Datatype="Int" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute></AttributeList></Member>
+    <Member Name="ReservoirLevel" Datatype="Real" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute></AttributeList></Member>
+    <Member Name="RunMode" Datatype="Int" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute></AttributeList></Member>
+  </Section>
+  <Section Name="Output">
+    <Member Name="arrDQ" Datatype="Array[1..&quot;MAX_DQ_SHELF&quot;] of Bool" Remanence="SetInIDB" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute></AttributeList></Member>
+    <Member Name="DQ" Datatype="&quot;udtShelfDQ&quot;"><AttributeList><StringAttribute Name="At" SystemDefined="true">arrDQ</StringAttribute></AttributeList><Sections><Section Name="None"><Member Name="Q_Fill_Solenoid" Datatype="Bool" /><Member Name="Q_Drain_Solenoid" Datatype="Bool" /></Section></Sections></Member>
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Static">
+    <Member Name="Controls" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="Flood_Duration" Datatype="LInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes</MultiLanguageText></Comment><StartValue>1</StartValue></Member><Member Name="Flood_Interval" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes</MultiLanguageText></Comment><StartValue>120</StartValue></Member><Member Name="Last_Flood" Datatype="Date_And_Time"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>DT#2015-01-01-00:00:00</StartValue></Member><Member Name="FillCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="DrainCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="WaterVolumeLimit" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Liters. Max amount of water a shelf can safely hold. If this limit is reached there might be a problem with the level switch (see overfill alarm)</MultiLanguageText></Comment><StartValue>70.0</StartValue></Member><Member Name="TON_Soak" Datatype="TON_TIME" Version="1.0"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_Drain" Datatype="TON_TIME" Version="1.0"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Member>
+    <Member Name="Status" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="Active" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="Filling" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="Soaking" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="Soaking_Finished" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="Draining" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="Finished" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="OverfillAlarm" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member></Member>
+    <Member Name="DQ_Fill_Solenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DQ_Drain_Solenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="DI_Level_Switch" Datatype="&quot;udtDigitalInput&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bStatus" Datatype="Bool" /><Member Name="bNormalPosition" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="iNextStep" Datatype="UInt" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>3</StartValue></Member>
+    <Member Name="InitialReservoirLevel" Datatype="Real" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member>
+  </Section>
+  <Section Name="Temp">
+    <Member Name="ReservoirDelta" Datatype="Real" />
+    <Member Name="i" Datatype="Int" />
+    <Member Name="current_date_time" Datatype="Date_And_Time" />
+    <Member Name="retval" Datatype="Int" />
+    <Member Name="td_diff" Datatype="Time" />
+    <Member Name="minutes_diff" Datatype="LInt" />
+    <Member Name="current_date" Datatype="LDT" />
+    <Member Name="current_time" Datatype="LTime_Of_Day" />
+    <Member Name="shelf_last_date" Datatype="LDT" />
+    <Member Name="day_diff" Datatype="LTime" />
+    <Member Name="shelf_last_time" Datatype="LTime_Of_Day" />
+    <Member Name="flood_time" Datatype="Time" />
+    <Member Name="active_shelves" Datatype="Int" />
+    <Member Name="j" Datatype="Int" />
+  </Section>
+  <Section Name="Constant">
+    <Member Name="drain_time" Datatype="Time" Accessibility="Public">
+      <StartValue>T#300S</StartValue>
+    </Member>
+    <Member Name="eStep_Fill" Datatype="UInt" Accessibility="Public" />
+    <Member Name="eStep_Soak" Datatype="UInt" Accessibility="Public">
+      <StartValue>1</StartValue>
+    </Member>
+    <Member Name="eStep_Drain" Datatype="UInt" Accessibility="Public">
+      <StartValue>2</StartValue>
+    </Member>
+    <Member Name="eStep_Done" Datatype="UInt" Accessibility="Public">
+      <StartValue>3</StartValue>
+    </Member>
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <IsRetainMemResEnabled>false</IsRetainMemResEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>fbShelfFertigation</Name>
+      <Number>5</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <NewLine Num="1" UId="21" />
+  <Token Text="IF" UId="22" />
+  <Blank Num="1" UId="23" />
+  <Access Scope="LocalVariable" UId="24">
+    <Symbol UId="25">
+      <Component Name="RunMode" UId="26" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="27" />
+  <Token Text="=" UId="28" />
+  <Blank Num="1" UId="29" />
+  <Access Scope="LiteralConstant" UId="30">
+    <Constant UId="31">
+      <ConstantValue UId="33">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="34" />
+  <Token Text="THEN" UId="35" />
+  <NewLine Num="1" UId="36" />
+  <Blank Num="4" UId="37" />
+  <Access Scope="LocalVariable" UId="38">
+    <Symbol UId="39">
+      <Component Name="iNextStep" UId="40" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="41" />
+  <Token Text=":=" UId="42" />
+  <Blank Num="1" UId="43" />
+  <Access Scope="LocalConstant" UId="44">
+    <Constant Name="eStep_Done" UId="45" />
+  </Access>
+  <Token Text=";" UId="48" />
+  <NewLine Num="1" UId="49" />
+  <Blank Num="2" UId="50" />
+  <NewLine Num="1" UId="51" />
+  <Token Text="ELSIF" UId="52" />
+  <Blank Num="1" UId="53" />
+  <Access Scope="LocalVariable" UId="54">
+    <Symbol UId="55">
+      <Component Name="RunMode" UId="56" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="57" />
+  <Token Text="=" UId="58" />
+  <Blank Num="1" UId="59" />
+  <Access Scope="LiteralConstant" UId="60">
+    <Constant UId="61">
+      <ConstantValue UId="63">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="64" />
+  <Token Text="THEN" UId="65" />
+  <NewLine Num="1" UId="66" />
+  <Blank Num="4" UId="67" />
+  <Token Text="IF" UId="68" />
+  <Blank Num="1" UId="69" />
+  <Access Scope="LocalVariable" UId="70">
+    <Symbol UId="71">
+      <Component Name="iNextStep" UId="72" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="73" />
+  <Token Text="=" UId="74" />
+  <Blank Num="1" UId="75" />
+  <Access Scope="LocalConstant" UId="76">
+    <Constant Name="eStep_Done" UId="77" />
+  </Access>
+  <Blank Num="1" UId="80" />
+  <Token Text="THEN" UId="81" />
+  <NewLine Num="1" UId="82" />
+  <Blank Num="8" UId="83" />
+  <Token Text="IF" UId="84" />
+  <Blank Num="1" UId="85" />
+  <Access Scope="LocalVariable" UId="86">
+    <Symbol UId="87">
+      <Component Name="activeShelf" UId="88" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="89" />
+  <Token Text="&lt;&gt;" UId="90" />
+  <Blank Num="1" UId="91" />
+  <Access Scope="LocalVariable" UId="92">
+    <Symbol UId="93">
+      <Component Name="shelfNumber" UId="94" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="95" />
+  <Token Text="THEN" UId="96" />
+  <NewLine Num="1" UId="97" />
+  <Blank Num="12" UId="98" />
+  <Access Scope="LocalVariable" UId="99">
+    <Symbol UId="100">
+      <Component Name="iNextStep" UId="101" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="102" />
+  <Token Text=":=" UId="103" />
+  <Blank Num="1" UId="104" />
+  <Access Scope="LocalConstant" UId="105">
+    <Constant Name="eStep_Done" UId="106" />
+  </Access>
+  <Token Text=";" UId="109" />
+  <NewLine Num="1" UId="110" />
+  <Blank Num="8" UId="111" />
+  <Token Text="ELSE" UId="112" />
+  <NewLine Num="1" UId="113" />
+  <Blank Num="12" UId="114" />
+  <Access Scope="LocalVariable" UId="115">
+    <Symbol UId="116">
+      <Component Name="iNextStep" UId="117" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="118" />
+  <Token Text=":=" UId="119" />
+  <Blank Num="1" UId="120" />
+  <Access Scope="LocalConstant" UId="121">
+    <Constant Name="eStep_Fill" UId="122" />
+  </Access>
+  <Token Text=";" UId="125" />
+  <NewLine Num="1" UId="126" />
+  <Blank Num="12" UId="127" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="128">
+    <Text UId="129"> set initial reservoir level for delta calculation below to prevent overfilling shelf</Text>
+  </LineComment>
+  <NewLine Num="1" UId="130" />
+  <Blank Num="12" UId="131" />
+  <Access Scope="LocalVariable" UId="132">
+    <Symbol UId="133">
+      <Component Name="InitialReservoirLevel" UId="134" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="135" />
+  <Token Text=":=" UId="136" />
+  <Blank Num="1" UId="137" />
+  <Access Scope="LocalVariable" UId="138">
+    <Symbol UId="139">
+      <Component Name="ReservoirLevel" UId="140" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="141" />
+  <NewLine Num="1" UId="142" />
+  <Blank Num="8" UId="143" />
+  <Token Text="END_IF" UId="144" />
+  <Token Text=";" UId="145" />
+  <NewLine Num="1" UId="146" />
+  <Blank Num="4" UId="147" />
+  <Token Text="END_IF" UId="148" />
+  <Token Text=";" UId="149" />
+  <NewLine Num="1" UId="150" />
+  <Blank Num="4" UId="151" />
+  <NewLine Num="1" UId="152" />
+  <Blank Num="4" UId="153" />
+  <Token Text="IF" UId="154" />
+  <Blank Num="1" UId="155" />
+  <Token Text="NOT" UId="156" />
+  <Blank Num="1" UId="157" />
+  <Access Scope="LocalVariable" UId="158">
+    <Symbol UId="159">
+      <Component Name="Status" UId="160" />
+      <Token Text="." UId="161" />
+      <Component Name="Active" UId="162" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="163" />
+  <Token Text="THEN" UId="164" />
+  <NewLine Num="1" UId="165" />
+  <Blank Num="8" UId="166" />
+  <Access Scope="LocalVariable" UId="167">
+    <Symbol UId="168">
+      <Component Name="iNextStep" UId="169" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="170" />
+  <Token Text=":=" UId="171" />
+  <Blank Num="1" UId="172" />
+  <Access Scope="LocalConstant" UId="173">
+    <Constant Name="eStep_Done" UId="174" />
+  </Access>
+  <Token Text=";" UId="177" />
+  <NewLine Num="1" UId="178" />
+  <Blank Num="4" UId="179" />
+  <Token Text="END_IF" UId="180" />
+  <Token Text=";" UId="181" />
+  <NewLine Num="1" UId="182" />
+  <Blank Num="4" UId="183" />
+  <NewLine Num="1" UId="184" />
+  <Blank Num="4" UId="185" />
+  <Token Text="REGION" UId="186" />
+  <Blank Num="1" UId="187" />
+  <Text UId="188">0: fill</Text>
+  <NewLine Num="1" UId="189" />
+  <Blank Num="8" UId="190" />
+  <NewLine Num="1" UId="191" />
+  <Blank Num="8" UId="192" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="193">
+    <Text UId="194">stop filling if reservoir drops 70L or more, set a level switch alarm for shelf</Text>
+  </LineComment>
+  <NewLine Num="1" UId="195" />
+  <Blank Num="8" UId="196" />
+  <Access Scope="LocalVariable" UId="197">
+    <Symbol UId="198">
+      <Component Name="ReservoirDelta" UId="199" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="200" />
+  <Token Text=":=" UId="201" />
+  <Blank Num="1" UId="202" />
+  <Access Scope="LocalVariable" UId="203">
+    <Symbol UId="204">
+      <Component Name="InitialReservoirLevel" UId="205" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="206" />
+  <Token Text="-" UId="207" />
+  <Blank Num="1" UId="208" />
+  <Access Scope="LocalVariable" UId="209">
+    <Symbol UId="210">
+      <Component Name="ReservoirLevel" UId="211" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="212" />
+  <NewLine Num="1" UId="213" />
+  <Blank Num="8" UId="214" />
+  <NewLine Num="1" UId="215" />
+  <Blank Num="8" UId="216" />
+  <Token Text="IF" UId="217" />
+  <Blank Num="1" UId="218" />
+  <Access Scope="LocalVariable" UId="219">
+    <Symbol UId="220">
+      <Component Name="ReservoirDelta" UId="221" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="222" />
+  <Token Text="&gt;=" UId="223" />
+  <Blank Num="1" UId="224" />
+  <Access Scope="LocalVariable" UId="225">
+    <Symbol UId="226">
+      <Component Name="Controls" UId="227" />
+      <Token Text="." UId="228" />
+      <Component Name="WaterVolumeLimit" UId="229" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="230" />
+  <Token Text="THEN" UId="231" />
+  <NewLine Num="1" UId="232" />
+  <Blank Num="12" UId="233" />
+  <Access Scope="LocalVariable" UId="234">
+    <Symbol UId="235">
+      <Component Name="Status" UId="236" />
+      <Token Text="." UId="237" />
+      <Component Name="Filling" UId="238" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="239" />
+  <Token Text=":=" UId="240" />
+  <Blank Num="1" UId="241" />
+  <Access Scope="LiteralConstant" UId="242">
+    <Constant UId="243">
+      <ConstantValue UId="245">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="246" />
+  <NewLine Num="1" UId="247" />
+  <Blank Num="12" UId="248" />
+  <Access Scope="LocalVariable" UId="249">
+    <Symbol UId="250">
+      <Component Name="Controls" UId="251" />
+      <Token Text="." UId="252" />
+      <Component Name="FillCommand" UId="253" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="254" />
+  <Token Text=":=" UId="255" />
+  <Blank Num="1" UId="256" />
+  <Access Scope="LiteralConstant" UId="257">
+    <Constant UId="258">
+      <ConstantValue UId="260">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="261" />
+  <NewLine Num="1" UId="262" />
+  <Blank Num="12" UId="263" />
+  <Access Scope="LocalVariable" UId="264">
+    <Symbol UId="265">
+      <Component Name="iNextStep" UId="266" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="267" />
+  <Token Text=":=" UId="268" />
+  <Blank Num="1" UId="269" />
+  <Access Scope="LocalConstant" UId="270">
+    <Constant Name="eStep_Soak" UId="271" />
+  </Access>
+  <Token Text=";" UId="274" />
+  <NewLine Num="1" UId="275" />
+  <Blank Num="12" UId="276" />
+  <Access Scope="LocalVariable" UId="277">
+    <Symbol UId="278">
+      <Component Name="Status" UId="279" />
+      <Token Text="." UId="280" />
+      <Component Name="OverfillAlarm" UId="281" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="282" />
+  <Token Text=":=" UId="283" />
+  <Blank Num="1" UId="284" />
+  <Access Scope="LiteralConstant" UId="285">
+    <Constant UId="286">
+      <ConstantValue UId="288">True</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="289" />
+  <NewLine Num="1" UId="290" />
+  <Blank Num="8" UId="291" />
+  <Token Text="END_IF" UId="292" />
+  <Token Text=";" UId="293" />
+  <NewLine Num="1" UId="294" />
+  <Blank Num="8" UId="295" />
+  <NewLine Num="1" UId="296" />
+  <Blank Num="8" UId="297" />
+  <Token Text="IF" UId="298" />
+  <Blank Num="1" UId="299" />
+  <Access Scope="LocalVariable" UId="300">
+    <Symbol UId="301">
+      <Component Name="iNextStep" UId="302" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="303" />
+  <Token Text="=" UId="304" />
+  <Blank Num="1" UId="305" />
+  <Access Scope="LocalConstant" UId="306">
+    <Constant Name="eStep_Fill" UId="307" />
+  </Access>
+  <Blank Num="1" UId="310" />
+  <Token Text="THEN" UId="311" />
+  <NewLine Num="1" UId="312" />
+  <Blank Num="12" UId="313" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="314">
+    <Text UId="315"> while the level switch is in its normal position, fill </Text>
+  </LineComment>
+  <NewLine Num="1" UId="316" />
+  <Blank Num="12" UId="317" />
+  <Token Text="IF" UId="318" />
+  <Blank Num="1" UId="319" />
+  <Token Text="(" UId="320" />
+  <Access Scope="LocalVariable" UId="321">
+    <Symbol UId="322">
+      <Component Name="DI_Level_Switch" UId="323" />
+      <Token Text="." UId="324" />
+      <Component Name="bStatus" UId="325" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="326" />
+  <Token Text="=" UId="327" />
+  <Blank Num="1" UId="328" />
+  <Access Scope="LocalVariable" UId="329">
+    <Symbol UId="330">
+      <Component Name="DI_Level_Switch" UId="331" />
+      <Token Text="." UId="332" />
+      <Component Name="bNormalPosition" UId="333" />
+    </Symbol>
+  </Access>
+  <Token Text=")" UId="334" />
+  <Blank Num="1" UId="335" />
+  <Token Text="THEN" UId="336" />
+  <NewLine Num="1" UId="337" />
+  <Blank Num="16" UId="338" />
+  <Access Scope="LocalVariable" UId="339">
+    <Symbol UId="340">
+      <Component Name="Status" UId="341" />
+      <Token Text="." UId="342" />
+      <Component Name="Filling" UId="343" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="344" />
+  <Token Text=":=" UId="345" />
+  <Blank Num="1" UId="346" />
+  <Access Scope="LiteralConstant" UId="347">
+    <Constant UId="348">
+      <ConstantValue UId="350">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="351" />
+  <NewLine Num="1" UId="352" />
+  <Blank Num="16" UId="353" />
+  <Access Scope="LocalVariable" UId="354">
+    <Symbol UId="355">
+      <Component Name="Controls" UId="356" />
+      <Token Text="." UId="357" />
+      <Component Name="FillCommand" UId="358" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="359" />
+  <Token Text=":=" UId="360" />
+  <Blank Num="1" UId="361" />
+  <Access Scope="LiteralConstant" UId="362">
+    <Constant UId="363">
+      <ConstantValue UId="365">True</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="366" />
+  <NewLine Num="1" UId="367" />
+  <Blank Num="12" UId="368" />
+  <Token Text="ELSIF" UId="369" />
+  <Blank Num="1" UId="370" />
+  <Token Text="(" UId="371" />
+  <Access Scope="LocalVariable" UId="372">
+    <Symbol UId="373">
+      <Component Name="DI_Level_Switch" UId="374" />
+      <Token Text="." UId="375" />
+      <Component Name="bStatus" UId="376" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="377" />
+  <Token Text="&lt;&gt;" UId="378" />
+  <Blank Num="1" UId="379" />
+  <Access Scope="LocalVariable" UId="380">
+    <Symbol UId="381">
+      <Component Name="DI_Level_Switch" UId="382" />
+      <Token Text="." UId="383" />
+      <Component Name="bNormalPosition" UId="384" />
+    </Symbol>
+  </Access>
+  <Token Text=")" UId="385" />
+  <Blank Num="1" UId="386" />
+  <Token Text="THEN" UId="387" />
+  <NewLine Num="1" UId="388" />
+  <Blank Num="16" UId="389" />
+  <Access Scope="LocalVariable" UId="390">
+    <Symbol UId="391">
+      <Component Name="Status" UId="392" />
+      <Token Text="." UId="393" />
+      <Component Name="Filling" UId="394" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="395" />
+  <Token Text=":=" UId="396" />
+  <Blank Num="1" UId="397" />
+  <Access Scope="LiteralConstant" UId="398">
+    <Constant UId="399">
+      <ConstantValue UId="401">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="402" />
+  <NewLine Num="1" UId="403" />
+  <Blank Num="16" UId="404" />
+  <Access Scope="LocalVariable" UId="405">
+    <Symbol UId="406">
+      <Component Name="Controls" UId="407" />
+      <Token Text="." UId="408" />
+      <Component Name="FillCommand" UId="409" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="410" />
+  <Token Text=":=" UId="411" />
+  <Blank Num="1" UId="412" />
+  <Access Scope="LiteralConstant" UId="413">
+    <Constant UId="414">
+      <ConstantValue UId="416">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="417" />
+  <NewLine Num="1" UId="418" />
+  <Blank Num="16" UId="419" />
+  <Access Scope="LocalVariable" UId="420">
+    <Symbol UId="421">
+      <Component Name="iNextStep" UId="422" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="423" />
+  <Token Text=":=" UId="424" />
+  <Blank Num="1" UId="425" />
+  <Access Scope="LocalConstant" UId="426">
+    <Constant Name="eStep_Soak" UId="427" />
+  </Access>
+  <Token Text=";" UId="430" />
+  <NewLine Num="1" UId="431" />
+  <Blank Num="12" UId="432" />
+  <Token Text="END_IF" UId="433" />
+  <Token Text=";" UId="434" />
+  <NewLine Num="1" UId="435" />
+  <Blank Num="8" UId="436" />
+  <Token Text="END_IF" UId="437" />
+  <Token Text=";" UId="438" />
+  <NewLine Num="1" UId="439" />
+  <Blank Num="4" UId="440" />
+  <Token Text="END_REGION" UId="441" />
+  <NewLine Num="1" UId="442" />
+  <Blank Num="4" UId="443" />
+  <NewLine Num="1" UId="444" />
+  <Blank Num="4" UId="445" />
+  <NewLine Num="1" UId="446" />
+  <Blank Num="4" UId="447" />
+  <Token Text="REGION" UId="448" />
+  <Blank Num="1" UId="449" />
+  <Text UId="450">1: Soak</Text>
+  <NewLine Num="1" UId="451" />
+  <Blank Num="8" UId="452" />
+  <Access Scope="LocalVariable" UId="453">
+    <Symbol UId="454">
+      <Component Name="flood_time" UId="455" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="456" />
+  <Token Text=":=" UId="457" />
+  <Blank Num="1" UId="458" />
+  <Access Scope="Call" UId="459">
+    <Instruction Name="LINT_TO_TIME" UId="460">
+      <Token Text="(" UId="461" />
+      <NamelessParameter UId="462">
+        <Access Scope="LocalVariable" UId="463">
+          <Symbol UId="464">
+            <Component Name="Controls" UId="465" />
+            <Token Text="." UId="466" />
+            <Component Name="Flood_Duration" UId="467" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="468" />
+        <Token Text="*" UId="469" />
+        <Blank Num="1" UId="470" />
+        <Access Scope="LiteralConstant" UId="471">
+          <Constant UId="472">
+            <ConstantValue UId="474">60000</ConstantValue>
+          </Constant>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="476" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="477" />
+  <NewLine Num="1" UId="478" />
+  <Blank Num="8" UId="479" />
+  <Access Scope="LocalVariable" UId="480">
+    <Symbol UId="481">
+      <Component Name="Controls" UId="482" />
+      <Token Text="." UId="483" />
+      <Component Name="TON_Soak" UId="484" />
+    </Symbol>
+  </Access>
+  <Access Scope="Call" UId="485">
+    <Instruction UId="486">
+      <Token Text="(" UId="487" />
+      <Parameter Name="IN" UId="488">
+        <Blank Num="1" UId="489" />
+        <Token Text=":=" UId="490" />
+        <Blank Num="1" UId="491" />
+        <Token Text="(" UId="492" />
+        <Access Scope="LocalVariable" UId="493">
+          <Symbol UId="494">
+            <Component Name="iNextStep" UId="495" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="496" />
+        <Token Text="=" UId="497" />
+        <Blank Num="1" UId="498" />
+        <Access Scope="LocalConstant" UId="499">
+          <Constant Name="eStep_Soak" UId="500" />
+        </Access>
+        <Token Text=")" UId="503" />
+      </Parameter>
+      <Token Text="," UId="504" />
+      <NewLine Num="1" UId="505" />
+      <Blank Num="27" UId="506" />
+      <Parameter Name="PT" UId="507">
+        <Blank Num="1" UId="508" />
+        <Token Text=":=" UId="509" />
+        <Blank Num="1" UId="510" />
+        <Access Scope="LocalVariable" UId="511">
+          <Symbol UId="512">
+            <Component Name="flood_time" UId="513" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="514" />
+      <NewLine Num="1" UId="515" />
+      <Blank Num="27" UId="516" />
+      <Parameter Name="Q" UId="517">
+        <Blank Num="1" UId="518" />
+        <Token Text="=&gt;" UId="519" />
+        <Blank Num="1" UId="520" />
+        <Access Scope="LocalVariable" UId="521">
+          <Symbol UId="522">
+            <Component Name="Status" UId="523" />
+            <Token Text="." UId="524" />
+            <Component Name="Soaking_Finished" UId="525" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="526" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="527" />
+  <NewLine Num="1" UId="528" />
+  <Blank Num="8" UId="529" />
+  <NewLine Num="1" UId="530" />
+  <Blank Num="8" UId="531" />
+  <Token Text="IF" UId="532" />
+  <Blank Num="1" UId="533" />
+  <Access Scope="LocalVariable" UId="534">
+    <Symbol UId="535">
+      <Component Name="iNextStep" UId="536" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="537" />
+  <Token Text="=" UId="538" />
+  <Blank Num="1" UId="539" />
+  <Access Scope="LocalConstant" UId="540">
+    <Constant Name="eStep_Soak" UId="541" />
+  </Access>
+  <Blank Num="1" UId="544" />
+  <Token Text="THEN" UId="545" />
+  <NewLine Num="1" UId="546" />
+  <Blank Num="12" UId="547" />
+  <Access Scope="LocalVariable" UId="548">
+    <Symbol UId="549">
+      <Component Name="Status" UId="550" />
+      <Token Text="." UId="551" />
+      <Component Name="Soaking" UId="552" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="553" />
+  <Token Text=":=" UId="554" />
+  <Blank Num="1" UId="555" />
+  <Access Scope="LiteralConstant" UId="556">
+    <Constant UId="557">
+      <ConstantValue UId="559">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="560" />
+  <NewLine Num="1" UId="561" />
+  <Blank Num="12" UId="562" />
+  <Token Text="IF" UId="563" />
+  <Blank Num="1" UId="564" />
+  <Access Scope="LocalVariable" UId="565">
+    <Symbol UId="566">
+      <Component Name="Status" UId="567" />
+      <Token Text="." UId="568" />
+      <Component Name="Soaking_Finished" UId="569" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="570" />
+  <Token Text="THEN" UId="571" />
+  <NewLine Num="1" UId="572" />
+  <Blank Num="16" UId="573" />
+  <Access Scope="LocalVariable" UId="574">
+    <Symbol UId="575">
+      <Component Name="Status" UId="576" />
+      <Token Text="." UId="577" />
+      <Component Name="Soaking" UId="578" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="579" />
+  <Token Text=":=" UId="580" />
+  <Blank Num="1" UId="581" />
+  <Access Scope="LiteralConstant" UId="582">
+    <Constant UId="583">
+      <ConstantValue UId="585">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="586" />
+  <Blank Num="1" UId="587" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="588">
+    <Text UId="589">reset flood TON</Text>
+  </LineComment>
+  <NewLine Num="1" UId="590" />
+  <Blank Num="16" UId="591" />
+  <Access Scope="LocalVariable" UId="592">
+    <Symbol UId="593">
+      <Component Name="iNextStep" UId="594" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="595" />
+  <Token Text=":=" UId="596" />
+  <Blank Num="1" UId="597" />
+  <Access Scope="LocalConstant" UId="598">
+    <Constant Name="eStep_Drain" UId="599" />
+  </Access>
+  <Token Text=";" UId="602" />
+  <NewLine Num="1" UId="603" />
+  <Blank Num="12" UId="604" />
+  <Token Text="END_IF" UId="605" />
+  <Token Text=";" UId="606" />
+  <NewLine Num="1" UId="607" />
+  <Blank Num="8" UId="608" />
+  <Token Text="END_IF" UId="609" />
+  <Token Text=";" UId="610" />
+  <NewLine Num="1" UId="611" />
+  <Blank Num="4" UId="612" />
+  <Token Text="END_REGION" UId="613" />
+  <NewLine Num="1" UId="614" />
+  <Blank Num="4" UId="615" />
+  <NewLine Num="1" UId="616" />
+  <Blank Num="4" UId="617" />
+  <NewLine Num="1" UId="618" />
+  <Blank Num="4" UId="619" />
+  <Token Text="REGION" UId="620" />
+  <Blank Num="1" UId="621" />
+  <Text UId="622">2: drain</Text>
+  <NewLine Num="1" UId="623" />
+  <Blank Num="8" UId="624" />
+  <Access Scope="LocalVariable" UId="625">
+    <Symbol UId="626">
+      <Component Name="Controls" UId="627" />
+      <Token Text="." UId="628" />
+      <Component Name="TON_Drain" UId="629" />
+    </Symbol>
+  </Access>
+  <Access Scope="Call" UId="630">
+    <Instruction UId="631">
+      <Token Text="(" UId="632" />
+      <Parameter Name="IN" UId="633">
+        <Blank Num="1" UId="634" />
+        <Token Text=":=" UId="635" />
+        <Blank Num="1" UId="636" />
+        <Token Text="(" UId="637" />
+        <Access Scope="LocalVariable" UId="638">
+          <Symbol UId="639">
+            <Component Name="iNextStep" UId="640" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="641" />
+        <Token Text="=" UId="642" />
+        <Blank Num="1" UId="643" />
+        <Access Scope="LocalConstant" UId="644">
+          <Constant Name="eStep_Drain" UId="645" />
+        </Access>
+        <Token Text=")" UId="648" />
+      </Parameter>
+      <Token Text="," UId="649" />
+      <NewLine Num="1" UId="650" />
+      <Blank Num="28" UId="651" />
+      <Parameter Name="PT" UId="652">
+        <Blank Num="1" UId="653" />
+        <Token Text=":=" UId="654" />
+        <Blank Num="1" UId="655" />
+        <Access Scope="LocalConstant" UId="656">
+          <Constant Name="drain_time" UId="657" />
+        </Access>
+      </Parameter>
+      <Token Text="," UId="660" />
+      <NewLine Num="1" UId="661" />
+      <Blank Num="28" UId="662" />
+      <Parameter Name="Q" UId="663">
+        <Blank Num="1" UId="664" />
+        <Token Text="=&gt;" UId="665" />
+        <Blank Num="1" UId="666" />
+        <Access Scope="LocalVariable" UId="667">
+          <Symbol UId="668">
+            <Component Name="Status" UId="669" />
+            <Token Text="." UId="670" />
+            <Component Name="Finished" UId="671" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="672" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="673" />
+  <NewLine Num="1" UId="674" />
+  <Blank Num="8" UId="675" />
+  <NewLine Num="1" UId="676" />
+  <Blank Num="8" UId="677" />
+  <Token Text="IF" UId="678" />
+  <Blank Num="1" UId="679" />
+  <Access Scope="LocalVariable" UId="680">
+    <Symbol UId="681">
+      <Component Name="iNextStep" UId="682" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="683" />
+  <Token Text="=" UId="684" />
+  <Blank Num="1" UId="685" />
+  <Access Scope="LocalConstant" UId="686">
+    <Constant Name="eStep_Drain" UId="687" />
+  </Access>
+  <Blank Num="1" UId="690" />
+  <Token Text="THEN" UId="691" />
+  <NewLine Num="1" UId="692" />
+  <Blank Num="12" UId="693" />
+  <Access Scope="LocalVariable" UId="694">
+    <Symbol UId="695">
+      <Component Name="Status" UId="696" />
+      <Token Text="." UId="697" />
+      <Component Name="Draining" UId="698" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="699" />
+  <Token Text=":=" UId="700" />
+  <Blank Num="1" UId="701" />
+  <Access Scope="LiteralConstant" UId="702">
+    <Constant UId="703">
+      <ConstantValue UId="705">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="706" />
+  <NewLine Num="1" UId="707" />
+  <Blank Num="12" UId="708" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="709">
+    <Text UId="710">open drain solenoid</Text>
+  </LineComment>
+  <NewLine Num="1" UId="711" />
+  <Blank Num="12" UId="712" />
+  <Access Scope="LocalVariable" UId="713">
+    <Symbol UId="714">
+      <Component Name="Controls" UId="715" />
+      <Token Text="." UId="716" />
+      <Component Name="DrainCommand" UId="717" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="718" />
+  <Token Text=":=" UId="719" />
+  <Blank Num="1" UId="720" />
+  <Access Scope="LiteralConstant" UId="721">
+    <Constant UId="722">
+      <ConstantValue UId="724">TRUE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="725" />
+  <NewLine Num="1" UId="726" />
+  <Blank Num="12" UId="727" />
+  <NewLine Num="1" UId="728" />
+  <Blank Num="12" UId="729" />
+  <Token Text="IF" UId="730" />
+  <Blank Num="1" UId="731" />
+  <Access Scope="LocalVariable" UId="732">
+    <Symbol UId="733">
+      <Component Name="Status" UId="734" />
+      <Token Text="." UId="735" />
+      <Component Name="Finished" UId="736" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="737" />
+  <Token Text="THEN" UId="738" />
+  <NewLine Num="1" UId="739" />
+  <Blank Num="16" UId="740" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="741">
+    <Text UId="742">close drain solenoid</Text>
+  </LineComment>
+  <NewLine Num="1" UId="743" />
+  <Blank Num="16" UId="744" />
+  <Access Scope="LocalVariable" UId="745">
+    <Symbol UId="746">
+      <Component Name="Controls" UId="747" />
+      <Token Text="." UId="748" />
+      <Component Name="DrainCommand" UId="749" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="750" />
+  <Token Text=":=" UId="751" />
+  <Blank Num="1" UId="752" />
+  <Access Scope="LiteralConstant" UId="753">
+    <Constant UId="754">
+      <ConstantValue UId="756">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="757" />
+  <NewLine Num="1" UId="758" />
+  <Blank Num="16" UId="759" />
+  <Access Scope="LocalVariable" UId="760">
+    <Symbol UId="761">
+      <Component Name="Status" UId="762" />
+      <Token Text="." UId="763" />
+      <Component Name="Draining" UId="764" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="765" />
+  <Token Text=":=" UId="766" />
+  <Blank Num="1" UId="767" />
+  <Access Scope="LiteralConstant" UId="768">
+    <Constant UId="769">
+      <ConstantValue UId="771">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="772" />
+  <Blank Num="1" UId="773" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="774">
+    <Text UId="775"> reset drain TON</Text>
+  </LineComment>
+  <NewLine Num="1" UId="776" />
+  <Blank Num="16" UId="777" />
+  <Access Scope="LocalVariable" UId="778">
+    <Symbol UId="779">
+      <Component Name="Status" UId="780" />
+      <Token Text="." UId="781" />
+      <Component Name="Soaking_Finished" UId="782" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="783" />
+  <Token Text=":=" UId="784" />
+  <Blank Num="1" UId="785" />
+  <Access Scope="LiteralConstant" UId="786">
+    <Constant UId="787">
+      <ConstantValue UId="789">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="790" />
+  <NewLine Num="1" UId="791" />
+  <Blank Num="16" UId="792" />
+  <Access Scope="LocalVariable" UId="793">
+    <Symbol UId="794">
+      <Component Name="retval" UId="795" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="796" />
+  <Token Text=":=" UId="797" />
+  <Blank Num="1" UId="798" />
+  <Access Scope="Call" UId="799">
+    <Instruction Name="RD_LOC_T" UId="800">
+      <Token Text="(" UId="801" />
+      <NamelessParameter UId="802">
+        <Access Scope="LocalVariable" UId="803">
+          <Symbol UId="804">
+            <Component Name="Controls" UId="805" />
+            <Token Text="." UId="806" />
+            <Component Name="Last_Flood" UId="807" />
+          </Symbol>
+        </Access>
+      </NamelessParameter>
+      <Token Text=")" UId="809" />
+    </Instruction>
+  </Access>
+  <Token Text=";" UId="810" />
+  <NewLine Num="1" UId="811" />
+  <Blank Num="16" UId="812" />
+  <Access Scope="LocalVariable" UId="813">
+    <Symbol UId="814">
+      <Component Name="iNextStep" UId="815" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="816" />
+  <Token Text=":=" UId="817" />
+  <Blank Num="1" UId="818" />
+  <Access Scope="LocalConstant" UId="819">
+    <Constant Name="eStep_Done" UId="820" />
+  </Access>
+  <Token Text=";" UId="823" />
+  <NewLine Num="1" UId="824" />
+  <Blank Num="12" UId="825" />
+  <Token Text="END_IF" UId="826" />
+  <Token Text=";" UId="827" />
+  <NewLine Num="1" UId="828" />
+  <Blank Num="12" UId="829" />
+  <NewLine Num="1" UId="830" />
+  <Blank Num="8" UId="831" />
+  <Token Text="END_IF" UId="832" />
+  <Token Text=";" UId="833" />
+  <NewLine Num="1" UId="834" />
+  <Blank Num="4" UId="835" />
+  <Token Text="END_REGION" UId="836" />
+  <NewLine Num="1" UId="837" />
+  <Blank Num="4" UId="838" />
+  <NewLine Num="1" UId="839" />
+  <Token Text="ELSIF" UId="840" />
+  <Blank Num="1" UId="841" />
+  <Access Scope="LocalVariable" UId="842">
+    <Symbol UId="843">
+      <Component Name="RunMode" UId="844" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="845" />
+  <Token Text="=" UId="846" />
+  <Blank Num="1" UId="847" />
+  <Access Scope="LiteralConstant" UId="848">
+    <Constant UId="849">
+      <ConstantValue UId="851">3</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="852" />
+  <Token Text="THEN" UId="853" />
+  <Blank Num="1" UId="854" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="855">
+    <Text UId="856">discharge</Text>
+  </LineComment>
+  <NewLine Num="1" UId="857" />
+  <Blank Num="4" UId="858" />
+  <Token Text="IF" UId="859" />
+  <Blank Num="1" UId="860" />
+  <Access Scope="LocalVariable" UId="861">
+    <Symbol UId="862">
+      <Component Name="Status" UId="863" />
+      <Token Text="." UId="864" />
+      <Component Name="Active" UId="865" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="866" />
+  <Token Text="AND" UId="867" />
+  <Blank Num="1" UId="868" />
+  <Access Scope="LocalVariable" UId="869">
+    <Symbol UId="870">
+      <Component Name="activeShelf" UId="871" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="872" />
+  <Token Text="=" UId="873" />
+  <Blank Num="1" UId="874" />
+  <Access Scope="LocalVariable" UId="875">
+    <Symbol UId="876">
+      <Component Name="shelfNumber" UId="877" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="878" />
+  <Token Text="THEN" UId="879" />
+  <NewLine Num="1" UId="880" />
+  <Blank Num="8" UId="881" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="882">
+    <Text UId="883"> drain active shelf while rack is in discharge mode </Text>
+  </LineComment>
+  <NewLine Num="1" UId="884" />
+  <Blank Num="8" UId="885" />
+  <Access Scope="LocalVariable" UId="886">
+    <Symbol UId="887">
+      <Component Name="Controls" UId="888" />
+      <Token Text="." UId="889" />
+      <Component Name="FillCommand" UId="890" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="891" />
+  <Token Text=":=" UId="892" />
+  <Blank Num="1" UId="893" />
+  <Access Scope="LiteralConstant" UId="894">
+    <Constant UId="895">
+      <ConstantValue UId="897">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="898" />
+  <NewLine Num="1" UId="899" />
+  <Blank Num="8" UId="900" />
+  <Access Scope="LocalVariable" UId="901">
+    <Symbol UId="902">
+      <Component Name="Controls" UId="903" />
+      <Token Text="." UId="904" />
+      <Component Name="DrainCommand" UId="905" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="906" />
+  <Token Text=":=" UId="907" />
+  <Blank Num="1" UId="908" />
+  <Access Scope="LiteralConstant" UId="909">
+    <Constant UId="910">
+      <ConstantValue UId="912">TRUE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="913" />
+  <NewLine Num="1" UId="914" />
+  <Blank Num="8" UId="915" />
+  <Access Scope="LocalVariable" UId="916">
+    <Symbol UId="917">
+      <Component Name="Status" UId="918" />
+      <Token Text="." UId="919" />
+      <Component Name="Filling" UId="920" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="921" />
+  <Token Text=":=" UId="922" />
+  <Blank Num="1" UId="923" />
+  <Access Scope="LiteralConstant" UId="924">
+    <Constant UId="925">
+      <ConstantValue UId="927">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="928" />
+  <NewLine Num="1" UId="929" />
+  <Blank Num="8" UId="930" />
+  <Access Scope="LocalVariable" UId="931">
+    <Symbol UId="932">
+      <Component Name="Status" UId="933" />
+      <Token Text="." UId="934" />
+      <Component Name="Soaking" UId="935" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="936" />
+  <Token Text=":=" UId="937" />
+  <Blank Num="1" UId="938" />
+  <Access Scope="LiteralConstant" UId="939">
+    <Constant UId="940">
+      <ConstantValue UId="942">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="943" />
+  <NewLine Num="1" UId="944" />
+  <Blank Num="8" UId="945" />
+  <Access Scope="LocalVariable" UId="946">
+    <Symbol UId="947">
+      <Component Name="Status" UId="948" />
+      <Token Text="." UId="949" />
+      <Component Name="Soaking_Finished" UId="950" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="951" />
+  <Token Text=":=" UId="952" />
+  <Blank Num="1" UId="953" />
+  <Access Scope="LiteralConstant" UId="954">
+    <Constant UId="955">
+      <ConstantValue UId="957">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="958" />
+  <NewLine Num="1" UId="959" />
+  <Blank Num="8" UId="960" />
+  <Access Scope="LocalVariable" UId="961">
+    <Symbol UId="962">
+      <Component Name="Status" UId="963" />
+      <Token Text="." UId="964" />
+      <Component Name="Draining" UId="965" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="966" />
+  <Token Text=":=" UId="967" />
+  <Blank Num="1" UId="968" />
+  <Access Scope="LiteralConstant" UId="969">
+    <Constant UId="970">
+      <ConstantValue UId="972">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="973" />
+  <NewLine Num="1" UId="974" />
+  <Blank Num="4" UId="975" />
+  <Token Text="ELSE" UId="976" />
+  <NewLine Num="1" UId="977" />
+  <Blank Num="8" UId="978" />
+  <Access Scope="LocalVariable" UId="979">
+    <Symbol UId="980">
+      <Component Name="iNextStep" UId="981" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="982" />
+  <Token Text=":=" UId="983" />
+  <Blank Num="1" UId="984" />
+  <Access Scope="LocalConstant" UId="985">
+    <Constant Name="eStep_Done" UId="986" />
+  </Access>
+  <Token Text=";" UId="989" />
+  <NewLine Num="1" UId="990" />
+  <Blank Num="4" UId="991" />
+  <Token Text="END_IF" UId="992" />
+  <Token Text=";" UId="993" />
+  <NewLine Num="1" UId="994" />
+  <Blank Num="4" UId="995" />
+  <NewLine Num="1" UId="996" />
+  <Token Text="END_IF" UId="997" />
+  <Token Text=";" UId="998" />
+  <NewLine Num="2" UId="999" />
+  <Token Text="REGION" UId="1000" />
+  <Blank Num="1" UId="1001" />
+  <Text UId="1002">3: Done</Text>
+  <NewLine Num="1" UId="1003" />
+  <Blank Num="4" UId="1004" />
+  <Token Text="IF" UId="1005" />
+  <Blank Num="1" UId="1006" />
+  <Access Scope="LocalVariable" UId="1007">
+    <Symbol UId="1008">
+      <Component Name="iNextStep" UId="1009" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1010" />
+  <Token Text="=" UId="1011" />
+  <Blank Num="1" UId="1012" />
+  <Access Scope="LocalConstant" UId="1013">
+    <Constant Name="eStep_Done" UId="1014" />
+  </Access>
+  <Blank Num="1" UId="1017" />
+  <Token Text="THEN" UId="1018" />
+  <NewLine Num="1" UId="1019" />
+  <Blank Num="8" UId="1020" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="1021">
+    <Text UId="1022"> set these here in case shelf deactivated mid-operation</Text>
+  </LineComment>
+  <NewLine Num="1" UId="1023" />
+  <Blank Num="8" UId="1024" />
+  <Access Scope="LocalVariable" UId="1025">
+    <Symbol UId="1026">
+      <Component Name="Controls" UId="1027" />
+      <Token Text="." UId="1028" />
+      <Component Name="FillCommand" UId="1029" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1030" />
+  <Token Text=":=" UId="1031" />
+  <Blank Num="1" UId="1032" />
+  <Access Scope="LiteralConstant" UId="1033">
+    <Constant UId="1034">
+      <ConstantValue UId="1036">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1037" />
+  <NewLine Num="1" UId="1038" />
+  <Blank Num="8" UId="1039" />
+  <Access Scope="LocalVariable" UId="1040">
+    <Symbol UId="1041">
+      <Component Name="Controls" UId="1042" />
+      <Token Text="." UId="1043" />
+      <Component Name="DrainCommand" UId="1044" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1045" />
+  <Token Text=":=" UId="1046" />
+  <Blank Num="1" UId="1047" />
+  <Access Scope="LiteralConstant" UId="1048">
+    <Constant UId="1049">
+      <ConstantValue UId="1051">FALSE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1052" />
+  <NewLine Num="1" UId="1053" />
+  <Blank Num="8" UId="1054" />
+  <Token Text="IF" UId="1055" />
+  <Blank Num="1" UId="1056" />
+  <Token Text="(" UId="1057" />
+  <Access Scope="LocalVariable" UId="1058">
+    <Symbol UId="1059">
+      <Component Name="Status" UId="1060" />
+      <Token Text="." UId="1061" />
+      <Component Name="Filling" UId="1062" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1063" />
+  <Token Text="OR" UId="1064" />
+  <Blank Num="1" UId="1065" />
+  <Access Scope="LocalVariable" UId="1066">
+    <Symbol UId="1067">
+      <Component Name="Status" UId="1068" />
+      <Token Text="." UId="1069" />
+      <Component Name="Soaking" UId="1070" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1071" />
+  <Token Text="OR" UId="1072" />
+  <Blank Num="1" UId="1073" />
+  <Access Scope="LocalVariable" UId="1074">
+    <Symbol UId="1075">
+      <Component Name="Status" UId="1076" />
+      <Token Text="." UId="1077" />
+      <Component Name="Draining" UId="1078" />
+    </Symbol>
+  </Access>
+  <Token Text=")" UId="1079" />
+  <Blank Num="1" UId="1080" />
+  <Token Text="AND" UId="1081" />
+  <Blank Num="1" UId="1082" />
+  <Access Scope="LocalVariable" UId="1083">
+    <Symbol UId="1084">
+      <Component Name="activeShelf" UId="1085" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1086" />
+  <Token Text="=" UId="1087" />
+  <Blank Num="1" UId="1088" />
+  <Access Scope="LocalVariable" UId="1089">
+    <Symbol UId="1090">
+      <Component Name="shelfNumber" UId="1091" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1092" />
+  <Token Text="THEN" UId="1093" />
+  <NewLine Num="1" UId="1094" />
+  <Blank Num="12" UId="1095" />
+  <Access Scope="LocalVariable" UId="1096">
+    <Symbol UId="1097">
+      <Component Name="Status" UId="1098" />
+      <Token Text="." UId="1099" />
+      <Component Name="Finished" UId="1100" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1101" />
+  <Token Text=":=" UId="1102" />
+  <Blank Num="1" UId="1103" />
+  <Access Scope="LiteralConstant" UId="1104">
+    <Constant UId="1105">
+      <ConstantValue UId="1107">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1108" />
+  <NewLine Num="1" UId="1109" />
+  <Blank Num="8" UId="1110" />
+  <Token Text="END_IF" UId="1111" />
+  <Token Text=";" UId="1112" />
+  <NewLine Num="1" UId="1113" />
+  <Blank Num="8" UId="1114" />
+  <Access Scope="LocalVariable" UId="1115">
+    <Symbol UId="1116">
+      <Component Name="Status" UId="1117" />
+      <Token Text="." UId="1118" />
+      <Component Name="Filling" UId="1119" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1120" />
+  <Token Text=":=" UId="1121" />
+  <Blank Num="1" UId="1122" />
+  <Access Scope="LiteralConstant" UId="1123">
+    <Constant UId="1124">
+      <ConstantValue UId="1126">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1127" />
+  <NewLine Num="1" UId="1128" />
+  <Blank Num="8" UId="1129" />
+  <Access Scope="LocalVariable" UId="1130">
+    <Symbol UId="1131">
+      <Component Name="Status" UId="1132" />
+      <Token Text="." UId="1133" />
+      <Component Name="Soaking" UId="1134" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1135" />
+  <Token Text=":=" UId="1136" />
+  <Blank Num="1" UId="1137" />
+  <Access Scope="LiteralConstant" UId="1138">
+    <Constant UId="1139">
+      <ConstantValue UId="1141">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1142" />
+  <NewLine Num="1" UId="1143" />
+  <Blank Num="8" UId="1144" />
+  <Access Scope="LocalVariable" UId="1145">
+    <Symbol UId="1146">
+      <Component Name="Status" UId="1147" />
+      <Token Text="." UId="1148" />
+      <Component Name="Soaking_Finished" UId="1149" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1150" />
+  <Token Text=":=" UId="1151" />
+  <Blank Num="1" UId="1152" />
+  <Access Scope="LiteralConstant" UId="1153">
+    <Constant UId="1154">
+      <ConstantValue UId="1156">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1157" />
+  <NewLine Num="1" UId="1158" />
+  <Blank Num="8" UId="1159" />
+  <Access Scope="LocalVariable" UId="1160">
+    <Symbol UId="1161">
+      <Component Name="Status" UId="1162" />
+      <Token Text="." UId="1163" />
+      <Component Name="Draining" UId="1164" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="1165" />
+  <Token Text=":=" UId="1166" />
+  <Blank Num="1" UId="1167" />
+  <Access Scope="LiteralConstant" UId="1168">
+    <Constant UId="1169">
+      <ConstantValue UId="1171">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="1172" />
+  <NewLine Num="1" UId="1173" />
+  <Blank Num="8" UId="1174" />
+  <NewLine Num="1" UId="1175" />
+  <Blank Num="4" UId="1176" />
+  <Token Text="END_IF" UId="1177" />
+  <Token Text=";" UId="1178" />
+  <NewLine Num="1" UId="1179" />
+  <Blank Num="4" UId="1180" />
+  <NewLine Num="1" UId="1181" />
+  <Token Text="END_REGION" UId="1182" />
+  <NewLine Num="1" UId="1183" />
+  <Blank Num="4" UId="1184" />
+  <NewLine Num="3" UId="1185" />
+  <Blank Num="8" UId="1186" />
+  <NewLine Num="1" UId="1187" />
+  <Blank Num="8" UId="1188" />
+  <NewLine Num="1" UId="1189" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Flood, soak, drain routine</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="LocalVariable" UId="21">
+    <Symbol UId="22">
+      <Component Name="DQ" UId="23" />
+      <Token Text="." UId="24" />
+      <Component Name="Q_Fill_Solenoid" UId="25" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="26" />
+  <Token Text=":=" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Access Scope="Call" UId="29">
+    <CallInfo UId="30" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="32">
+        <Component Name="fcDigitalOutput" UId="31" />
+      </Instance>
+      <Token Text="(" UId="33" />
+      <Parameter Name="bInAutoVal" UId="34">
+        <Blank Num="1" UId="35" />
+        <Token Text=":=" UId="36" />
+        <Blank Num="1" UId="37" />
+        <Access Scope="LocalVariable" UId="38">
+          <Symbol UId="39">
+            <Component Name="Controls" UId="40" />
+            <Token Text="." UId="41" />
+            <Component Name="FillCommand" UId="42" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="43" />
+      <Blank Num="1" UId="44" />
+      <Parameter Name="InOutUdt" UId="45">
+        <Blank Num="1" UId="46" />
+        <Token Text=":=" UId="47" />
+        <Blank Num="1" UId="48" />
+        <Access Scope="LocalVariable" UId="49">
+          <Symbol UId="50">
+            <Component Name="DQ_Fill_Solenoid" UId="51" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="53" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="54" />
+  <NewLine Num="1" UId="55" />
+  <Access Scope="LocalVariable" UId="56">
+    <Symbol UId="57">
+      <Component Name="DQ" UId="58" />
+      <Token Text="." UId="59" />
+      <Component Name="Q_Drain_Solenoid" UId="60" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="61" />
+  <Token Text=":=" UId="62" />
+  <Blank Num="1" UId="63" />
+  <Access Scope="Call" UId="64">
+    <CallInfo UId="65" BlockType="FC">
+      <Instance Scope="GlobalVariable" UId="67">
+        <Component Name="fcDigitalOutput" UId="66" />
+      </Instance>
+      <Token Text="(" UId="68" />
+      <Parameter Name="bInAutoVal" UId="69">
+        <Blank Num="1" UId="70" />
+        <Token Text=":=" UId="71" />
+        <Blank Num="1" UId="72" />
+        <Access Scope="LocalVariable" UId="73">
+          <Symbol UId="74">
+            <Component Name="Controls" UId="75" />
+            <Token Text="." UId="76" />
+            <Component Name="DrainCommand" UId="77" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text="," UId="78" />
+      <Blank Num="1" UId="79" />
+      <Parameter Name="InOutUdt" UId="80">
+        <Blank Num="1" UId="81" />
+        <Token Text=":=" UId="82" />
+        <Blank Num="1" UId="83" />
+        <Access Scope="LocalVariable" UId="84">
+          <Symbol UId="85">
+            <Component Name="DQ_Drain_Solenoid" UId="86" />
+          </Symbol>
+        </Access>
+      </Parameter>
+      <Token Text=")" UId="88" />
+    </CallInfo>
+  </Access>
+  <Token Text=";" UId="89" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>write DQ outputs</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="D" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="E" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FB>
+</Document>

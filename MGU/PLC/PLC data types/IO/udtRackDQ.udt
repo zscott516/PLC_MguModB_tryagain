@@ -1,0 +1,11 @@
+﻿TYPE "udtRackDQ"
+VERSION : 0.1
+   STRUCT
+      Q_SupplySolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      Q_ReturnSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      Q_ShelfSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      Q_Lights { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_STRUCT;
+
+END_TYPE
+

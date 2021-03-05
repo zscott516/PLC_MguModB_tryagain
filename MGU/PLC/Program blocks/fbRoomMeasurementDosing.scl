@@ -1,0 +1,340 @@
+﻿FUNCTION_BLOCK "fbRoomMeasurementDosing"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      bInStart { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Start command for sequence
+      iInActiveRack { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Current rack requesting MD
+      iInPreviousRack { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Previous rack, if last operation was also MD (0 otherwise)
+      rInTankLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current tank level (L)
+      rInISEReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current ISE sensor level
+      rInECReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current EC sensor level
+      rInpHReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current pH sensor level
+      rInORPReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInRackLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current rack reservoir level
+      rInFreshLevelForMLoop { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInFillLevelToPreviousShelf { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInReturnPathVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Return path volume (L) to fill from active rack
+      rInTankEmptyLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Volume at which tank is considered empty (L)
+      InFertigationSettings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtFertigationSettings";   // Current rack fertigation settings
+   END_VAR
+
+   VAR_OUTPUT RETAIN
+      bOutTankReturnSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Output for writing to tank return solenoid
+      bOutActiveRackReturnSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutActiveRackSupplySolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutPreviousRackReturnSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutPreviousRackSupplySolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutFreshWaterSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutDischargeSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutMPathSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutNutrientACommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Output for writing to Nutrient A enable
+      bOutNutrientBCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Output for writing to Nutrient B enable
+      OutNutrientReadings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtNutrientReading";   // Final measured sensor levels for rack
+      bOutDone { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR RETAIN
+      iState { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      iNextState { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      rTankStartingLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      TON_MeasurementTimer {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      TON_NutrientATimer {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      TON_NutrientBTimer {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+   END_VAR
+   VAR 
+      TON_TankLowLimitTimer {InstructionName := 'TON_TIME'; LibVersion := '1.0'} : TON_TIME;
+   END_VAR
+
+   VAR CONSTANT 
+      eMDState_Idle : Int;
+      eMDState_Rotate_Start : Int := 100;
+      eMDState_Rotate_FillTankFromRack : Int := 102;
+      eMDState_Rotate_PushToPrevious : Int := 104;
+      eMDState_Rotate_FillTankFresh : Int := 106;
+      eMDState_Rotate_MeasurementLoop : Int := 108;
+      eMDState_Rotate_Done : Int := 119;
+      eMDState_Measure_Start : Int := 120;
+      eMDState_Measure_FillTankFromRack : Int := 122;
+      eMDState_Measure_OpenMLoop : Int := 124;
+      eMDState_Measure_Done : Int := 139;
+      eMDState_Dosing_Start : Int := 140;
+      eMDState_Dosing_AddNutrientA : Int := 142;
+      eMDState_Dosing_AddNutrientB : Int := 144;
+      eMDState_Dosing_AddFreshWater : Int := 146;
+      eMDState_Dosing_Done : Int := 159;
+      eMDState_Return_Start : Int := 160;
+      eMDState_Return_FillPreviousRack : Int := 162;
+      eMDState_Return_FillActiveRack : Int := 164;
+      eMDState_Return_CloseSupplyPath : Int := 166;
+      eMDState_Return_Done : Int := 169;
+      iISEMode_Off : Int := 0;
+      iISEMode_Load : Int := 1;
+      iISEMode_Deplete : Int := 2;
+   END_VAR
+
+
+BEGIN
+	REGION State 0: Idle
+	    // Wait for start command to move on to rotate if a previous rack used the piping 
+	    //  or directly to measure if not 
+	    
+	    IF #iState = #eMDState_Idle THEN
+	        #bOutDone := 0;
+	        IF #bInStart THEN
+	            IF #iInPreviousRack = 0 OR #iInPreviousRack = #iInActiveRack THEN
+	                #iNextState := #eMDState_Measure_Start;
+	            ELSE
+	                #iNextState := #eMDState_Rotate_Start;
+	            END_IF;
+	        END_IF;
+	    END_IF;
+	        
+	    
+	END_REGION
+	
+	REGION State 100: Rotate
+	    // Open the tank return solenoid
+	    // Open the return solenoid and close the shelf solenoid for the current rack until a fixed amount of water is pumped into the tank
+	    // Close the return solenoid of the current rack and open the supply valve of the previous rack to push 19L from the 
+	    //     tank into the previous rack. 
+	    //     
+	    
+	    // Open tank return and rack return, close shelf, record starting tank level, then move to next state
+	    IF #iState = #eMDState_Rotate_Start THEN
+	        #bOutTankReturnSolenoidCommand := 1; 
+	        #bOutActiveRackReturnSolenoidCommand := 1;
+	        #iNextState := #eMDState_Rotate_FillTankFromRack;
+	        #rTankStartingLevel := #rInTankLevel;
+	    END_IF;
+	    
+	    // Once the target fill level is reached, close the return solenoids, open the previous rack's supply, then move to next state
+	    IF #iState = #eMDState_Rotate_FillTankFromRack THEN
+	        IF #rInTankLevel >= #rTankStartingLevel + #rInReturnPathVolume  OR #rInRackLevel <= #InFertigationSettings.rMinReservoirVolume THEN
+	            #bOutActiveRackReturnSolenoidCommand := 0;
+	            #bOutPreviousRackSupplySolenoidCommand := 1;
+	            #bOutTankReturnSolenoidCommand := 1;
+	            #iNextState := #eMDState_Rotate_PushToPrevious;
+	        END_IF;
+	    END_IF;
+	    
+	    // Run until 19L have been pushed into the previous rack and the tank is back at its original level, then close the
+	    // previous rack's supply solenoid and move to next state
+	    IF #iState = #eMDState_Rotate_PushToPrevious THEN
+	        
+	        IF #rInTankLevel <= #rTankStartingLevel * 1.2 THEN // HACK
+	            #bOutPreviousRackSupplySolenoidCommand := 0;
+	            #iNextState := #eMDState_Rotate_FillTankFresh;
+	        END_IF;
+	        
+	    END_IF;
+	    
+	    // Open the fresh water supply and fill the tank until the target level is reached, then close the fresh water supply, open the
+	    // measurement path solenoid and the discharge solenoid and move to the next state
+	    IF #iState = #eMDState_Rotate_FillTankFresh THEN
+	        
+	        IF #rInTankLevel >= #rTankStartingLevel + #rInFreshLevelForMLoop THEN
+	            #bOutFreshWaterSolenoidCommand := 0;
+	            #bOutMPathSolenoidCommand := 1;
+	            #bOutDischargeSolenoidCommand := 1;
+	            #bOutTankReturnSolenoidCommand := 0;
+	            #iNextState := #eMDState_Rotate_MeasurementLoop;
+	        ELSE
+	            #bOutFreshWaterSolenoidCommand := 1;
+	        END_IF;
+	    END_IF;
+	    
+	    // Push water out through the measurement loop. Once the tank is empty, close measurement path solenoid and
+	    // the discharge solenoid and move to the next state
+	    IF #iState = #eMDState_Rotate_MeasurementLoop THEN
+	        
+	        IF #rInTankLevel <= #rInTankEmptyLevel THEN
+	            
+	            #bOutMPathSolenoidCommand := 0;
+	            #bOutDischargeSolenoidCommand := 0;
+	            #iNextState := #eMDState_Rotate_Done;
+	        END_IF;
+	    END_IF;
+	    
+	    IF #iState = #eMDState_Rotate_Done THEN
+	        #iNextState := #eMDState_Measure_Start;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION State 120: Measure
+	    // Receive water from rack and start measurement phase. Open measurement loop, push water through, record sensor readings, 
+	    // determine setpoints, and move on to dosing
+	    
+	    #TON_MeasurementTimer(IN := (#iState = #eMDState_Measure_OpenMLoop),
+	                         PT := #InFertigationSettings.tMeasurementTime);
+	    
+	    // Open tank return and shelf return solenoid
+	    IF #iState = #eMDState_Measure_Start THEN
+	        #bOutTankReturnSolenoidCommand := 1;
+	        #bOutActiveRackReturnSolenoidCommand := 1;
+	        #iNextState := #eMDState_Measure_FillTankFromRack;
+	        #rTankStartingLevel := #rInTankLevel;
+	    END_IF;
+	    
+	    // Wait to receive target level from rack, close rack return solenoid
+	    IF #iState = #eMDState_Measure_FillTankFromRack THEN
+	        IF #rInTankLevel >= (#InFertigationSettings.rMeasurementVolume + #rInTankEmptyLevel) OR
+	            #rInRackLevel <= #InFertigationSettings.rMinReservoirVolume THEN
+	            #iNextState := #eMDState_Measure_OpenMLoop;
+	            #bOutActiveRackReturnSolenoidCommand := 0;
+	        END_IF;
+	    END_IF;
+	    
+	    // Open MPath solenoid, wait for measurement time then record measurement
+	    IF #iState = #eMDState_Measure_OpenMLoop THEN
+	        
+	        IF #TON_MeasurementTimer.Q THEN
+	            #OutNutrientReadings.rISEReading := #rInISEReading;
+	            #OutNutrientReadings.rECReading := #rInECReading;
+	            #OutNutrientReadings.rpHReading := #rInpHReading;
+	            #OutNutrientReadings.rORPReading := #rInORPReading;
+	            #bOutMPathSolenoidCommand := 0;
+	            #bOutTankReturnSolenoidCommand := 0;
+	            #iNextState := #eMDState_Measure_Done;
+	        ELSE
+	            #bOutMPathSolenoidCommand := 1;
+	        END_IF;
+	    END_IF;
+	    
+	    
+	    IF #iState = #eMDState_Measure_Done THEN
+	        #iNextState := #eMDState_Dosing_Start;
+	    END_IF;
+	   
+	    
+	END_REGION
+	
+	REGION State 140: Dosing
+	    
+	    // Check if rack fertigation logic has requested dosing
+	    // Add enabled nutrients one at a time for dosing time then add fresh water to tank
+	    
+	    IF #iState = #eMDState_Dosing_Start THEN
+	        
+	        IF #InFertigationSettings.bDosingActive THEN
+	            
+	            IF #InFertigationSettings.bNutrientAEnable THEN
+	                #iNextState := #eMDState_Dosing_AddNutrientA;
+	            ELSIF #InFertigationSettings.bNutrientBEnable THEN
+	                #iNextState := #eMDState_Dosing_AddNutrientB;
+	            ELSE
+	                #iNextState := #eMDState_Dosing_AddFreshWater;
+	            END_IF;
+	            
+	        ELSE
+	            #iNextState := #eMDState_Dosing_AddFreshWater;
+	        END_IF;
+	    END_IF;
+	    
+	    #TON_NutrientATimer(IN := (#iState = #eMDState_Dosing_AddNutrientA),
+	                       PT := #InFertigationSettings.tNutrientDosingDuration);
+	    // Add nutrient A for dosing time, then check if nutrient B is needed
+	    IF #iState = #eMDState_Dosing_AddNutrientA THEN
+	        
+	        IF #TON_NutrientATimer.Q THEN
+	            #bOutNutrientACommand := 0;
+	            IF #InFertigationSettings.bNutrientBEnable THEN
+	                #iNextState := #eMDState_Dosing_AddNutrientB;
+	            ELSE
+	                #iNextState := #eMDState_Dosing_AddFreshWater;
+	            END_IF;
+	        ELSE
+	            #bOutNutrientACommand := 1;
+	        END_IF;
+	    END_IF;
+	    
+	    #TON_NutrientBTimer(IN := (#iState = #eMDState_Dosing_AddNutrientB),
+	                       PT := #InFertigationSettings.tNutrientDosingDuration);
+	    // Add nutrient B for dosing time, then move on to water fill
+	    IF #iState = #eMDState_Dosing_AddNutrientB THEN
+	        
+	        IF #TON_NutrientBTimer.Q THEN
+	            #bOutNutrientBCommand := 0;
+	            #iNextState := #eMDState_Dosing_AddFreshWater;
+	        ELSE
+	            #bOutNutrientBCommand := 1;
+	        END_IF;
+	    END_IF;
+	    
+	    // Add fresh water to tank if tank level plus rack is less than the operating volume
+	    IF #iState = #eMDState_Dosing_AddFreshWater THEN
+	        IF (#rInTankLevel - #rInTankEmptyLevel + #rInRackLevel < #InFertigationSettings.rOperatingVolume) THEN
+	            #bOutFreshWaterSolenoidCommand := 1;
+	        ELSE
+	            #bOutFreshWaterSolenoidCommand := 0;
+	            #iNextState := #eMDState_Dosing_Done;
+	        END_IF;
+	    END_IF;
+	    
+	    
+	    IF #iState = #eMDState_Dosing_Done THEN
+	        #iNextState := #eMDState_Return_Start;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION State 160: Return TO Tank
+	    // If a previous rack was used, open supply path to previous rack, wait for 8L drop in tank
+	    // Open supply path to active rack, activate floor pump, wait for tank contents to return to rack
+	    // Close supply path
+	    
+	    // Determine which rack to start return to
+	    IF #iState = #eMDState_Return_Start THEN
+	        
+	        IF #iInPreviousRack = 0 OR #iInPreviousRack = #iInActiveRack  THEN
+	            #iNextState := #eMDState_Return_FillActiveRack;
+	        ELSE
+	            #iNextState := #eMDState_Return_FillPreviousRack;
+	        END_IF;
+	        #rTankStartingLevel := #rInTankLevel;
+	    END_IF;
+	    
+	    // Open supply path to previous rack, wait for 8L drop in tank, close previous rack return path
+	    IF #iState = #eMDState_Return_FillPreviousRack THEN
+	        #bOutPreviousRackSupplySolenoidCommand := 1;
+	        IF #rInTankLevel < (#rTankStartingLevel - #rInFillLevelToPreviousShelf) THEN
+	            #bOutPreviousRackSupplySolenoidCommand := 0;
+	            #iNextState := #eMDState_Return_FillActiveRack;
+	        END_IF;
+	    END_IF;
+	    
+	    // Open supply path to active rack
+	    IF #iState = #eMDState_Return_FillActiveRack THEN
+	        #rTankStartingLevel := #rInTankLevel;
+	        #bOutActiveRackSupplySolenoidCommand := 1;
+	        #iNextState := #eMDState_Return_CloseSupplyPath;
+	    END_IF;
+	    
+	    // Wait for tank to empty, close supply path
+	    //#TON_TankLowLimitTimer(IN:=#rInTankLevel <= #rInTankEmptyLevel,
+	    //                       PT:=T#3s);
+	    IF #iState = #eMDState_Return_CloseSupplyPath THEN
+	        IF #rInTankLevel <= #rInTankEmptyLevel * 1.2 OR #rInRackLevel >= #InFertigationSettings.rMaxReservoirVolume THEN // HACK
+	            #bOutActiveRackSupplySolenoidCommand := 0;
+	            #iNextState := #eMDState_Return_Done;
+	        END_IF;
+	    END_IF;
+	    
+	    //Return to Idle at end of M&D
+	    IF #iState = #eMDState_Return_Done THEN
+	        #bOutDone := 1;
+	        #iNextState := #eMDState_Idle;
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION Update State
+	    IF #iState <> #iNextState THEN
+	        #iState := #iNextState;
+	    END_IF;
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+
