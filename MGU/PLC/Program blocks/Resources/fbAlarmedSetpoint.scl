@@ -1,0 +1,145 @@
+﻿FUNCTION_BLOCK "fbAlarmedSetpoint"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInRawValue : Int;
+   END_VAR
+
+   VAR RETAIN
+      arrSetpoints { ExternalVisible := 'False'; S7_SetPoint := 'False'} : Array[1..10] of "udtTimeOfDaySetpoint";   // Setpoints need to be chronologically increasing
+      rSetpoint { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real := 0.0;
+      rActual { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real := 0.0;
+      Alarms { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         bHigh { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool := false;   // rActual exceeds limit
+         bLow { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool := false;   // rActual exceeds limit
+         bRate { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool := false;   // rActual increases or decreases faster than the limit. False if rate is left as 0.
+         bSetpoint { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool := false;   // rActual does not reach rSetpoint within allowed time delay and deadband. False if deadband left at 0.
+      END_STRUCT;
+      Config { ExternalVisible := 'False'} : Struct
+         rLowCalibration { ExternalVisible := 'False'} : Real := 0.0;
+         rHighCalibration { ExternalVisible := 'False'} : Real := 100.0;
+         Alarms { ExternalVisible := 'False'} : Struct
+            rLowLimit { ExternalVisible := 'False'} : Real := 0.0;
+            rHighLimit { ExternalVisible := 'False'} : Real := 100.0;
+            rRateLimit { ExternalVisible := 'False'} : Real := 0.0;   // Maximum permitted change in rActual per second
+            rDeadband { ExternalVisible := 'False'} : Real := 0.0;   // Range around rSetpoint that is still considered within range
+            iSettlingSecs { ExternalVisible := 'False'} : Int := 0;   // Allowable delay to allow rActual to reach rSetpoint after change
+         END_STRUCT;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      TON_RateCheck {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      rActual_Prev { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real := 0.0;
+      TON_Settling {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      rSetpoint_Prev { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real := 0.0;
+   END_VAR
+
+   VAR_TEMP 
+      localTime : Date_And_Time;
+      ret_val : Int;
+      currentTOD : Time_Of_Day;
+      i : Int;
+      currentTODsecs : DInt;
+   END_VAR
+
+
+BEGIN
+	(* 
+	Processes raw analog input AND evaluates alarms.
+	Note: All alarms are momentary, i.e. no ack necessary AND they reset themselves when the condition becomes false.
+	*)
+	
+	
+	REGION Scale raw input based on calibration
+	    #rActual := "fcAnalogInput"(iInRawValue := #iInRawValue,
+	                                rLowCalibration := #Config.rLowCalibration,
+	                                rHighCalibration := #Config.rHighCalibration);
+	END_REGION
+	
+	
+	REGION Low/high alarms
+	    #Alarms.bHigh := #rActual > #Config.Alarms.rHighLimit;
+	    #Alarms.bLow := #rActual < #Config.Alarms.rLowLimit;
+	    
+	END_REGION
+	
+	
+	REGION Rate of change alarm
+	    // Set the current value on startup to prevent a spurious alarm
+	    IF "FirstScan" THEN
+	        #rActual_Prev := #rActual;
+	    END_IF;
+	    
+	    // Compare values at every given time interval to get rate of change
+	    IF #TON_RateCheck.Q THEN
+	        #Alarms.bRate := (ABS(#rActual - #rActual_Prev) > #Config.Alarms.rRateLimit)
+	        AND (#Config.Alarms.rRateLimit <> 0.0); // ignore alarm if max rate is left at default of 0
+	        
+	        #rActual_Prev := #rActual;
+	    END_IF;
+	    
+	    #TON_RateCheck(IN := NOT #TON_RateCheck.Q,
+	                   PT := t#1s);
+	END_REGION
+	
+	
+	REGION Get current time of day
+	    #ret_val := RD_LOC_T(#localTime);
+	    #currentTOD := DT_TO_TOD(#localTime);
+	    
+	END_REGION
+	
+	
+	REGION Determine current setpoint based on time of day
+	    IF #arrSetpoints[1].TimeOfDaySeconds = -1 THEN
+	        // If no time schedule is defined, default to first setpoint in array
+	        #rSetpoint := #arrSetpoints[1].rSetpoint;
+	        
+	    ELSIF #currentTODsecs < #arrSetpoints[1].TimeOfDaySeconds THEN
+	        // Check for setpoint from previous day
+	        FOR #i := 10 TO 1 BY -1 DO
+	            IF #arrSetpoints[#i].TimeOfDaySeconds <> -1 THEN
+	                #rSetpoint := #arrSetpoints[#i].rSetpoint;
+	                EXIT;
+	            END_IF;
+	        END_FOR;
+	        
+	    ELSE
+	        // Iterate through and find current setpoint
+	        FOR #i := 1 TO 9 DO
+	            IF #currentTODsecs < #arrSetpoints[#i + 1].TimeOfDaySeconds OR #arrSetpoints[#i + 1].TimeOfDaySeconds = -1 THEN
+	                #rSetpoint := #arrSetpoints[#i].rSetpoint;
+	                EXIT;
+	            ELSIF #i = 9 THEN
+	                #rSetpoint := #arrSetpoints[10].rSetpoint;
+	            END_IF;
+	        END_FOR;
+	        
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION Setpoint not reached alarm
+	    // Set the current value on startup to prevent a spurious alarm
+	    IF "FirstScan" THEN
+	        #rSetpoint_Prev := #rSetpoint;
+	    END_IF;
+	    
+	    // Evaluate alarm after settling time has elapsed
+	    #TON_Settling(IN := (#rSetpoint = #rSetpoint_Prev), // restart timer when setpoint changes
+	                  PT := INT_TO_TIME(#Config.Alarms.iSettlingSecs * 1000)); // convert to ms
+	    
+	    #Alarms.bSetpoint := #TON_Settling.Q AND (
+	    (#rActual < #rSetpoint - #Config.Alarms.rDeadband / 2.0) OR
+	    (#rActual > #rSetpoint + #Config.Alarms.rDeadband / 2.0))
+	    AND (#Config.Alarms.rDeadband <> 0.0); // ignore alarm if deadband is left at default of 0
+	    
+	    // Save setpoint value for next comparison
+	    #rSetpoint_Prev := #rSetpoint;
+	    
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+

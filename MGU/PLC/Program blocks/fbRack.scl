@@ -1,0 +1,68 @@
+﻿FUNCTION_BLOCK "fbRack"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInMutexLockConfirmation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      udtInLastNutrientReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtNutrientReading";
+      bInSupplySolenoidFromRoomFertigation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bInReturnSolenoidFromRoomFertigation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      iInLightsDelaySecs { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      rInCurrentTemperature { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+   END_VAR
+   VAR_INPUT DB_SPECIFIC
+      arrAI { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."NUM_AI_RACK"] of Int;
+      AI { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} AT arrAI : "udtRackAI";
+   END_VAR
+
+   VAR_OUTPUT 
+      iOutMutexRequest { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      OutFertigationSettings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtFertigationSettings";
+   END_VAR
+   VAR_OUTPUT DB_SPECIFIC
+      arrDQ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."NUM_DQ_RACK"] of Bool;
+      DQ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} AT arrDQ : "udtRackDQ";
+   END_VAR
+
+   VAR 
+      Lighting { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRackLights";
+      Fertigation { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRackFertigation";
+      AI_ReservoirLevel { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+   END_VAR
+   VAR RETAIN
+      DQ_SupplySolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_ReturnSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_ShelfSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_Lights { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+   END_VAR
+
+
+BEGIN
+	// Note that rack supply/return solenoids are managed by room-level fertigation FB
+	
+	// Process rack-level analog inputs
+	#AI_ReservoirLevel(#AI.IW_ReservoirLevel);
+	
+	// Call lighting control fb
+	#Lighting(iInDelaySecs := #iInLightsDelaySecs,
+	          rInCurrentTemperature := #rInCurrentTemperature,
+	          bOutLights => #Lighting.bOutLights);
+	
+	// Call rack-level fertigation logic
+	#Fertigation(iInMutexLockConfirmation := #iInMutexLockConfirmation,
+	             InLastNutrientReading:= #udtInLastNutrientReading,
+	             rInReservoirLevel := #AI_ReservoirLevel.rActual,
+	             bInReturnSolenoidStatus:=#DQ.Q_ReturnSolenoid,
+	             bInShelfSolenoidStatus:=#DQ.Q_ShelfSolenoid,
+	             iOutMutexRequest => #iOutMutexRequest,
+	             OutFertigationSettings => #OutFertigationSettings,
+	             bOutShelfSolenoid => #Fertigation.bOutShelfSolenoid);
+	
+	// Set rack-level outputs
+	// Rack supply/return solenoids are managed by room-level fertigation FB
+	#DQ.Q_SupplySolenoid := "fcDigitalOutput"(bInAutoVal := #bInSupplySolenoidFromRoomFertigation, InOutUdt := #DQ_SupplySolenoid);
+	#DQ.Q_ReturnSolenoid := "fcDigitalOutput"(bInAutoVal := #bInReturnSolenoidFromRoomFertigation, InOutUdt := #DQ_ReturnSolenoid);
+	#DQ.Q_ShelfSolenoid := "fcDigitalOutput"(bInAutoVal := #Fertigation.bOutShelfSolenoid, InOutUdt := #DQ_ShelfSolenoid);
+	#DQ.Q_Lights := "fcDigitalOutput"(bInAutoVal := #Lighting.bOutLights, InOutUdt := #DQ_Lights);
+	
+END_FUNCTION_BLOCK
+

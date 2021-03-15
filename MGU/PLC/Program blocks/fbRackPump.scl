@@ -1,0 +1,133 @@
+﻿FUNCTION_BLOCK "fbRackPump"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      rInSpeedCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Commanded pump speed (%)
+   END_VAR
+
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         rPrimeSpeed { ExternalVisible := 'False'} : Real := 100.0;   // Pump speed when priming (%)
+         diPrimingSecs { ExternalVisible := 'False'} : DInt := 60;   // Duration of pump priming (seconds)
+         bOverrideEnable { ExternalVisible := 'False'} : Bool;   // Sets pump speed to the override value
+         rOverrideSpeed { ExternalVisible := 'False'} : Real;   // Manual override speed (%) Set to 0 to turn off.
+      END_STRUCT;
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         iState { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // 0: Off, 1: Priming, 2:Running
+         rCommandSpeed { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Speed commanded to VFD (%)
+         rActualSpeed { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Speed reported from VFD (%)
+         rVoltage { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Vrms
+         rCurrent { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Arms
+         rPower { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // kW
+         rPowerFactor { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         bError { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         ErrorDetail { ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "udtError_VFD";
+      END_STRUCT;
+   END_VAR
+   VAR 
+      fbVFD { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "fbVFD_GSeries";
+      TON_Priming {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      dummyUdt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "udtHMI_VFD_Control";   // Ignore
+   END_VAR
+
+   VAR_TEMP 
+      arrTelegramWords : Array[1..6] of Int;
+      iRet : Int;
+   END_VAR
+
+   VAR CONSTANT 
+      eStateOff : Int := 0;
+      eStatePriming : Int := 1;
+      eStateRunning : Int := 2;
+      cScalingFactor : Real := 16384.0;   // Full scale (100%) value of VFD parameters
+   END_VAR
+
+
+BEGIN
+	(*
+	Pump has 3 modes: Off, Priming, Running. 
+	If the pump speed changes from zero to non-zero, start priming for the priming duration
+	Once priming is complete, move to Pump running while the rack remains in Fill or Circulate
+	*)
+	
+	REGION Determine pump VFD command speed based on off/priming/run state
+	    IF #rInSpeedCommand <> 0 THEN
+	        // start out by priming, then switch to running
+	        IF #Status.iState = #eStateOff THEN
+	            #Status.iState := #eStatePriming;
+	        ELSIF #Status.iState = #eStatePriming AND #TON_Priming.Q THEN
+	            #Status.iState := #eStateRunning;
+	        END_IF;
+	        
+	    ELSE
+	        #Status.iState := #eStateOff;
+	    END_IF;
+	    
+	    #TON_Priming(IN := (#Status.iState = #eStatePriming),
+	                 PT := DINT_TO_TIME(#Controls.diPrimingSecs * 1000));
+	    
+	    // Check for manual override
+	    IF #Controls.bOverrideEnable THEN
+	        #fbVFD.rInCommandSpeed := #Controls.rOverrideSpeed;
+	        
+	    ELSE
+	        CASE #Status.iState OF
+	            #eStateOff: // Off
+	                #fbVFD.rInCommandSpeed := 0;
+	            #eStatePriming: // Priming - run at priming speed until priming timer has elapsed then transition to Running   
+	                #fbVFD.rInCommandSpeed := #Controls.rPrimeSpeed;
+	            #eStateRunning: // Running
+	                #fbVFD.rInCommandSpeed := #rInSpeedCommand;
+	        END_CASE;
+	        
+	        // if override is not active, override speed tracks command speed so that activating override mode
+	        // doesn't unexpectedly change the value
+	        #Controls.rOverrideSpeed := #fbVFD.rInCommandSpeed;
+	        
+	    END_IF;
+	    
+	    #Status.rCommandSpeed := #fbVFD.rInCommandSpeed;
+	    
+	END_REGION
+	
+	
+	REGION Open library G series VFD block call
+	    (*
+	    Telegram is assigned globally in fbConfig.
+	    Contactor output is fed back since we con't have a physical one.
+	    Dummy Udt is needed even though we don't have an HMI faceplate.
+	    *)
+	    
+	    #fbVFD(tInTimeout:=T#1s,
+	           iInMode:="Modes.Auto",
+	           hwInTelegram:=#fbVFD.hwInTelegram,
+	           bInEstop:=FALSE,
+	           bInSignalContactor:=#fbVFD.bOutContactor,
+	           bInEnableForward:=TRUE,
+	           rInCommandSpeed:=#fbVFD.rInCommandSpeed,
+	           bInCommandForward:=#fbVFD.rInCommandSpeed > 0.0,
+	           bInResetError:=TRUE,
+	           rOutSpeed=>#Status.rActualSpeed,
+	           bOutContactor=>#fbVFD.bOutContactor,
+	           bOutError=>#Status.bError,
+	           ERROR_VFD=>#Status.ErrorDetail,
+	           HMI_VFD_Control:=#dummyUdt);
+	    
+	END_REGION
+	
+	
+	REGION Read additional drive parameters from extended telegram
+	    #iRet := DPRD_DAT(LADDR := #fbVFD.hwInTelegram, RECORD => #arrTelegramWords);
+	    
+	    // Telegram word 1 (status word) is handled inside fbVFD
+	    #Status.rActualSpeed := #arrTelegramWords[2] / #cScalingFactor * 100; // percent 
+	    #Status.rVoltage := #arrTelegramWords[3] / #cScalingFactor * 1000; // Vrms
+	    #Status.rCurrent := #arrTelegramWords[4] / #cScalingFactor * 7.1; //9.43; // Arms
+	    #Status.rPower := #arrTelegramWords[5] / #cScalingFactor * 1.49 * 2;//3.15; // Kw
+	    #Status.rPowerFactor := #arrTelegramWords[6] / #cScalingFactor;
+	    
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+

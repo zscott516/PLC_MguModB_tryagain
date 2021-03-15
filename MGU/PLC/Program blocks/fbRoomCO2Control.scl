@@ -1,0 +1,60 @@
+﻿FUNCTION_BLOCK "fbRoomCO2Control"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInCO2ReadingRaw { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+   END_VAR
+
+   VAR_OUTPUT RETAIN
+      bOutSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR 
+      AI_CO2Sensor { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+   END_VAR
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         iModeCommand { ExternalVisible := 'False'} : Int;   // 0: Off, 1: Periodic Dosing
+         tMeasurementInterval { ExternalVisible := 'False'} : Time := T#30s;   // Time between measurements
+         tDosingDuration { ExternalVisible := 'False'} : Time := T#5s;   // Time to open solenoid if measurement is below setpoint
+      END_STRUCT;
+   END_VAR
+   VAR 
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         tElapsedMeasurement { ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;
+         tElapsedDosing { ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;
+      END_STRUCT;
+   END_VAR
+   VAR RETAIN
+      TON_MeasurementCycle {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+      TP_Dosing {InstructionName := 'TP_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TP_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      bCheckMeasurement : Bool;
+   END_VAR
+
+   VAR CONSTANT 
+      eMode_Off : Int := 0;
+      eMode_PeriodicDosing : Int := 2;
+   END_VAR
+
+
+BEGIN
+	// process CO2 sensor input
+	#AI_CO2Sensor(#iInCO2ReadingRaw);
+	
+	// if mode is set to periodic dosing, run timer to periodically check value
+	#bCheckMeasurement := #TON_MeasurementCycle.Q;
+	#TON_MeasurementCycle(IN := #Controls.iModeCommand = #eMode_PeriodicDosing AND NOT #bCheckMeasurement,
+	                      PT := #Controls.tMeasurementInterval,
+	                      ET => #Status.tElapsedMeasurement);
+	
+	//if value is below setpoint, open valve for set duration
+	#TP_Dosing(IN := #bCheckMeasurement AND #AI_CO2Sensor.rActual < #AI_CO2Sensor.rSetpoint,
+	           PT := #Controls.tDosingDuration,
+	           Q => #bOutSolenoid,
+	           ET => #Status.tElapsedDosing);
+	
+END_FUNCTION_BLOCK
+

@@ -1,0 +1,108 @@
+﻿FUNCTION_BLOCK "fbRackLights"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInDelaySecs { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      rInCurrentTemperature { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+   END_VAR
+
+   VAR_OUTPUT 
+      bOutLights { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         iMode { ExternalVisible := 'False'} : Int;   // 0: Off, 1: On, 2: Auto
+         diOffTime { ExternalVisible := 'False'} : DInt;   // Off time (seconds past midnight)
+         diOnTime { ExternalVisible := 'False'} : DInt;   // On time (seconds past midnight)
+         rHighTemperatureLimit { ExternalVisible := 'False'} : Real := 75.0;
+      END_STRUCT;
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         diSecondsElapsed { ExternalVisible := 'False'; ExternalWritable := 'False'} : DInt;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      bLightsCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+   VAR RETAIN
+      TON_OnDelay {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : TON_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      tCurrentDateTime : Date_And_Time;   // Current PLC Date and Time
+      tCurrentTimeMilli : Time_Of_Day;   // Current time (ms since 0:00:00)
+      retVal : Int;   // Garbage return value from RD_LOC_T
+      diSeconds : DInt;
+   END_VAR
+
+   VAR CONSTANT 
+      eOffMode : Int := 0;
+      eOnMode : Int := 1;
+      eAutoMode : Int := 2;
+   END_VAR
+
+
+BEGIN
+	REGION State 0 - Off Mode AND State 1 - On Mode
+	    // Directly assign rack light output based on off or on mode
+	    IF #Controls.iMode = #eOffMode THEN
+	        #bLightsCommand := 0;
+	    ELSIF #Controls.iMode = #eOnMode THEN
+	        #bLightsCommand := 1;
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION State 2 - Auto Mode
+	    // Check the current time against the on time and off time, and assign the lights appropriately
+	    IF #Controls.iMode = #eAutoMode THEN
+	        
+	        //Get current time from PLC and convert to seconds since 0:00:00
+	        #retVal := RD_LOC_T(OUT => #tCurrentDateTime);
+	        #tCurrentTimeMilli := DT_TO_TOD(IN := #tCurrentDateTime);
+	        #diSeconds := TOD_TO_DINT(IN := #tCurrentTimeMilli) / 1000; //Go from ms time to DInt seconds
+	        
+	        // Situation 1: Off time happens after on time
+	        IF #Controls.diOffTime > #Controls.diOnTime THEN
+	            IF #diSeconds > #Controls.diOnTime AND #diSeconds < #Controls.diOffTime THEN
+	                #bLightsCommand := 1;
+	            ELSE
+	                #bLightsCommand := 0;
+	            END_IF;
+	            
+	            // Situation 2: On time happens after off time
+	        ELSE
+	            IF #diSeconds > #Controls.diOffTime AND #diSeconds < #Controls.diOnTime THEN
+	                #bLightsCommand := 0;
+	            ELSE
+	                #bLightsCommand := 1;
+	            END_IF;
+	        END_IF;
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION Temperature Override When in Auto
+	    IF #Controls.iMode = #eAutoMode AND #rInCurrentTemperature > #Controls.rHighTemperatureLimit THEN
+	        #bLightsCommand := 0;
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION Write seconds elapsed status AND set outputs with confugred delay
+	    #Status.diSecondsElapsed := #diSeconds;
+	    
+	    #TON_OnDelay(IN := #bLightsCommand,
+	                 PT := INT_TO_TIME(#iInDelaySecs));
+	    
+	    #bOutLights := #TON_OnDelay.Q;
+	    
+	END_REGION
+	
+	
+	
+END_FUNCTION_BLOCK
+
