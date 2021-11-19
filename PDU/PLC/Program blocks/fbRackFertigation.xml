@@ -61,9 +61,9 @@
   </Section>
   <Section Name="InOut" />
   <Section Name="Static">
-    <Member Name="Controls" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="Flood_Duration" Datatype="LInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes - not currently used, but here for when rack-level confgurations are desired over shelf-level</MultiLanguageText></Comment><StartValue>5</StartValue></Member><Member Name="Flood_Interval" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes - see above</MultiLanguageText></Comment><StartValue>120</StartValue></Member><Member Name="Num_Shelves" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>6</StartValue></Member><Member Name="ROCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="DischargeCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="RunMode" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">0: off, 2: auto(flood/soak/drain) 3: discharge</MultiLanguageText></Comment></Member><Member Name="ReservoirLowLimit" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Liters</MultiLanguageText></Comment><StartValue>25.0</StartValue></Member><Member Name="ReservoirUpperLimit" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Liters</MultiLanguageText></Comment><StartValue>60.0</StartValue></Member></Member>
+    <Member Name="Controls" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="Flood_Duration" Datatype="LInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes - not currently used, but here for when rack-level confgurations are desired over shelf-level</MultiLanguageText></Comment><StartValue>5</StartValue></Member><Member Name="Flood_Interval" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Minutes - see above</MultiLanguageText></Comment><StartValue>120</StartValue></Member><Member Name="Num_Shelves" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>6</StartValue></Member><Member Name="ROCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="DischargeCommand" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList></Member><Member Name="RunMode" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">0: off, 2: auto(flood/soak/drain) 3: discharge</MultiLanguageText></Comment></Member><Member Name="ReservoirLowLimit" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Gallons</MultiLanguageText></Comment><StartValue>4.0</StartValue></Member><Member Name="ReservoirUpperLimit" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Gallons</MultiLanguageText></Comment><StartValue>60.0</StartValue></Member><Member Name="ReservoirDischargeDeadBand" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>2.0</StartValue></Member></Member>
     <Member Name="Status" Datatype="Struct" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Member Name="Active_Shelf" Datatype="Int"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><StartValue>-1</StartValue></Member><Member Name="Last_Flood" Datatype="Date_And_Time"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">not currently used, but here for when rack-level confgurations are desired over shelf-level</MultiLanguageText></Comment><StartValue>DT#2015-01-01-00:00:00</StartValue></Member></Member>
-    <Member Name="AI_Reservoir_Level" Datatype="&quot;udtAnalogInput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real" /><Member Name="rRawValue" Datatype="Int" /><Member Name="rActual" Datatype="Real"><Comment><MultiLanguageText Lang="en-US">Liters</MultiLanguageText></Comment></Member></Section></Sections></Member>
+    <Member Name="AI_Reservoir_Level" Datatype="&quot;udtAnalogInput&quot;" Remanence="Retain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="rLowCalibration" Datatype="Real" /><Member Name="rHighCalibration" Datatype="Real"><StartValue>100.0</StartValue></Member><Member Name="rRawValue" Datatype="Int" /><Member Name="rActual" Datatype="Real"><Comment><MultiLanguageText Lang="en-US">Liters</MultiLanguageText></Comment></Member></Section></Sections></Member>
     <Member Name="DQ_RO_Solenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
     <Member Name="DQ_Discharge_Solenoid" Datatype="&quot;udtDigitalOutput&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member>
     <Member Name="ShelvesFertigation" Datatype="Array[1..&quot;NUM_SHELVES_PER_RACK&quot;] of &quot;fbShelfFertigation&quot;" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="Input"><Member Name="activeShelf" Datatype="Int" /><Member Name="shelfNumber" Datatype="Int" /><Member Name="ReservoirLevel" Datatype="Real" /><Member Name="RunMode" Datatype="Int" /></Section><Section Name="Output"><Member Name="arrDQ" Datatype="Array[1..&quot;MAX_DQ_SHELF&quot;] of Bool" /></Section><Section Name="InOut" /><Section Name="Static"><Member Name="Controls" Datatype="Struct"><Member Name="Flood_Duration" Datatype="LInt" /><Member Name="Flood_Interval" Datatype="Int" /><Member Name="Last_Flood" Datatype="Date_And_Time" /><Member Name="FillCommand" Datatype="Bool" /><Member Name="DrainCommand" Datatype="Bool" /><Member Name="WaterVolumeLimit" Datatype="Real" /><Member Name="TON_Soak" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member><Member Name="TON_Drain" Datatype="TON_TIME" Version="1.0"><Sections><Section Name="None"><Member Name="PT" Datatype="Time" /><Member Name="ET" Datatype="Time" /><Member Name="IN" Datatype="Bool" /><Member Name="Q" Datatype="Bool" /></Section></Sections></Member></Member><Member Name="Status" Datatype="Struct"><Member Name="Active" Datatype="Bool" /><Member Name="Filling" Datatype="Bool" /><Member Name="Soaking" Datatype="Bool" /><Member Name="Soaking_Finished" Datatype="Bool" /><Member Name="Draining" Datatype="Bool" /><Member Name="Finished" Datatype="Bool" /><Member Name="OverfillAlarm" Datatype="Bool" /></Member><Member Name="DQ_Fill_Solenoid" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member><Member Name="DQ_Drain_Solenoid" Datatype="&quot;udtDigitalOutput&quot;"><Sections><Section Name="None"><Member Name="bAutoVal" Datatype="Bool" /><Member Name="bOverrideVal" Datatype="Bool" /><Member Name="bStatus" Datatype="Bool" /><Member Name="bOverrideEnable" Datatype="Bool" /></Section></Sections></Member><Member Name="DI_Level_Switch" Datatype="&quot;udtDigitalInput&quot;"><Sections><Section Name="None"><Member Name="bStatus" Datatype="Bool" /><Member Name="bNormalPosition" Datatype="Bool" /></Section></Sections></Member><Member Name="iNextStep" Datatype="UInt" /><Member Name="InitialReservoirLevel" Datatype="Real" /></Section></Sections></Member>
@@ -1102,184 +1102,119 @@
     </Constant>
   </Access>
   <Token Text=";" UId="734" />
-  <NewLine Num="2" UId="735" />
+  <NewLine Num="1" UId="735" />
   <Blank Num="8" UId="736" />
-  <Token Text="IF" UId="737" />
-  <Blank Num="1" UId="738" />
-  <Access Scope="LocalVariable" UId="739">
-    <Symbol UId="740">
-      <Component Name="AI_Reservoir_Level" UId="741" />
-      <Token Text="." UId="742" />
-      <Component Name="rActual" UId="743" />
+  <NewLine Num="1" UId="737" />
+  <Blank Num="8" UId="738" />
+  <Token Text="IF" UId="739" />
+  <Blank Num="1" UId="740" />
+  <Access Scope="LocalVariable" UId="741">
+    <Symbol UId="742">
+      <Component Name="AI_Reservoir_Level" UId="743" />
+      <Token Text="." UId="744" />
+      <Component Name="rActual" UId="745" />
     </Symbol>
   </Access>
-  <Blank Num="1" UId="744" />
-  <Token Text="&gt;" UId="745" />
   <Blank Num="1" UId="746" />
-  <Access Scope="LocalVariable" UId="747">
-    <Symbol UId="748">
-      <Component Name="Controls" UId="749" />
-      <Token Text="." UId="750" />
-      <Component Name="ReservoirLowLimit" UId="751" />
+  <Token Text="&gt;" UId="747" />
+  <Blank Num="1" UId="748" />
+  <Token Text="(" UId="749" />
+  <Access Scope="LocalVariable" UId="750">
+    <Symbol UId="751">
+      <Component Name="Controls" UId="752" />
+      <Token Text="." UId="753" />
+      <Component Name="ReservoirLowLimit" UId="754" />
     </Symbol>
   </Access>
-  <Blank Num="1" UId="752" />
-  <Token Text="THEN" UId="753" />
-  <NewLine Num="1" UId="754" />
-  <Blank Num="12" UId="755" />
-  <Access Scope="LocalVariable" UId="756">
-    <Symbol UId="757">
-      <Component Name="Controls" UId="758" />
-      <Token Text="." UId="759" />
-      <Component Name="DischargeCommand" UId="760" />
+  <Blank Num="1" UId="755" />
+  <Token Text="*" UId="756" />
+  <Blank Num="1" UId="757" />
+  <Access Scope="LocalVariable" UId="758">
+    <Symbol UId="759">
+      <Component Name="Controls" UId="760" />
+      <Token Text="." UId="761" />
+      <Component Name="ReservoirDischargeDeadBand" UId="762" />
     </Symbol>
   </Access>
-  <Blank Num="1" UId="761" />
-  <Token Text=":=" UId="762" />
-  <Blank Num="1" UId="763" />
-  <Access Scope="LiteralConstant" UId="764">
-    <Constant UId="765">
-      <ConstantValue UId="767">TRUE</ConstantValue>
+  <Token Text=")" UId="763" />
+  <Blank Num="1" UId="764" />
+  <Token Text="THEN" UId="765" />
+  <NewLine Num="1" UId="766" />
+  <Blank Num="12" UId="767" />
+  <Access Scope="LocalVariable" UId="768">
+    <Symbol UId="769">
+      <Component Name="Controls" UId="770" />
+      <Token Text="." UId="771" />
+      <Component Name="DischargeCommand" UId="772" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="773" />
+  <Token Text=":=" UId="774" />
+  <Blank Num="1" UId="775" />
+  <Access Scope="LiteralConstant" UId="776">
+    <Constant UId="777">
+      <ConstantValue UId="779">TRUE</ConstantValue>
     </Constant>
   </Access>
-  <Token Text=";" UId="768" />
-  <NewLine Num="1" UId="769" />
-  <Blank Num="8" UId="770" />
-  <Token Text="ELSE" UId="771" />
-  <NewLine Num="1" UId="772" />
-  <Blank Num="12" UId="773" />
-  <Access Scope="LocalVariable" UId="774">
-    <Symbol UId="775">
-      <Component Name="Controls" UId="776" />
-      <Token Text="." UId="777" />
-      <Component Name="DischargeCommand" UId="778" />
+  <Token Text=";" UId="780" />
+  <NewLine Num="1" UId="781" />
+  <Blank Num="8" UId="782" />
+  <Token Text="ELSIF" UId="783" />
+  <Blank Num="1" UId="784" />
+  <Access Scope="LocalVariable" UId="785">
+    <Symbol UId="786">
+      <Component Name="AI_Reservoir_Level" UId="787" />
+      <Token Text="." UId="788" />
+      <Component Name="rActual" UId="789" />
     </Symbol>
   </Access>
-  <Blank Num="1" UId="779" />
-  <Token Text=":=" UId="780" />
-  <Blank Num="1" UId="781" />
-  <Access Scope="LiteralConstant" UId="782">
-    <Constant UId="783">
-      <ConstantValue UId="785">FALSE</ConstantValue>
+  <Blank Num="1" UId="790" />
+  <Token Text="&lt;=" UId="791" />
+  <Blank Num="1" UId="792" />
+  <Access Scope="LocalVariable" UId="793">
+    <Symbol UId="794">
+      <Component Name="Controls" UId="795" />
+      <Token Text="." UId="796" />
+      <Component Name="ReservoirLowLimit" UId="797" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="798" />
+  <Token Text="THEN" UId="799" />
+  <NewLine Num="1" UId="800" />
+  <Blank Num="14" UId="801" />
+  <Access Scope="LocalVariable" UId="802">
+    <Symbol UId="803">
+      <Component Name="Controls" UId="804" />
+      <Token Text="." UId="805" />
+      <Component Name="DischargeCommand" UId="806" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="807" />
+  <Token Text=":=" UId="808" />
+  <Blank Num="1" UId="809" />
+  <Access Scope="LiteralConstant" UId="810">
+    <Constant UId="811">
+      <ConstantValue UId="813">FALSE</ConstantValue>
     </Constant>
   </Access>
-  <Token Text=";" UId="786" />
-  <NewLine Num="1" UId="787" />
-  <Blank Num="12" UId="788" />
-  <Access Scope="LocalVariable" UId="789">
-    <Symbol UId="790">
-      <Component Name="Controls" UId="791" />
-      <Token Text="." UId="792" />
-      <Component Name="RunMode" UId="793" />
-    </Symbol>
-  </Access>
-  <Blank Num="1" UId="794" />
-  <Token Text=":=" UId="795" />
-  <Blank Num="1" UId="796" />
-  <Access Scope="LiteralConstant" UId="797">
-    <Constant UId="798">
-      <ConstantValue UId="800">0</ConstantValue>
-    </Constant>
-  </Access>
-  <Token Text=";" UId="801" />
-  <Blank Num="1" UId="802" />
-  <LineComment Inserted="false" NoClosingBracket="false" UId="803">
-    <Text UId="804">off</Text>
-  </LineComment>
-  <NewLine Num="1" UId="805" />
-  <Blank Num="12" UId="806" />
-  <Token Text="FOR" UId="807" />
-  <Blank Num="1" UId="808" />
-  <Access Scope="LocalVariable" UId="809">
-    <Symbol UId="810">
-      <Component Name="i" UId="811" />
-    </Symbol>
-  </Access>
-  <Blank Num="1" UId="812" />
-  <Token Text=":=" UId="813" />
-  <Blank Num="1" UId="814" />
-  <Access Scope="LiteralConstant" UId="815">
-    <Constant UId="816">
-      <ConstantValue UId="818">1</ConstantValue>
-    </Constant>
-  </Access>
-  <Blank Num="1" UId="819" />
-  <Token Text="TO" UId="820" />
-  <Blank Num="1" UId="821" />
-  <Access Scope="LocalVariable" UId="822">
-    <Symbol UId="823">
-      <Component Name="Controls" UId="824" />
-      <Token Text="." UId="825" />
-      <Component Name="Num_Shelves" UId="826" />
-    </Symbol>
-  </Access>
-  <Blank Num="1" UId="827" />
-  <Token Text="DO" UId="828" />
+  <Token Text=";" UId="814" />
+  <NewLine Num="1" UId="815" />
+  <Blank Num="8" UId="816" />
+  <Token Text="END_IF" UId="817" />
+  <Token Text=";" UId="818" />
+  <NewLine Num="1" UId="819" />
+  <Blank Num="10" UId="820" />
+  <NewLine Num="1" UId="821" />
+  <Blank Num="4" UId="822" />
+  <Token Text="END_IF" UId="823" />
+  <Token Text=";" UId="824" />
+  <NewLine Num="2" UId="825" />
+  <Blank Num="4" UId="826" />
+  <NewLine Num="1" UId="827" />
+  <Blank Num="4" UId="828" />
   <NewLine Num="1" UId="829" />
-  <Blank Num="16" UId="830" />
-  <Access Scope="LocalVariable" UId="831">
-    <Symbol UId="832">
-      <Component Name="ShelvesFertigation" UId="833">
-        <Token Text="[" UId="834" />
-        <Access Scope="LocalVariable" UId="835">
-          <Symbol UId="836">
-            <Component Name="i" UId="837" />
-          </Symbol>
-        </Access>
-        <Token Text="]" UId="838" />
-      </Component>
-      <Token Text="." UId="839" />
-      <Component Name="Status" UId="840" />
-      <Token Text="." UId="841" />
-      <Component Name="Active" UId="842" />
-    </Symbol>
-  </Access>
-  <Blank Num="1" UId="843" />
-  <Token Text=":=" UId="844" />
-  <Blank Num="1" UId="845" />
-  <Access Scope="LiteralConstant" UId="846">
-    <Constant UId="847">
-      <ConstantValue UId="849">False</ConstantValue>
-    </Constant>
-  </Access>
-  <Token Text=";" UId="850" />
-  <NewLine Num="1" UId="851" />
-  <Blank Num="16" UId="852" />
-  <Access Scope="LocalVariable" UId="853">
-    <Symbol UId="854">
-      <Component Name="Status" UId="855" />
-      <Token Text="." UId="856" />
-      <Component Name="Active_Shelf" UId="857" />
-    </Symbol>
-  </Access>
-  <Blank Num="1" UId="858" />
-  <Token Text=":=" UId="859" />
-  <Blank Num="1" UId="860" />
-  <Access Scope="LiteralConstant" UId="861">
-    <Constant UId="862">
-      <ConstantValue UId="864">-1</ConstantValue>
-    </Constant>
-  </Access>
-  <Token Text=";" UId="865" />
-  <NewLine Num="1" UId="866" />
-  <Blank Num="12" UId="867" />
-  <Token Text="END_FOR" UId="868" />
-  <Token Text=";" UId="869" />
-  <NewLine Num="1" UId="870" />
-  <Blank Num="8" UId="871" />
-  <Token Text="END_IF" UId="872" />
-  <Token Text=";" UId="873" />
-  <NewLine Num="1" UId="874" />
-  <Blank Num="4" UId="875" />
-  <Token Text="END_IF" UId="876" />
-  <Token Text=";" UId="877" />
-  <NewLine Num="1" UId="878" />
-  <Blank Num="4" UId="879" />
-  <NewLine Num="1" UId="880" />
-  <Blank Num="4" UId="881" />
-  <NewLine Num="1" UId="882" />
-  <Token Text="END_REGION" UId="883" />
-  <NewLine Num="5" UId="884" />
+  <Token Text="END_REGION" UId="830" />
+  <NewLine Num="5" UId="831" />
 </StructuredText></NetworkSource>
           <ProgrammingLanguage>SCL</ProgrammingLanguage>
         </AttributeList>

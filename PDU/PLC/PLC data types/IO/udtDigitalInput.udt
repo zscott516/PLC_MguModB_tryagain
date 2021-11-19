@@ -1,0 +1,9 @@
+﻿TYPE "udtDigitalInput"
+VERSION : 0.1
+   STRUCT
+      bStatus : Bool;
+      bNormalPosition : Bool := true;
+   END_STRUCT;
+
+END_TYPE
+

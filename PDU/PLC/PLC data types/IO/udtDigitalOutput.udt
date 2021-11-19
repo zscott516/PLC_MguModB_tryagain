@@ -1,0 +1,11 @@
+﻿TYPE "udtDigitalOutput"
+VERSION : 0.1
+   STRUCT
+      bAutoVal { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Value set by the program
+      bOverrideVal { ExternalVisible := 'False'} : Bool;   // Value set by the user, tracks bAuto when bOverrideEnable=0
+      bStatus { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Value being written to actual output
+      bOverrideEnable { ExternalVisible := 'False'} : Bool;   // Sets bOut to bOverride
+   END_STRUCT;
+
+END_TYPE
+
