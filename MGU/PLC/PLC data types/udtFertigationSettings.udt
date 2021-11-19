@@ -7,6 +7,8 @@ VERSION : 0.1
       bNutrientBEnable { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Enables nutrient B for use in dosing
       rISELowSP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Low setpoint for ISE measurement for dosing
       rISEHighSP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // High setpoint for ISE measurement for dosing
+      rECLowSP : Real;
+      rECHighSP : Real;
       tNutrientDosingDuration { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;   // Duration for which to add a nutrient during dosing (s)
       bDosingActive { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Rack was dosed on last MD cycle and is below high SP
       rOperatingVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Operating volume for fill after dosing (L)

@@ -6,6 +6,7 @@ NON_RETAIN
 
 BEGIN
    Room[1].Fertigation.Controls.rTankEmptyLevel := 60.0;
+   Room[1].HVAC.Config.ModbusServerAddr.ADDR[4] := 20;
    Room[1].AI_ISESensor.Config.rHighCalibration := 900.0;
 
 END_DATA_BLOCK
