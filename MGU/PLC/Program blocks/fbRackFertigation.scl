@@ -307,35 +307,37 @@ BEGIN
 	
 	REGION Dosing Mode
 	    // Determine if dosing is required based off of ISE or EC reading, low/high setpoints, and commanded ISE mode
-	    
-	    IF #Controls.iDosingType = 0 THEN // USE ISE PROBE
-	        #rDosingHighSP := #Controls.rISEHighSP;
-	        #rDosingLowSP := #Controls.rISELowSP;
-	        #rNutrientReading := #InLastNutrientReading.rISEReading;
-	    ELSIF #Controls.iDosingType = 1 THEN // USE EC PROBE 
-	        #rDosingHighSP := #Controls.rECHighSP;
-	        #rDosingLowSP := #Controls.rECLowSP;
-	        #rNutrientReading := #InLastNutrientReading.rECReading;
-	    END_IF;
-	    
-	    IF #Controls.iDosingMode = #eDosingMode_Auto AND #Controls.iDosingDirection = #eDosingMode_Off THEN
-	        #Controls.iDosingDirection := #eDosingMode_Load;
-	    END_IF; 
-	    
-	    // if in load mode and high SP is reached, switch to deplete
-	    IF #Controls.iDosingMode = #eDosingMode_Auto AND
-	        #Controls.#iDosingDirection = #eDosingMode_Load AND #rNutrientReading >= #rDosingHighSP THEN
-	        #Controls.#iDosingDirection := #eDosingMode_Deplete;
-	    END_IF;
-	    
-	    // if in deplete mode and low SP is reached, switch to load
-	    IF #Controls.iDosingMode = #eDosingMode_Auto AND
-	        #Controls.iDosingDirection = #eDosingMode_Deplete AND #rNutrientReading <= #rDosingLowSP THEN
-	        #Controls.iDosingDirection := #eDosingMode_Load;
-	    END_IF;
-	    
-	    IF #Controls.iDosingMode = #eDosingMode_Off THEN
-	        #Controls.iDosingDirection := #eDosingMode_Off;
+	    // wait to determine the dosing mode until fbRoomMeasurementDosing is done with the measurement (state = #eMDState_Measure_Done)
+	    IF "dbMain".Room[1].Fertigation.fbRoomMeasurementDosing.iState = 139 THEN
+	        IF #Controls.iDosingType = 0 THEN // USE ISE PROBE
+	            #rDosingHighSP := #Controls.rISEHighSP;
+	            #rDosingLowSP := #Controls.rISELowSP;
+	            #rNutrientReading := #InLastNutrientReading.rISEReading;
+	        ELSIF #Controls.iDosingType = 1 THEN // USE EC PROBE 
+	            #rDosingHighSP := #Controls.rECHighSP;
+	            #rDosingLowSP := #Controls.rECLowSP;
+	            #rNutrientReading := #InLastNutrientReading.rECReading;
+	        END_IF;
+	        
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND #Controls.iDosingDirection = #eDosingMode_Off THEN
+	            #Controls.iDosingDirection := #eDosingMode_Load;
+	        END_IF;
+	        
+	        // if in load mode and high SP is reached, switch to deplete
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND
+	            #Controls.#iDosingDirection = #eDosingMode_Load AND #rNutrientReading >= #rDosingHighSP THEN
+	            #Controls.#iDosingDirection := #eDosingMode_Deplete;
+	        END_IF;
+	        
+	        // if in deplete mode and low SP is reached, switch to load
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND
+	            #Controls.iDosingDirection = #eDosingMode_Deplete AND #rNutrientReading <= #rDosingLowSP THEN
+	            #Controls.iDosingDirection := #eDosingMode_Load;
+	        END_IF;
+	        
+	        IF #Controls.iDosingMode = #eDosingMode_Off THEN
+	            #Controls.iDosingDirection := #eDosingMode_Off;
+	        END_IF;
 	    END_IF;
 	    
 	    // Request dosing if in load mode, skip dosing if in deplete or off
