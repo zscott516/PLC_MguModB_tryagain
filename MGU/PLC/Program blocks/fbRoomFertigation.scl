@@ -1,0 +1,381 @@
+﻿FUNCTION_BLOCK "fbRoomFertigation"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      arrInMutexRequests { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of Int;   // Array of mutex requests from racks
+      arrInFertigationSettings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of "udtFertigationSettings";
+      rInTankLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInNutrientALevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInNutrientBLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInNutrientAcidLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInpHSensor { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInECSensor { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInISESensor { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rInORPReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      iInNumRacks { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Number of racks to process mutex requests for
+   END_VAR
+
+   VAR_OUTPUT 
+      bOutTankReturnSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutMPathSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutFreshWaterSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutDischargeSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutNutrientMixing { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutNutrientA { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutNutrientB { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bOutNutrientAcid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+   VAR_OUTPUT RETAIN
+      arrOutNutrientReading { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of "udtNutrientReading";   // Array of nutrient readings going to racks
+      arrOutMutexLocks { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of Int;   // Array of mutex locks going to racks
+   END_VAR
+   VAR_OUTPUT 
+      arrOutSupplySolenoids { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of Bool;   // Array of supply solenoids for each rack
+      arrOutReturnSolenoids { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of Bool;   // Array of return solenoids for each rack
+   END_VAR
+
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         bPauseFertigation { ExternalVisible := 'False'} : Bool;   // While true, prevents next rack from locking
+         rFloorPumpSpeedSP { ExternalVisible := 'False'} : Real;   // Floor pump speed (RPM)
+         iNutrientMixingMode { ExternalVisible := 'False'} : Int;   // Nutrient mixing mode (0: off, 1: on, 2: 10 minute, 3: Continuous)
+         rFreshLevelForMeasurementLoop { ExternalVisible := 'False'} : Real;   // Amount of fresh water to fill in the tank during rotate to clean measurement loop
+         rFillLevelToPreviousShelf { ExternalVisible := 'False'} : Real := 8.0;   // Amount of water to push back to previous tank during return
+         rReturnPathVolume { ExternalVisible := 'False'} : Real := 19.0;   // Return path volume (L) to fill from active rack
+         rTankEmptyLevel { ExternalVisible := 'False'} : Real := 150.0;   // Volume at which tank is considered empty (L)
+         rTankMaxVolume { ExternalVisible := 'False'} : Real := 900.0;   // Maximum volume for tank (L)
+         bNutrientAgitation { ExternalVisible := 'False'} : Bool;
+         tNutrientAgitationInterval { ExternalVisible := 'False'} : Time := T#60M;   // Agitation Frequency
+         tNutrientAgitationDuration { ExternalVisible := 'False'} : Time := T#10M;   // Agitation Pump on-time
+         rNutrientTanksLowerLimit { ExternalVisible := 'False'} : Real := 20.0;   // Liters
+      END_STRUCT;
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         iState { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Current operation (0: off, 1: Fill, 2:Measurement/Dosing, 3:Discharge)
+         iActiveRack { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Rack that currently has a lock, 0 if idle
+         iLastMDRack { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Keep track of previous rack for rotate and flush, 0 if previous operation was not measurement and dosing
+      END_STRUCT;
+      bTankReturnSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for tank return solenoid
+      bMPathSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for measurement path solenoid
+      bFreshWaterSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for fresh water solenoid
+      bDischargeSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for discharge solenoid
+      bNutrientMixingCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for nutrient mixing enable
+      bNutrientACommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for dosing nutrient A
+      bNutrientBCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for dosing nutrient B
+      bNutrientAcidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      TON_Discharge {InstructionName := 'TON_TIME'; LibVersion := '1.0'; S7_SetPoint := 'False'} : TON_TIME;
+      TON_24HourNutrientMix {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+   END_VAR
+   VAR 
+      fbRoomMeasurementDosing { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "fbRoomMeasurementDosing";
+   END_VAR
+   VAR RETAIN
+      bTransferring { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Memory bit for transfer to rack during fill process
+      rTransferredVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rVolumeToTransfer { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      bEndDischarge { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+   VAR 
+      TON_PeriodicNutrientAgitation {InstructionName := 'TON_TIME'; LibVersion := '1.0'} : TON_TIME;
+      TP_PeriodicNutrientAgitation {InstructionName := 'TP_TIME'; LibVersion := '1.0'} : TP_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      bFoundActive : Bool;
+      i : Int;   // Iterable for mutex request 
+      tCurrentDateTime : Date_And_Time;   // Current PLC Date and Time
+      tCurrentTime : Time_Of_Day;   // Current PLC Time of Day
+      retVal : Int;   // Garbage return value from RD_LOC_T
+      bMDDone : Bool;
+      rTargetFillVolume : Real;
+   END_VAR
+
+   VAR CONSTANT 
+      eRoomMode_Off : Int := 0;   // Room Off State
+      eRoomMode_Fill : Int := 1;   // Room Filling State
+      eRoomMode_MeasurementDosing : Int := 2;   // Room Measurement and Dosing State
+      eRoomMode_Discharge : Int := 3;   // Room Discharge State
+      eNutrientMixingMode_Off : Int := 0;   // Forced off
+      eNutrientMixingMode_On : Int := 1;   // Forced on
+      eNutrientMixingMode_Periodic : Int := 2;   // Run according to Interval/Duration settings
+      eNutrientMixingMode_FullDay : Int := 3;   // Run for 24 hours then switch to Ten Minute mode
+      MIX_START_TIME : Time_Of_Day := TOD#12:00:00;   // Start of 10 minute mix at noon
+      MIX_END_TIME : Time_Of_Day := TOD#12:10:00;   // End of 10 minute mix at noon
+   END_VAR
+
+
+BEGIN
+	REGION 0: Off
+	    // Close all solenoids
+	    // Iterate through mutex requests to trigger state change
+	    // Send lock when mutex request arrives
+	    
+	    IF #Status.iState = #eRoomMode_Off THEN
+	        #bTankReturnSolenoidCommand := 0;
+	        #bMPathSolenoidCommand := 0;
+	        #bFreshWaterSolenoidCommand := 0;
+	        
+	        #bFoundActive := 0;
+	        IF NOT #Controls.bPauseFertigation THEN // if not paused, check for next rack requesting lock
+	            FOR #i := 1 TO #iInNumRacks DO
+	                IF #arrInMutexRequests[#i] <> #eRoomMode_Off THEN
+	                    
+	                    // Mutex request active - update state and active rack, send lock
+	                    #Status.iState := #arrInMutexRequests[#i];
+	                    #Status.iActiveRack := #i;
+	                    #arrOutMutexLocks[#i] := #Status.iState;
+	                    #bFoundActive := 1;
+	                    //Break out of for loop
+	                    EXIT;
+	                END_IF;
+	            END_FOR;
+	        END_IF;
+	        IF NOT #bFoundActive THEN
+	            #Status.iActiveRack := 0;
+	        END_IF;
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	REGION 1: Fill
+	    // Open fresh water solenoid, fill until max volume reached or rack volume reached, close fresh water solenoid
+	    // Open rack supply solenoid, activate floor pump, wait for main tank content to return to rack
+	    
+	    // Need to keep track of how much has been sent to the rack, until total volume added matches OperatingVolume + TotalShelfVolume or
+	    // resevoir reaches max volume
+	    
+	    IF #Status.iState = #eRoomMode_Fill THEN
+	        
+	        #Status.iLastMDRack := 0; // no rotate if last rack last rack was filled
+	        
+	        #rTargetFillVolume := #arrInFertigationSettings[#Status.iActiveRack].rOperatingVolume
+	        + #arrInFertigationSettings[#Status.iActiveRack].rTotalShelfVolume;
+	        
+	        IF #rTransferredVolume >= #rTargetFillVolume OR
+	            #arrInFertigationSettings[#Status.iActiveRack].rRackCurrentVolume > #arrInFertigationSettings[#Status.iActiveRack].rMaxReservoirVolume THEN
+	            // Full volume or rack reservoir is too full, done with fill
+	            #Status.iState := #eRoomMode_Off;
+	            #arrOutMutexLocks[#Status.iActiveRack] := 0;
+	            
+	            #arrOutSupplySolenoids[#Status.iActiveRack] := 0;
+	            #bFreshWaterSolenoidCommand := 0;
+	            
+	            #bTransferring := 0;
+	            #rTransferredVolume := 0;
+	            
+	            
+	        ELSIF #rInTankLevel < #Controls.rTankMaxVolume AND
+	            #rInTankLevel - #Controls.rTankEmptyLevel + #rTransferredVolume < #rTargetFillVolume AND
+	            NOT #bTransferring THEN
+	            // Adding water to the main tank
+	            #bFreshWaterSolenoidCommand := 1;
+	            
+	        ELSIF NOT #bTransferring THEN
+	            // Start transfer from main tank to rack
+	            #bTransferring := 1;
+	            #bFreshWaterSolenoidCommand := 0;
+	            #rVolumeToTransfer := #rInTankLevel - #Controls.rTankEmptyLevel;
+	            
+	        END_IF;
+	        
+	        IF #bTransferring AND #rInTankLevel <= #Controls.rTankEmptyLevel THEN
+	            // Transfer is done, add volume to transferred total
+	            #bTransferring := 0;
+	            #rTransferredVolume += #rVolumeToTransfer;
+	            #rVolumeToTransfer := 0;
+	            #arrOutSupplySolenoids[#Status.iActiveRack] := 0;
+	            
+	        END_IF;
+	        
+	        // Transfer from main tank to rack until main tank is empty
+	        #arrOutSupplySolenoids[#Status.iActiveRack] := #bTransferring;
+	        
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	
+	REGION 2: Measurement AND Dosing
+	    // Call measurement and dosing subfunction for the room
+	    // Only write to outputs when in the correct mode
+	    
+	    // Reset the last rack id to skip rotate if that rack is not accepting rotate
+	    IF #Status.iState = #eRoomMode_MeasurementDosing AND #Status.iLastMDRack <> 0 THEN
+	        IF NOT #arrInFertigationSettings[#Status.iLastMDRack].bEnableIncomingRotate THEN
+	            #Status.iLastMDRack := 0;
+	        END_IF;
+	    END_IF;
+	    
+	     #fbRoomMeasurementDosing(bInStart := (#Status.iState = #eRoomMode_MeasurementDosing),
+	                              iInActiveRack := #Status.iActiveRack,
+	                              iInPreviousRack := #Status.iLastMDRack,
+	                              rInTankLevel := #rInTankLevel,
+	                              rInRackLevel := #arrInFertigationSettings[#Status.iActiveRack].rRackCurrentVolume,
+	                              rInISEReading := #rInISESensor,
+	                              rInECReading := #rInECSensor,
+	                              rInpHReading := #rInpHSensor,
+	                              rInORPReading := #rInORPReading,
+	                              rInFillLevelToPreviousShelf := #Controls.rFillLevelToPreviousShelf,
+	                              rInFreshLevelForMLoop := #Controls.rFreshLevelForMeasurementLoop,
+	                              rInReturnPathVolume := #Controls.rReturnPathVolume,
+	                              rInTankEmptyLevel := #Controls.rTankEmptyLevel,
+	                              InFertigationSettings := #arrInFertigationSettings[#Status.iActiveRack],
+	                              bOutTankReturnSolenoidCommand => #fbRoomMeasurementDosing.bOutTankReturnSolenoidCommand,
+	                              bOutActiveRackReturnSolenoidCommand => #fbRoomMeasurementDosing.bOutActiveRackReturnSolenoidCommand,
+	                              bOutActiveRackSupplySolenoidCommand => #fbRoomMeasurementDosing.bOutActiveRackSupplySolenoidCommand,
+	                              bOutPreviousRackReturnSolenoidCommand => #fbRoomMeasurementDosing.bOutPreviousRackReturnSolenoidCommand,
+	                              bOutPreviousRackSupplySolenoidCommand => #fbRoomMeasurementDosing.bOutPreviousRackSupplySolenoidCommand,
+	                              bOutFreshWaterSolenoidCommand => #fbRoomMeasurementDosing.bOutFreshWaterSolenoidCommand,
+	                              bOutDischargeSolenoidCommand => #fbRoomMeasurementDosing.bOutDischargeSolenoidCommand,
+	                              bOutMPathSolenoidCommand => #fbRoomMeasurementDosing.bOutMPathSolenoidCommand,
+	                              bOutNutrientACommand => #fbRoomMeasurementDosing.bOutNutrientACommand,
+	                              bOutNutrientBCommand => #fbRoomMeasurementDosing.bOutNutrientBCommand,
+	                              OutNutrientReadings => #fbRoomMeasurementDosing.OutNutrientReadings,
+	                              bOutDone => #bMDDone);
+	    
+	    //Handle output writing
+	    IF #Status.iState = #eRoomMode_MeasurementDosing THEN
+	        #bTankReturnSolenoidCommand := #fbRoomMeasurementDosing.bOutTankReturnSolenoidCommand;
+	        #bFreshWaterSolenoidCommand := #fbRoomMeasurementDosing.bOutFreshWaterSolenoidCommand;
+	        #bDischargeSolenoidCommand := #fbRoomMeasurementDosing.bOutDischargeSolenoidCommand;
+	        #bMPathSolenoidCommand := #fbRoomMeasurementDosing.bOutMPathSolenoidCommand;
+	        #bNutrientACommand := #fbRoomMeasurementDosing.bOutNutrientACommand;
+	        #bNutrientBCommand := #fbRoomMeasurementDosing.bOutNutrientBCommand;
+	        #arrOutReturnSolenoids[#Status.iActiveRack] := #fbRoomMeasurementDosing.bOutActiveRackReturnSolenoidCommand;
+	        #arrOutSupplySolenoids[#Status.iActiveRack] := #fbRoomMeasurementDosing.bOutActiveRackSupplySolenoidCommand;
+	        #arrOutReturnSolenoids[#Status.iLastMDRack] := #fbRoomMeasurementDosing.bOutPreviousRackReturnSolenoidCommand;
+	        #arrOutSupplySolenoids[#Status.iLastMDRack] := #fbRoomMeasurementDosing.bOutPreviousRackSupplySolenoidCommand;
+	        #arrOutNutrientReading[#Status.iActiveRack] := #fbRoomMeasurementDosing.OutNutrientReadings;
+	        
+	        IF #bMDDone THEN
+	            #Status.iState := #eRoomMode_Off;
+	            #arrOutMutexLocks[#Status.iActiveRack] := #eRoomMode_Off;
+	            #Status.iLastMDRack := #Status.iActiveRack; // save rack id for rotate on next M&D
+	        END_IF;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION 3: Discharge
+	    // Open discharge solenoid and rack's return solenoid
+	    // Wait for discharge time
+	    // Close solenoids and release lock
+	    // Return to Off mode
+	    
+	    #TON_Discharge(IN := (#Status.iState = #eRoomMode_Discharge),
+	                   PT := #arrInFertigationSettings[#Status.iActiveRack].tDischargeTime);
+	    
+	    IF #Status.iState = #eRoomMode_Discharge THEN
+	        
+	        IF #TON_Discharge.Q OR #arrInFertigationSettings[#Status.iActiveRack].bEndDischargeCommand THEN
+	            #bEndDischarge := 1;
+	        END_IF;
+	        
+	        
+	        IF #bEndDischarge THEN
+	            #arrOutMutexLocks[#Status.iActiveRack] := #eRoomMode_Off;
+	            
+	            // wait until pump stops to close valves
+	            IF #arrInFertigationSettings[#Status.iActiveRack].bPumpAtStandstill THEN 
+	                #bDischargeSolenoidCommand := 0;
+	                #arrOutReturnSolenoids[#Status.iActiveRack] := 0;
+	                #Status.iLastMDRack := 0; // no rotate if last rack was discharged
+	                #Status.iState := #eRoomMode_Off;
+	                #bEndDischarge := 0;
+	                #TON_Discharge.IN := 0; // reset timer
+	            END_IF;
+	            
+	        ELSE
+	            #bDischargeSolenoidCommand := 1;
+	            #arrOutReturnSolenoids[#Status.iActiveRack] := 1;
+	            
+	        END_IF;
+	        
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION Nutrient Tank Mixing
+	    // 0: forced off, 1: forced on, 2: 10 minutes per day at noon, 3: Run for 24 hours then jump to mode 2
+	    
+	    
+	    // if the tanks are too low, switch agitation to off
+	    (*IF #rInNutrientALevel < #Controls.rNutrientTanksLowerLimit OR #rInNutrientBLevel < #Controls.rNutrientTanksLowerLimit THEN
+	        #Controls.iNutrientMixingMode := #eNutrientMixingMode_Off;
+	    END_IF;
+	    *)
+	    
+	    #TON_24HourNutrientMix(IN := (#Controls.iNutrientMixingMode = #eNutrientMixingMode_FullDay),
+	                           PT := T#24h);
+	    
+	    // if mode is set to periodic agitation, run timer to periodically run pumps
+	    #Controls.bNutrientAgitation := #TON_PeriodicNutrientAgitation.Q;
+	    #TON_PeriodicNutrientAgitation(IN := #Controls.iNutrientMixingMode = #eNutrientMixingMode_Periodic AND NOT #Controls.bNutrientAgitation,
+	                                   PT := #Controls.tNutrientAgitationInterval);
+	    
+	    #TP_PeriodicNutrientAgitation(IN := #Controls.bNutrientAgitation,
+	                                  PT := #Controls.tNutrientAgitationDuration,
+	                                  Q => #bNutrientMixingCommand);
+	    
+	    
+	    IF #Controls.iNutrientMixingMode = #eNutrientMixingMode_Off THEN
+	        #bNutrientMixingCommand := 0;
+	        
+	    ELSIF #Controls.iNutrientMixingMode = #eNutrientMixingMode_On THEN
+	        #bNutrientMixingCommand := 1;
+	        
+	        (*
+	    ELSIF #Controls.iNutrientMixingMode = #eNutrientMixingMode_Periodic THEN
+	      
+	        // Extract current PLC time
+	        #retVal := RD_LOC_T(OUT => #tCurrentDateTime);
+	        #tCurrentTime := DT_TO_TOD(IN := #tCurrentDateTime);
+	        
+	        IF (#tCurrentTime < #MIX_END_TIME) AND (#tCurrentTime > #MIX_START_TIME) T
+	            #bNutrientMixingCommand := 1;
+	        ELSE
+	            #bNutrientMixingCommand := 0;
+	        END_IF;
+	        
+	        *)
+	        
+	    ELSIF #Controls.iNutrientMixingMode = #eNutrientMixingMode_FullDay THEN
+	        
+	        IF #TON_24HourNutrientMix.Q THEN
+	            #bNutrientMixingCommand := 0;
+	            #Controls.iNutrientMixingMode := #eNutrientMixingMode_Periodic;
+	        ELSE
+	            #bNutrientMixingCommand := 1;
+	        END_IF;
+	        
+	        // Catchall for incorrectly entered state, just turn off mixer
+	    //ELSE
+	    //    #bNutrientMixingCommand := 0;
+	    END_IF;
+	    
+	    // IF not forced on and then tank levels are too low, override above and disable mixing until tanks are filled
+	    IF NOT (#Controls.iNutrientMixingMode = #eNutrientMixingMode_On) AND
+	           (#rInNutrientALevel < #Controls.rNutrientTanksLowerLimit OR
+	            #rInNutrientBLevel < #Controls.rNutrientTanksLowerLimit) THEN
+	        #bNutrientMixingCommand := 0;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION Set digital outputs
+	    #bOutTankReturnSolenoid := #bTankReturnSolenoidCommand;
+	    #bOutMPathSolenoid      := #bMPathSolenoidCommand;
+	    #bOutFreshWaterSolenoid := #bFreshWaterSolenoidCommand;
+	    #bOutDischargeSolenoid  := #bDischargeSolenoidCommand;
+	    #bOutNutrientMixing     := #bNutrientMixingCommand;
+	    #bOutNutrientA          := #bNutrientACommand;
+	    #bOutNutrientB          := #bNutrientBCommand;
+	    #bOutNutrientAcid       := #bNutrientAcidCommand;
+	    
+	END_REGION
+	
+	
+	
+END_FUNCTION_BLOCK
+

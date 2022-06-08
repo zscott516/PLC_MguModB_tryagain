@@ -1,0 +1,26 @@
+﻿TYPE "udtFertigationSettings"
+VERSION : 0.1
+   STRUCT
+      tMeasurementTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;   // Duration of cycle through M loop before measurement taken (s)
+      rMeasurementVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Amount of water to receive from rack for measurement (L)
+      bNutrientAEnable { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Enables nutrient A for use in dosing
+      bNutrientBEnable { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Enables nutrient B for use in dosing
+      rISELowSP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Low setpoint for ISE measurement for dosing
+      rISEHighSP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // High setpoint for ISE measurement for dosing
+      rECLowSP : Real;
+      rECHighSP : Real;
+      tNutrientDosingDuration { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;   // Duration for which to add a nutrient during dosing (s)
+      bDosingActive { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Rack was dosed on last MD cycle and is below high SP
+      rOperatingVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Operating volume for fill after dosing (L)
+      rTotalShelfVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      rMaxReservoirVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Maximum water capacity of the rack (L)
+      rMinReservoirVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Minimum water capacity of the rack (L)
+      rRackCurrentVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Current rack fill level (L)
+      bPumpAtStandstill { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      bEndDischargeCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      tDischargeTime { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;
+      bEnableIncomingRotate { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Rack is in M&D mode and circulating state
+   END_STRUCT;
+
+END_TYPE
+

@@ -1,0 +1,19 @@
+﻿FUNCTION "fcAnalogInput" : Real
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInRawValue : Int;
+      rLowCalibration : Real;
+      rHighCalibration : Real;
+   END_VAR
+
+
+BEGIN
+	// Scale raw input (0 to 27648 for 4-20mA and 0-10V)
+	#fcAnalogInput :=
+	
+	( INT_TO_REAL(#iInRawValue) / INT_TO_REAL("IoScaling.S7Analog.Default.iRawMax")) *
+	(#rHighCalibration - #rLowCalibration) + #rLowCalibration;
+	
+END_FUNCTION
+

@@ -1,0 +1,352 @@
+﻿FUNCTION_BLOCK "fbConfig"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT RETAIN
+      bInSimulation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool := false;   // If true, skips IO reconfig steps
+   END_VAR
+
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         iSetNumRooms { ExternalVisible := 'False'} : Int := 1;
+         arrSetNumRacksPerRoom { ExternalVisible := 'False'} : Array[1.."MAX_ROOMS"] of Int := [6];
+         bSetConfig { ExternalVisible := 'False'} : Bool := false;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         bDone { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         bBusy { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         bError { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         ErrorMsg { ExternalVisible := 'False'; ExternalWritable := 'False'} : String;
+      END_STRUCT;
+      iNumRooms { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int := 0;
+      iStep { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      iNextStep { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+      R_TRIG_SetConfig {InstructionName := 'R_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : R_TRIG;
+      ReconfigIOSystem {InstructionName := 'ReconfigIOSystem'; LibVersion := '1.2'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : ReconfigIOSystem;
+      arrVfdDeviceConfig { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[-2.."MAX_VFDS"] of Word;
+   END_VAR
+
+   VAR_TEMP 
+      iRoomIndex : Int;
+      iRackIndex : Int;
+      arrTelegrams : Array[1.."MAX_VFDS"] of HW_SUBMODULE;
+      arrIoDeviceIds : Array[1.."MAX_VFDS"] of HW_DEVICE;
+      i : Int;
+      iVfdCount : Int;
+      bSettingsValid : Bool;
+      strErrorCode : String;
+      retVal : Word;
+   END_VAR
+
+   VAR CONSTANT 
+      eStep_ValidateConfig : Int;
+      eStep_SetUp : Int := 1;
+      eStep_Deactivate : Int := 2;
+      eStep_WaitForDeactivate : Int := 3;
+      eStep_Reconfig : Int := 4;
+      eStep_WaitForReconfig : Int := 5;
+      eStep_Restart : Int := 6;
+      eStep_Done : Int := 7;
+      eStep_Error : Int := 8;
+   END_VAR
+
+
+BEGIN
+	// Enables VFDs and IO racks based on the number of configured rooms and racks.
+	// The intention is for everything to be configurable via the OPC UA interface and nothing
+	// needs to be changed in TIA Portal, so that all deployments regardless of size can use the same codebase.
+	
+	// Global constants for reference:
+	(*
+	"MAX_ROOMS"
+	"MAX_RACKS_PER_ROOM"
+	"MAX_VFDS"
+	
+	"NUM_AI_ROOM"
+	"NUM_AI_RACK"
+	"MAX_AI_TOTAL"
+	
+	"NUM_DQ_ROOM"
+	"NUM_DQ_RACK"
+	"MAX_DQ_TOTAL"
+	*)
+	
+	REGION 0: Validate config, set num racks and rooms
+	    
+	    // wait for start command
+	    #R_TRIG_SetConfig(CLK:= #Controls.bSetConfig);
+	    
+	    // also trigger on PLC startup
+	    IF "FirstScan" OR #iStep = #eStep_ValidateConfig OR
+	        (#R_TRIG_SetConfig.Q AND (#iStep = #eStep_Done OR #iStep = #eStep_Error) ) THEN
+	        
+	        REGION Check error conditions            
+	            // make sure specified number of rooms and racks is valid
+	            #bSettingsValid := TRUE;
+	            #Status.ErrorMsg := '';
+	            
+	            IF "MAX_VFDS" <> "MAX_ROOMS" * "MAX_RACKS_PER_ROOM" THEN
+	                #bSettingsValid := FALSE;
+	                #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' MAX_VFDS != MAX_ROOMS*MAX_RACKS ');
+	            END_IF;
+	            
+	            IF #Controls.iSetNumRooms > "MAX_ROOMS" THEN
+	                #bSettingsValid := FALSE;
+	                #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' NumRooms > MAX ');
+	            END_IF;
+	            
+	            FOR #i := 1 TO UINT_TO_INT("MAX_ROOMS") DO
+	                IF #Controls.arrSetNumRacksPerRoom[#i] > "MAX_RACKS_PER_ROOM" THEN
+	                    #bSettingsValid := FALSE;
+	                    #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' NumRacks > MAX ');
+	                    EXIT;
+	                END_IF;
+	            END_FOR;
+	            
+	            IF "MAX_AI_PER_ROOM" <> ("NUM_AI_ROOM" + "NUM_AI_RACK" * "MAX_RACKS_PER_ROOM" + "EXTRA_AI_PER_ROOM") OR ( "MAX_AI_PER_ROOM" MOD 4 <> 0) THEN
+	                #bSettingsValid := FALSE;
+	                #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' MAX_AI_PER_ROOM incorrect ');
+	            END_IF;
+	            
+	            IF "MAX_DQ_PER_ROOM" <> ("NUM_DQ_ROOM" + "NUM_DQ_RACK" * "MAX_RACKS_PER_ROOM" + "EXTRA_DQ_PER_ROOM") OR ( "MAX_DQ_PER_ROOM" MOD 8 <> 0) THEN
+	                #bSettingsValid := FALSE;
+	                #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' MAX_DQ_PER_ROOM incorrect ');
+	            END_IF;
+	            
+	        END_REGION
+	        
+	        IF #bSettingsValid THEN
+	            // set number of rooms
+	            #iNumRooms := #Controls.iSetNumRooms;
+	            
+	            FOR #iRoomIndex := 1 TO #iNumRooms DO
+	                // set number of racks in each room
+	                "dbMain".Room[#iRoomIndex].Config.iNumRacks := #Controls.arrSetNumRacksPerRoom[#iRoomIndex];
+	            END_FOR;
+	            
+	            #iNextStep := #eStep_SetUp;
+	            
+	        ELSE
+	            #iNextStep := #eStep_Error;
+	            
+	        END_IF;
+	        
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION 1: Set up params
+	    
+	    IF #iStep = #eStep_SetUp THEN
+	        
+	        REGION Map VFD IO device system constants
+	            // Populate temp array of system constants for all possible VFDs
+	            #arrIoDeviceIds[1] := "RackPumpVFD_1~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[2] := "RackPumpVFD_2~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[3] := "RackPumpVFD_3~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[4] := "RackPumpVFD_4~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[5] := "RackPumpVFD_5~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[6] := "RackPumpVFD_6~PROFINET_interface~IODevice";
+	            (*
+	            #arrIoDeviceIds[7] := "RackPumpVFD_7~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[8] := "RackPumpVFD_8~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[9] := "RackPumpVFD_9~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[10] := "RackPumpVFD_10~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[11] := "RackPumpVFD_11~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[12] := "RackPumpVFD_12~PROFINET_interface~IODevice";
+	            
+	            
+	            #arrIoDeviceIds[13] := "RackPumpVFD_13~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[14] := "RackPumpVFD_14~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[15] := "RackPumpVFD_15~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[16] := "RackPumpVFD_16~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[17] := "RackPumpVFD_17~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[18] := "RackPumpVFD_18~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[19] := "RackPumpVFD_19~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[20] := "RackPumpVFD_20~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[21] := "RackPumpVFD_21~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[22] := "RackPumpVFD_22~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[23] := "RackPumpVFD_23~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[24] := "RackPumpVFD_24~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[25] := "RackPumpVFD_25~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[26] := "RackPumpVFD_26~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[27] := "RackPumpVFD_27~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[28] := "RackPumpVFD_28~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[29] := "RackPumpVFD_29~PROFINET_interface~IODevice";
+	            #arrIoDeviceIds[30] := "RackPumpVFD_30~PROFINET_interface~IODevice";
+	            *)
+	            
+	        END_REGION
+	        
+	        REGION Map VFD telegram hw submodule system constants
+	            // Populate temp array of system constants for all possible VFDs
+	            #arrTelegrams[1] := "RackPumpVFD_1~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[2] := "RackPumpVFD_2~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[3] := "RackPumpVFD_3~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[4] := "RackPumpVFD_4~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[5] := "RackPumpVFD_5~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[6] := "RackPumpVFD_6~PROFINET_interface~Free_telegram";
+	            (*
+	            #arrTelegrams[7] := "RackPumpVFD_7~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[8] := "RackPumpVFD_8~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[9] := "RackPumpVFD_9~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[10] := "RackPumpVFD_10~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[11] := "RackPumpVFD_11~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[12] := "RackPumpVFD_12~PROFINET_interface~Free_telegram";
+	            
+	            
+	            #arrTelegrams[13] := "RackPumpVFD_13~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[14] := "RackPumpVFD_14~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[15] := "RackPumpVFD_15~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[16] := "RackPumpVFD_16~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[17] := "RackPumpVFD_17~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[18] := "RackPumpVFD_18~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[19] := "RackPumpVFD_19~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[20] := "RackPumpVFD_20~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[21] := "RackPumpVFD_21~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[22] := "RackPumpVFD_22~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[23] := "RackPumpVFD_23~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[24] := "RackPumpVFD_24~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[25] := "RackPumpVFD_25~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[26] := "RackPumpVFD_26~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[27] := "RackPumpVFD_27~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[28] := "RackPumpVFD_28~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[29] := "RackPumpVFD_29~PROFINET_interface~Free_telegram";
+	            #arrTelegrams[30] := "RackPumpVFD_30~PROFINET_interface~Free_telegram";
+	            *)
+	            
+	        END_REGION
+	        
+	        REGION Assign VFDs to racks, set up IO reconfig array
+	            
+	            #iVfdCount := 0;
+	            
+	            FOR #iRoomIndex := 1 TO #iNumRooms DO
+	                
+	                // Assign VFDs to configured rooms and racks, only using the ones we need
+	                // Link up the Hw_SubModule system constant for each VFD's Profinet telegram
+	                
+	                FOR #iRackIndex := 1 TO #Controls.arrSetNumRacksPerRoom[#iRoomIndex] DO
+	                    #iVfdCount += 1;
+	                    
+	                    "dbMain".Room[#iRoomIndex].Rack[#iRackIndex].Fertigation.Pump.fbVFD.hwInTelegram :=
+	                    #arrTelegrams[#iVfdCount];
+	                    
+	                END_FOR;
+	                
+	            END_FOR;
+	            
+	            // populate data record array for reconfig io fb
+	            #arrVfdDeviceConfig[-2] := 16#0100; // Version of the data record (1.0)
+	            #arrVfdDeviceConfig[-1] := INT_TO_WORD(#iVfdCount); // Number of IO devices to be activated
+	            
+	            // populate input array with IO device IDs for all the VFDs we are using
+	            FOR #i := 0 TO #iVfdCount-1 DO
+	                #arrVfdDeviceConfig[#i] := UINT_TO_WORD(#arrIoDeviceIds[#i+1]);
+	            END_FOR;
+	            
+	            // zero out rest of array (zero port interconnections used since everything is defined in topology)
+	            FOR #i := #iVfdCount TO UINT_TO_INT("MAX_VFDS") DO
+	                #arrVfdDeviceConfig[#i] := 0;
+	            END_FOR;
+	            
+	        END_REGION
+	        
+	        REGION Assign Modbus TCP HVAC servers to rooms
+	            FOR #i := 1 TO #iNumRooms DO
+	                
+	                // Port and connection ID
+	                "dbMain".Room[#i].HVAC.Config.ID := INT_TO_UINT(80 + #i);
+	                
+	                // IP address
+	                "dbMain".Room[#i].HVAC.Config.ModbusServerAddr.ADDR[1] := 10;
+	                "dbMain".Room[#i].HVAC.Config.ModbusServerAddr.ADDR[2] := 1;
+	                "dbMain".Room[#i].HVAC.Config.ModbusServerAddr.ADDR[3] := 0;
+	                "dbMain".Room[#i].HVAC.Config.ModbusServerAddr.ADDR[4] := INT_TO_BYTE(19 + #i);
+	                
+	            END_FOR;
+	        END_REGION
+	        
+	        IF #bInSimulation THEN
+	            #iNextStep := #eStep_Done;
+	        ELSE
+	            #iNextStep := #eStep_Deactivate;
+	        END_IF;
+	        
+	    END_IF;
+	END_REGION
+	
+	REGION Call ReconfigIOSystem FB
+	
+	    CASE #iStep OF
+	        #eStep_Deactivate:
+	            #ReconfigIOSystem.REQ := TRUE;
+	            #ReconfigIOSystem.MODE := 1;
+	            IF #ReconfigIOSystem.DONE THEN
+	                #iNextStep := #eStep_WaitForDeactivate;
+	            END_IF;
+	            
+	        #eStep_WaitForDeactivate:
+	            #ReconfigIOSystem.REQ := FALSE;
+	            #iNextStep := #eStep_Reconfig;
+	            
+	        #eStep_Reconfig:
+	            #ReconfigIOSystem.REQ := TRUE;
+	            #ReconfigIOSystem.MODE := 2;
+	            IF #ReconfigIOSystem.DONE THEN
+	                #iNextStep := #eStep_WaitForReconfig;
+	            END_IF;
+	            
+	        #eStep_WaitForReconfig:
+	            #ReconfigIOSystem.REQ := FALSE;
+	            #iNextStep := #eStep_Restart;
+	            
+	        #eStep_Restart:
+	            #ReconfigIOSystem.REQ := TRUE;
+	            #ReconfigIOSystem.MODE := 3;
+	            IF #ReconfigIOSystem.DONE THEN
+	                #iNextStep := #eStep_Done;
+	            END_IF;
+	                
+	        ELSE
+	            #ReconfigIOSystem.REQ := FALSE;
+	            #ReconfigIOSystem.MODE := 0;
+	            
+	    END_CASE;
+	    
+	    #ReconfigIOSystem(REQ := #ReconfigIOSystem.REQ,
+	                      MODE := #ReconfigIOSystem.MODE,
+	                      LADDR := "Local~PROFINET_interface_1",
+	                      CTRLREC := #arrVfdDeviceConfig,
+	                      STATUS => #ReconfigIOSystem.STATUS,
+	                      BUSY => #ReconfigIOSystem.BUSY,
+	                      DONE => #ReconfigIOSystem.DONE,
+	                      ERROR => #ReconfigIOSystem.ERROR);
+	    
+	    // catch and log error
+	    IF #ReconfigIOSystem.ERROR THEN
+	        #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' ReconfigIO Error Code: ');
+	        #retVal := HTA(IN := #ReconfigIOSystem.STATUS, N := 4, OUT => #strErrorCode);
+	        #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := #strErrorCode);
+	        
+	        #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := ' On device: ');
+	        #retVal := HTA(IN := #ReconfigIOSystem.ERR_INFO, N := 2, OUT => #strErrorCode);
+	        #Status.ErrorMsg := CONCAT(IN1 := #Status.ErrorMsg, IN2 := #strErrorCode);
+	        
+	        #iNextStep := #eStep_Error;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION Set status outputs
+	    #Status.bDone := #iStep = #eStep_Done;
+	    #Status.bBusy := #iStep <> #eStep_Done AND #iStep <> #eStep_Error;
+	    #Status.bError := #iStep = #eStep_Error;
+	    
+	END_REGION
+	
+	// set step for next scan
+	#iStep := #iNextStep;
+END_FUNCTION_BLOCK
+

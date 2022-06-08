@@ -1,0 +1,13 @@
+﻿DATA_BLOCK "dbMain"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+"fbMain"
+
+BEGIN
+   Room[1].Fertigation.Controls.rTankEmptyLevel := 60.0;
+   Room[1].HVAC.Config.ModbusServerAddr.ADDR[4] := 20;
+   Room[1].AI_ISESensor.Config.rHighCalibration := 900.0;
+
+END_DATA_BLOCK
+

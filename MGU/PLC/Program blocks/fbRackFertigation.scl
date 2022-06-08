@@ -1,0 +1,365 @@
+﻿FUNCTION_BLOCK "fbRackFertigation"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInMutexLockConfirmation { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // 0: Off, 1: Fill, 2: Measurement/Dosing, 3:Discharge
+      InLastNutrientReading { ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtNutrientReading";
+      rInReservoirLevel { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Rack reservoir level
+      bInReturnSolenoidStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Return solenoid status for determining when return to main tank or discharge
+      bInShelfSolenoidStatus { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR_OUTPUT 
+      iOutMutexRequest { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // 0: Off, 1: Fill, 2: Measurement/Dosing, 3:Discharge
+      OutFertigationSettings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : "udtFertigationSettings";
+      bOutShelfSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         iModeCommand { ExternalVisible := 'False'} : Int;   // 0: Off, 1: Fill, 2: Measurement/Dosing, 3:Discharge, 4: Circulate
+         dtLastMeasurement { ExternalVisible := 'False'} : Date_And_Time := DT#2020-07-14-15:57:00;   // time since last measurement (0-86400s)
+         bEndDischargeCommand { ExternalVisible := 'False'} : Bool;   // Command to end discharge before timer expires
+         diDischargeTimeSecs { ExternalVisible := 'False'} : DInt := 10800;   // Discharge duration (seconds)
+         rPumpReservoirInterlockLevel { ExternalVisible := 'False'} : Real := 180.0;   // Reservoir level below which to turn off pump (L)
+         rPumpContinousSpeed { ExternalVisible := 'False'} : Real := 79.2;   // Commanded pump speed (%)
+         rPumpReturnSpeed { ExternalVisible := 'False'} : Real := 80.8;   // Commanded pump speed (%)
+         rPumpDischargeSpeed { ExternalVisible := 'False'} : Real := 91.7;   // Commanded pump speed (%)
+         diMeasurementSecs { ExternalVisible := 'False'} : DInt := 180;   // Duration of measurement (seconds)
+         diDosingIntervalMins { ExternalVisible := 'False'} : DInt := 120;   // Time to stay in circulate mode before trigerring a M&D routine
+         rMeasurementVolume { ExternalVisible := 'False'} : Real := 200.0;   // Volume to move from reservoir to tank during measurement
+         iDosingType { ExternalVisible := 'False'} : Int;   // 0: ISE, 1: EC
+         iDosingMode { ExternalVisible := 'False'} : Int := 1;   // 0: Off,  2: Auto
+         iDosingDirection { ExternalVisible := 'False'} : Int;   // 0: off, 1: load, 2 deplete
+         bNutrientAEnable { ExternalVisible := 'False'} : Bool := true;   // Enable nutrient A for dosing
+         bNutrientBEnable { ExternalVisible := 'False'} : Bool := true;   // Enable nutrient B for dosing
+         rISELowSP { ExternalVisible := 'False'} : Real := 35.0;   // Low ISE setpoint for dosing
+         rISEHighSP { ExternalVisible := 'False'} : Real := 145.0;   // High ISE setpoint for dosing
+         rECLowSP { ExternalVisible := 'False'} : Real := 1.0;   // Low EC setpoint for dosing
+         rECHighSP { ExternalVisible := 'False'} : Real := 1.5;   // High EC setpoint for dosing
+         diNutrientDosingSecs { ExternalVisible := 'False'} : DInt := 60;   // Duration of nutrient dosing (seconds)
+         rOperatingVolume { ExternalVisible := 'False'} : Real := 450.0;   // Operating volume for rack reservoir (L)
+         rTotalShelfVolume { ExternalVisible := 'False'} : Real := 1800.0;   // Total volume of the shelves (L)
+         rMaxReservoirVolume { ExternalVisible := 'False'} : Real := 900.0;   // Maximum water capacity of the rack reservoir (L)
+      END_STRUCT;
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         iState { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // 0: Off, 1: Fill, 2: Measurement/Dosing, 3:Discharge, 4: Circulate
+         NutrientLevels { ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "udtNutrientReading";   // Last measured nutrient levels
+      END_STRUCT;
+   END_VAR
+   VAR 
+      Pump { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRackPump";
+   END_VAR
+   VAR RETAIN
+      bShelfSolenoidCommand { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Command for shelf solenoid
+      bLockConfirmedModeActive { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Memory bit for mutex lock, used to detect lock dropping out
+      iNextMode { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;   // Holder for next user commanded mode
+      rInitialVolume { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Initial volume of reservoir at start of measurement
+   END_VAR
+   VAR 
+      NutrientReadingReady {InstructionName := 'F_TRIG'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : F_TRIG;
+   END_VAR
+   VAR RETAIN
+      TON_Circulate {InstructionName := 'TON_TIME'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TON_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      retVal : Int;
+      tCurrentDateTime : Date_And_Time;
+      lastDelta : Date_And_Time;
+      rPumpSpeed : Real;
+      rDosingHighSP : Real;
+      rDosingLowSP : Real;
+      rNutrientReading : Real;
+   END_VAR
+
+   VAR CONSTANT 
+      eRackMode_Off : Int := 0;   // Rack Off State
+      eRackMode_Fill : Int := 1;   // Rack Fill State
+      eRackMode_MeasurementDosing : Int := 2;   // Rack Measurement and Dosing State
+      eRackMode_Discharge : Int := 3;   // Rack Discharge State
+      eRackMode_Circulate : Int := 4;   // Rack Circulate State
+      eDosingMode_Off : Int := 0;   // Skip dosing for this rack
+      eDosingMode_Load : Int := 1;   // Dose nutrients up to ISE High SP
+      eDosingMode_Deplete : Int := 2;   // Does nutrients up to ISE Low SP
+      eDosingMode_Auto : Int := 2;   // Simplified FarmManager interface mode
+   END_VAR
+
+
+BEGIN
+	// Rack Level Fertigation Controller
+	// Responsible for: sending mutex lock requests to room, managing shelf valve and rack pump, and controlling rack state
+	// Rack States:
+	//      0 - Off
+	//      1 - Fill
+	//      2 - Measurement and Dosing
+	//      3 - Discharge
+	//      4 - Circulate (Default State)
+	
+	
+	
+	
+	REGION 0: Off
+	    // In the off state, close the shelf solenoid and turn off the pump
+	    // IF #Status.iState = #eRackMode_Off  THEN
+	    //     #iOutMutexRequest := #eRackMode_Off;
+	    // END_IF;
+	    
+	    // wait to turn off shelf solenoid until pump stops
+	    IF #Status.iState = #eRackMode_Off AND #Pump.Status.rActualSpeed = 0 THEN
+	        #bShelfSolenoidCommand := 0;
+	    END_IF;
+	    
+	END_REGION
+	
+	REGION 1: Fill
+	    // In the fill state, send the mutex lock request, wait for confirmation, run the pump and open the shelf solenoid
+	    // once the mutex lock drops out, move directly to 4: Circulate and set commanded mode to Circulate
+	    
+	    IF #Status.iState = #eRackMode_Fill THEN
+	        
+	        IF #iInMutexLockConfirmation = #eRackMode_Fill THEN
+	            #bLockConfirmedModeActive := 1;
+	            #bShelfSolenoidCommand := 1;
+	        ELSIF (#iInMutexLockConfirmation <> #eRackMode_Fill) AND #bLockConfirmedModeActive THEN
+	            #bLockConfirmedModeActive := 0;
+	            #iNextMode := #eRackMode_Circulate;
+	            #Controls.iModeCommand := #eRackMode_Circulate;
+	        END_IF;
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	REGION 2: Measurement & Dosing
+	    // In the measurement and dosing state, send the mutex lock request along with the nutrient
+	    // dosing setpoints, wait for confirmation, then automatically transition TO 4: Circulation
+	    
+	    IF #Status.iState = #eRackMode_MeasurementDosing THEN
+	        
+	        
+	        // confirm that we are locked
+	        IF #iInMutexLockConfirmation = #eRackMode_MeasurementDosing AND NOT #bLockConfirmedModeActive THEN
+	            #bLockConfirmedModeActive := 1;
+	            #bShelfSolenoidCommand := 1;
+	            #rInitialVolume := #rInReservoirLevel;
+	            
+	            // check that M&D is done, go back to circulate
+	        ELSIF #iInMutexLockConfirmation <> #eRackMode_MeasurementDosing AND #bLockConfirmedModeActive THEN
+	            #bLockConfirmedModeActive := 0;
+	            #iNextMode := #eRackMode_Circulate;
+	            #retVal := RD_LOC_T(#Controls.dtLastMeasurement); // save last time measurement has occured
+	        END_IF;
+	        
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	REGION 3: Discharge
+	    // In the discharge state, send the mutex lock request, wait for confirmation, close shelf solenoid
+	    // once the mutex lock drops out, move directly to 0: Off and set commanded mode to Off
+	    
+	    IF #Status.iState = #eRackMode_Discharge THEN
+	        
+	        IF #iInMutexLockConfirmation = #eRackMode_Discharge THEN
+	            #bLockConfirmedModeActive := 1;
+	            #bShelfSolenoidCommand := 0;
+	        ELSIF (#iInMutexLockConfirmation <> #eRackMode_Discharge) AND #bLockConfirmedModeActive THEN
+	            #bLockConfirmedModeActive := 0;
+	            #iNextMode := #eRackMode_Off;
+	            #Controls.iModeCommand := #eRackMode_Off;
+	        END_IF;
+	    ELSE
+	        #Controls.bEndDischargeCommand := FALSE;
+	    END_IF;
+	    
+	    #OutFertigationSettings.tDischargeTime := DINT_TO_TIME(#Controls.diDischargeTimeSecs * 1000);
+	    #OutFertigationSettings.bEndDischargeCommand := #Controls.bEndDischargeCommand;
+	    
+	END_REGION
+	
+	REGION 4: Circulate
+	    // In the circulate state, open the shelf solenoid and run the pump
+	    // Mutex request to Room is off
+	    IF #Status.iState = #eRackMode_Circulate THEN
+	        #bShelfSolenoidCommand := 1;
+	        #iOutMutexRequest := #eRackMode_Off;
+	    END_IF;
+	    
+	    // Automatically trigger M&D after 2 hours of circulating if the commanded state is M&D
+	    // 
+	    #retVal := RD_LOC_T(OUT => #tCurrentDateTime);
+	    
+	    #lastDelta := T_SUB(IN1 := #tCurrentDateTime,
+	                        IN2 := DINT_TO_TIME(#Controls.diDosingIntervalMins * 60 * 1000));
+	    
+	    IF (#Status.iState = #eRackMode_Circulate AND
+	        #Controls.iModeCommand = #eRackMode_MeasurementDosing AND
+	        #lastDelta > #Controls.dtLastMeasurement) THEN
+	        #iNextMode := #eRackMode_MeasurementDosing;
+	    END_IF;
+	    
+	    
+	    (*
+	    #TON_Circulate(IN := #Status.iState = #eRackMode_Circulate AND #Controls.iModeCommand = #eRackMode_MeasurementDosing,
+	                   PT := DINT_TO_TIME(#Controls.diDosingIntervalMins * 60 * 1000));
+	    
+	    IF #TON_Circulate.Q THEN
+	        #iNextMode := #eRackMode_MeasurementDosing;
+	    END_IF;
+	    *)
+	    
+	END_REGION
+	
+	REGION State Management
+	    // If rack is in Off or Circulate, take the OPC commanded state
+	    // Except if commanding M&D, go into circulate first, then it will automatically go into M&D on the timer
+	    // If rack is in M&D, Fill, or Discharge, wait for the automatic state transition
+	    
+	    //Check that the Rack is in a state where it can perform a state change
+	    IF (#Status.iState <> #Controls.iModeCommand) AND (#Status.iState = #iNextMode) THEN
+	        IF (#Status.iState <> #eRackMode_Off AND #Status.iState <> #eRackMode_Circulate) THEN
+	            #Controls.iModeCommand := #Status.iState;
+	        END_IF;
+	    END_IF;
+	    
+	    
+	    IF #Status.iState = #eRackMode_Off AND #Controls.iModeCommand = #eRackMode_MeasurementDosing THEN
+	        #iNextMode := #eRackMode_Circulate;
+	    ELSIF #Status.iState = #eRackMode_Off OR
+	        (#Status.iState = #eRackMode_Circulate AND #Controls.iModeCommand <> #eRackMode_MeasurementDosing) THEN
+	        #iNextMode := #Controls.iModeCommand;
+	    END_IF;
+	    
+	    //Set Mutex Request
+	    IF #iNextMode = #Status.iState OR (#iNextMode = #eRackMode_Circulate) THEN
+	        #iOutMutexRequest := #eRackMode_Off;
+	    ELSE
+	        #iOutMutexRequest := #iNextMode;
+	    END_IF;
+	    
+	    //Change to next state
+	    IF #iNextMode = #iInMutexLockConfirmation OR #iNextMode = #eRackMode_Off OR #iNextMode = #eRackMode_Circulate THEN
+	        #Status.iState := #iNextMode;
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	
+	REGION Pump Management
+	    
+	    IF #rInReservoirLevel < #Controls.rPumpReservoirInterlockLevel OR #Status.iState = #eRackMode_Off THEN
+	        // turn off pump if there's not enough water
+	        #rPumpSpeed := 0;
+	        
+	    ELSIF #Status.iState = #eRackMode_MeasurementDosing AND #bInReturnSolenoidStatus = 1 THEN
+	        // returning water to the main tank, check that the return solenoid is open
+	        #rPumpSpeed := #Controls.rPumpReturnSpeed;
+	        
+	    ELSIF #Status.iState = #eRackMode_Discharge AND #bInReturnSolenoidStatus = 1 THEN
+	        // discharging water from rack reservoir to sewer, check that the return solenoid is open
+	        #rPumpSpeed := #Controls.rPumpDischargeSpeed;
+	        
+	    ELSIF #bInShelfSolenoidStatus = 1 THEN
+	        // circulate mode, fill mode, and all other state, double check the the shelf solenoid is open
+	        #rPumpSpeed := #Controls.rPumpContinousSpeed;
+	        
+	    ELSE
+	        #rPumpSpeed := 0;
+	        
+	    END_IF;
+	    
+	    #Pump(rInSpeedCommand := #rPumpSpeed);
+	    
+	END_REGION
+	
+	REGION Fertigation Settings
+	    // Package up OPC Settings for fertigation to pass out to room
+	    
+	    #OutFertigationSettings.tMeasurementTime := DINT_TO_TIME(#Controls.diMeasurementSecs * 1000);
+	    #OutFertigationSettings.rMeasurementVolume := #Controls.rMeasurementVolume;
+	    #OutFertigationSettings.bNutrientAEnable := #Controls.bNutrientAEnable;
+	    #OutFertigationSettings.bNutrientBEnable := #Controls.bNutrientBEnable;
+	    #OutFertigationSettings.rISELowSP := #Controls.rISELowSP;
+	    #OutFertigationSettings.rISEHighSP := #Controls.rISEHighSP;
+	    #OutFertigationSettings.rECLowSP := #Controls.rECLowSP;
+	    #OutFertigationSettings.rECHighSP := #Controls.rECHighSP;
+	    
+	    
+	    #OutFertigationSettings.tNutrientDosingDuration := DINT_TO_TIME(#Controls.diNutrientDosingSecs * 1000);
+	    
+	    #OutFertigationSettings.rOperatingVolume := #Controls.rOperatingVolume;
+	    #OutFertigationSettings.rTotalShelfVolume := #Controls.rTotalShelfVolume;
+	    #OutFertigationSettings.rMaxReservoirVolume := #Controls.rMaxReservoirVolume;
+	    #OutFertigationSettings.rMinReservoirVolume := #Controls.rPumpReservoirInterlockLevel;
+	    #OutFertigationSettings.rRackCurrentVolume := #rInReservoirLevel;
+	    
+	    #OutFertigationSettings.bPumpAtStandstill := #Pump.Status.rActualSpeed = 0;
+	    
+	    // Enable incoming rotate from room if in M&D mode and current state is circulate
+	    #OutFertigationSettings.bEnableIncomingRotate := #Status.iState = #eRackMode_Circulate
+	    AND #Controls.iModeCommand = #eRackMode_MeasurementDosing;
+	    
+	END_REGION
+	
+	
+	REGION Dosing Mode
+	    // Determine if dosing is required based off of ISE or EC reading, low/high setpoints, and commanded ISE mode
+	    // wait to determine the dosing mode until fbRoomMeasurementDosing is done with the measurement (state = #eMDState_Measure_Done)
+	    IF "dbMain".Room[1].Fertigation.fbRoomMeasurementDosing.iState = 139 THEN
+	        IF #Controls.iDosingType = 0 THEN // USE ISE PROBE
+	            #rDosingHighSP := #Controls.rISEHighSP;
+	            #rDosingLowSP := #Controls.rISELowSP;
+	            #rNutrientReading := #InLastNutrientReading.rISEReading;
+	        ELSIF #Controls.iDosingType = 1 THEN // USE EC PROBE 
+	            #rDosingHighSP := #Controls.rECHighSP;
+	            #rDosingLowSP := #Controls.rECLowSP;
+	            #rNutrientReading := #InLastNutrientReading.rECReading;
+	        END_IF;
+	        
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND #Controls.iDosingDirection = #eDosingMode_Off THEN
+	            #Controls.iDosingDirection := #eDosingMode_Load;
+	        END_IF;
+	        
+	        // if in load mode and high SP is reached, switch to deplete
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND
+	            #Controls.#iDosingDirection = #eDosingMode_Load AND #rNutrientReading >= #rDosingHighSP THEN
+	            #Controls.#iDosingDirection := #eDosingMode_Deplete;
+	        END_IF;
+	        
+	        // if in deplete mode and low SP is reached, switch to load
+	        IF #Controls.iDosingMode = #eDosingMode_Auto AND
+	            #Controls.iDosingDirection = #eDosingMode_Deplete AND #rNutrientReading <= #rDosingLowSP THEN
+	            #Controls.iDosingDirection := #eDosingMode_Load;
+	        END_IF;
+	        
+	        IF #Controls.iDosingMode = #eDosingMode_Off THEN
+	            #Controls.iDosingDirection := #eDosingMode_Off;
+	        END_IF;
+	    END_IF;
+	    
+	    // Request dosing if in load mode, skip dosing if in deplete or off
+	    #OutFertigationSettings.bDosingActive := (#Controls.iDosingDirection = #eDosingMode_Load);
+	    
+	    //Copy over nutrient levels to OPC status output when M&D lock drops out
+	    #NutrientReadingReady(CLK := (#iInMutexLockConfirmation = #eRackMode_MeasurementDosing));
+	    IF #NutrientReadingReady.Q THEN
+	        #Status.NutrientLevels := #InLastNutrientReading;
+	    END_IF;
+	    
+	    
+	END_REGION
+	
+	REGION Set digital outputs
+	    #bOutShelfSolenoid := #bShelfSolenoidCommand;
+	    
+	END_REGION
+	
+	
+	
+	
+	
+END_FUNCTION_BLOCK
+

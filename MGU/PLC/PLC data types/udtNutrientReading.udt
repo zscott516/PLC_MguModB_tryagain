@@ -1,0 +1,11 @@
+﻿TYPE "udtNutrientReading"
+VERSION : 0.1
+   STRUCT
+      rISEReading { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Nutrient measurement level
+      rORPReading { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Nutrient measurement level
+      rECReading { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Nutrient measurement level
+      rpHReading { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;   // Nutrient measurement level
+   END_STRUCT;
+
+END_TYPE
+

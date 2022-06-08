@@ -1,0 +1,242 @@
+﻿FUNCTION_BLOCK "fbRoomHVAC"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iInCO2ReadingRaw { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Int;
+   END_VAR
+
+   VAR_OUTPUT 
+      bOutCO2Solenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+   END_VAR
+
+   VAR 
+      Temperature_Cooling { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      Humidity { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+   END_VAR
+   VAR RETAIN
+      Controls { ExternalVisible := 'False'} : Struct
+         rHeatingSP { ExternalVisible := 'False'} : Real := 55.0;
+         bResetAlarm { ExternalVisible := 'False'} : Bool;
+         bResetModbus { ExternalVisible := 'False'} : Bool;
+         rDehum_SAT_SP { ExternalVisible := 'False'} : Real := 65.0;
+         rDehum_MOD_SP { ExternalVisible := 'False'} : Real := 60.0;
+      END_STRUCT;
+      Status { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         SupplyAirTemperature { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         bModbusError { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         wLastModbusErrorCode { ExternalVisible := 'False'; ExternalWritable := 'False'} : Word;
+         Compressor_1_Percentage { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         Compressor_2_Percentage { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         ZoneAirEnthalpy { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         Compressor_1_Command { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Compressor_1_Enabled { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Compressor_1_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Compressor_2_Command { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Compressor_2_Enabled { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Compressor_2_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         LPS1_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         LPS2_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         HPS1_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         HPS2_Alarm { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Dehum_1_Enabled { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Dehum_2_Enabled { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         HGRH_Modulation { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         Freeze_Alarm_1 { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         Freeze_Alarm_2 { ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+         DX_LAT_1 { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+         DX_LAT_2 { ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
+      END_STRUCT;
+      Config { ExternalVisible := 'False'} : Struct
+         ModbusServerAddr {InstructionName := 'IP_V4'; LibVersion := '1.0'; ExternalVisible := 'False'; S7_SetPoint := 'False'} : IP_V4 := ([10, 1, 0, 20]);   // IP address for Modbus TCP server
+         ID { ExternalVisible := 'False'} : UInt := 81;   // Unique ID for connection, also used as port number on PLC
+      END_STRUCT;
+   END_VAR
+   VAR 
+      CO2Control { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRoomCO2Control";
+      TCPConnection {InstructionName := 'TCON_IP_v4'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : TCON_IP_v4 := ((), (), 11, true, ([10, 1, 0, 20]), 502, 1001);
+      fbModbusTCPClient_Instance { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : "fbModbusTCPClient";
+      Read_Discrete { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[0..13] of "udtModbusValBool";
+      Write_Discrete { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[0..0] of "udtModbusValBool";
+      Read_Registers { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[0..9] of "udtModbusValReal";
+      Write_Registers { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[0..4] of "udtModbusValReal";
+      TON_ModbusReset {InstructionName := 'TON_TIME'; LibVersion := '1.0'} : TON_TIME;
+      mbreset { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      TP_ModbusResetPulse {InstructionName := 'TP_TIME'; LibVersion := '1.0'} : TP_TIME;
+   END_VAR
+
+   VAR CONSTANT 
+      cFakeScaling : Int := 150;
+      cRoomTempIndex : Int := 0;
+      cHumidityIndex : Int := 1;
+      cCO2Index : Int := 2;
+      cSupplyAirTempIndex : Int := 3;
+   END_VAR
+
+
+BEGIN
+	REGION Set connection parameters
+	    #TCPConnection.InterfaceId := "Local~PROFINET_interface_1"; // PLC ethernet port
+	    #TCPConnection.ID := UINT_TO_WORD(#Config.ID);
+	    #TCPConnection.ConnectionType := 11; // TCP
+	    #TCPConnection.ActiveEstablished := TRUE;
+	    #TCPConnection.RemoteAddress := #Config.ModbusServerAddr;
+	    #TCPConnection.RemotePort := 502; // Default for Modbus TCP
+	    #TCPConnection.LocalPort := #Config.ID;
+	    
+	END_REGION
+	
+	
+	REGION Reset Modbus on Error
+	    #mbreset := #TON_ModbusReset.Q;
+	    #TON_ModbusReset(IN := #Status.bModbusError AND NOT #mbreset,
+	                     PT := T#10S);
+	    
+	    #TP_ModbusResetPulse(IN := #mbreset,
+	                         PT := T#5S,
+	                         Q => #Controls.bResetModbus);
+	    
+	    (*
+	    
+	    IF #Status.bModbusError AND NOT #mbreset THEN
+	        #Controls.bResetModbus := 1;
+	        //#mbreset := 1;
+	    END_IF;
+	    
+	    IF #TON_ModbusReset.Q AND #Controls.bResetModbus THEN
+	        #Controls.bResetModbus := 0;
+	        #TON_ModbusReset.IN := 0;
+	        //#mbreset := 0;
+	    END_IF;
+	    *)
+	    
+	    
+	    
+	END_REGION
+	
+	
+	REGION Set up registers
+	    // Read coils and discrete inputs (00001 and 10001)
+	    #Read_Discrete[0].iAddr := 10048; // Compressor_1_Command
+	    #Read_Discrete[1].iAddr := 10067; // Compressor_1_Enabled
+	    #Read_Discrete[2].iAddr := 10091; // Compressor_1_Alarm
+	    #Read_Discrete[3].iAddr := 10049; // Compressor_2_Command
+	    #Read_Discrete[4].iAddr := 10008; // Compressor_2_Enabled
+	    #Read_Discrete[5].iAddr := 10068; // Compressor_2_Alarm
+	    #Read_Discrete[6].iAddr := 10089; // LPS1_Alarm
+	    #Read_Discrete[7].iAddr := 10034; // LPS2_Alarm
+	    #Read_Discrete[8].iAddr := 10093; // HPS1_Alarm
+	    #Read_Discrete[9].iAddr := 10097; // HPS2_Alarm
+	    #Read_Discrete[10].iAddr := 10019; // Dehum_1_Enabled
+	    #Read_Discrete[11].iAddr := 10014; // Dehum_2_Enabled
+	    #Read_Discrete[12].iAddr := 10090; // Freeze Alarm #1
+	    #Read_Discrete[13].iAddr := 10037; // Freeze Alarm #2
+	    
+	    // Write coils (00001)
+	    #Write_Discrete[0].iAddr := 00020; // Alarm reset
+	    #Write_Discrete[0].bVal := #Controls.bResetAlarm;
+	    
+	    // Read input and holding registers (30001 and 40001)
+	    #Read_Registers[#cRoomTempIndex].iRegister := 30035; // Room Temperature
+	    #Read_Registers[#cHumidityIndex].iRegister := 30031; // Humidity
+	    #Read_Registers[#cCO2Index].iRegister := 30031;//30001; // CO2
+	    #Read_Registers[#cSupplyAirTempIndex].iRegister := 30043; // Supply Air Temperature
+	    
+	    #Read_Registers[4].iRegister := 30077; // Compressor_1_percentage
+	    #Read_Registers[5].iRegister := 30077;//30049; // Compressor_2_percentage
+	    #Read_Registers[6].iRegister := 30039; // ZoneAirEnthalpy
+	    #Read_Registers[7].iRegister := 30095; //HGRH_Modulation
+	    #Read_Registers[8].iRegister := 30013; // DX_LAT #1
+	    #Read_Registers[9].iRegister := 30087; // DX_LAT #2
+	    
+	    // Write holding registers (40001)
+	    #Write_Registers[0].iRegister := 40119; // Cooling SP
+	    #Write_Registers[0].rVal := #Temperature_Cooling.rSetpoint;
+	    
+	    #Write_Registers[1].iRegister := 40121; // Heating SP
+	    #Write_Registers[1].rVal := #Controls.rHeatingSP;
+	    
+	    #Write_Registers[2].iRegister := 40039; // Dehumidification SP
+	    #Write_Registers[2].rVal := #Humidity.rSetpoint;
+	    
+	    #Write_Registers[3].iRegister := 40043; // Dehum Supply Air SP
+	    #Write_Registers[3].rVal := #Controls.rDehum_SAT_SP;
+	    
+	    #Write_Registers[4].iRegister := 40097; // Dehumidification MOD SP... DX LAT SP? degrees F?
+	    #Write_Registers[4].rVal := #Controls.rDehum_MOD_SP;
+	    (*
+	    #Write_Data[3].iRegister := 2; // CO2 SP 1
+	    #Write_Data[3].rVal := #CO2.rSetpoint;
+	    
+	    #Write_Data[4].iRegister := 66; // CO2 SP 2
+	    #Write_Data[4].rVal := #CO2.rSetpoint;
+	    *)
+	    
+	END_REGION
+	
+	
+	REGION Modbus TCP Client Block Call
+	    #fbModbusTCPClient_Instance(bInRequest:="Clock_0.5Hz" AND NOT #Controls.bResetModbus,
+	                                bInReset:=#Controls.bResetModbus,
+	                                iInSlaveId:=3,
+	                                bOutError=>#Status.bModbusError,
+	                                wOutLastErrorCode=>#Status.wLastModbusErrorCode,
+	                                InOutConnect:=#TCPConnection,
+	                                InOutReadDiscreteData:=#Read_Discrete,
+	                                InOutWriteCoilData:=#Write_Discrete,
+	                                InOutReadRegisterData:=#Read_Registers,
+	                                InOutWriteRegisterData:=#Write_Registers);
+	    
+	END_REGION
+	
+	
+	REGION Parse received data
+	    // Status data
+	    #Status.Compressor_1_Percentage := #Read_Registers[4].rVal;
+	    #Status.Compressor_2_Percentage := #Read_Registers[5].rVal;
+	    #Status.ZoneAirEnthalpy := #Read_Registers[6].rVal;
+	    #Status.HGRH_Modulation := #Read_Registers[7].rVal;
+	    #Status.DX_LAT_1 := #Read_Registers[8].rVal;
+	    #Status.DX_LAT_2 := #Read_Registers[9].rVal;
+	    
+	    
+	    #Status.Compressor_1_Command := #Read_Discrete[0].bVal;
+	    #Status.Compressor_1_Enabled := #Read_Discrete[1].bVal;
+	    #Status.Compressor_1_Alarm := #Read_Discrete[2].bVal;
+	    #Status.Compressor_2_Command := #Read_Discrete[3].bVal;
+	    #Status.Compressor_2_Enabled := #Read_Discrete[4].bVal;
+	    #Status.Compressor_2_Alarm := #Read_Discrete[5].bVal;
+	    #Status.LPS1_Alarm := #Read_Discrete[6].bVal;
+	    #Status.LPS2_Alarm := #Read_Discrete[7].bVal;
+	    #Status.HPS1_Alarm := #Read_Discrete[8].bVal;
+	    #Status.HPS2_Alarm := #Read_Discrete[9].bVal;
+	    #Status.Dehum_1_Enabled := #Read_Discrete[10].bVal;
+	    #Status.Dehum_2_Enabled := #Read_Discrete[11].bVal;
+	    #Status.Freeze_Alarm_1 := #Read_Discrete[12].bVal;
+	    #Status.Freeze_Alarm_2 := #Read_Discrete[13].bVal;
+	    
+	    
+	    // Bypass analog scaling for alarmed setpoints
+	    #Temperature_Cooling.Config.rLowCalibration := 0;
+	    #Temperature_Cooling.Config.rHighCalibration := #cFakeScaling;
+	    #Humidity.Config.rLowCalibration := 0;
+	    #Humidity.Config.rHighCalibration := #cFakeScaling;
+	    
+	    #Temperature_Cooling(iInRawValue := REAL_TO_INT(#Read_Registers[#cRoomTempIndex].rVal /
+	                                                    #cFakeScaling * "IoScaling.S7Analog.Default.iRawMax"));
+	    
+	    #Humidity(iInRawValue := REAL_TO_INT(#Read_Registers[#cHumidityIndex].rVal /
+	                                         #cFakeScaling * "IoScaling.S7Analog.Default.iRawMax"));
+	    
+	    #Status.SupplyAirTemperature := #Read_Registers[#cSupplyAirTempIndex].rVal;
+	    
+	END_REGION
+	
+	
+	REGION Call CO2 control logic
+	    #CO2Control(iInCO2ReadingRaw := #iInCO2ReadingRaw,
+	                bOutSolenoid => #bOutCO2Solenoid);
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+

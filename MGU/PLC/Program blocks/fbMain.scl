@@ -1,0 +1,167 @@
+﻿FUNCTION_BLOCK "fbMain"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR 
+      Room { ExternalVisible := 'False'; S7_SetPoint := 'False'} : Array[1.."MAX_ROOMS"] of "fbRoom";
+      Config { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbConfig";
+   END_VAR
+
+   VAR_TEMP 
+      iRoomCount : Int;
+      iRackCount : Int;
+      iPos : DInt;
+   END_VAR
+
+
+BEGIN
+	// Main block which calls all room FBs and holds all parameters in instance memory.
+	
+	REGION Call config FB
+	    // bInSimulation = TRUE skips IO device configuration steps
+	    #Config(bInSimulation := #Config.bInSimulation);
+	    
+	END_REGION
+	
+	
+	REGION Map input array to all room and rack inputs
+	    IF #Config.Status.bDone THEN
+	        
+	        FOR #iRoomCount := 1 TO UINT_TO_INT("MAX_ROOMS") DO
+	            
+	            #iPos := 1; // input array is 1 indexed
+	            
+	            MOVE_BLK(IN := "GlobalAI".Room[#iRoomCount].AI[#iPos],
+	                     COUNT := "NUM_AI_ROOM",
+	                     OUT => #Room[#iRoomCount].arrAI[1]);
+	            
+	            #iPos += "NUM_AI_ROOM";
+	            
+	            
+	            FOR #iRackCount := 1 TO UINT_TO_INT("MAX_RACKS_PER_ROOM") DO
+	                
+	                MOVE_BLK(IN := "GlobalAI".Room[#iRoomCount].AI[#iPos],
+	                         COUNT := "NUM_AI_RACK",
+	                         OUT => #Room[#iRoomCount].Rack[#iRackCount].arrAI[1]);
+	                
+	                #iPos += "NUM_AI_RACK";
+	                
+	            END_FOR;
+	            
+	            #iPos += "EXTRA_AI_PER_ROOM"; // skip over unused points
+	            
+	        END_FOR;
+	        
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION TEMPORARY- Remap inputs from temporary IO tag table
+	    #Room[1].arrAI[1] := "IW_RoomTemperature_1";
+	    #Room[1].arrAI[2] := "IW_RoomTemperature_2";
+	    #Room[1].arrAI[3] := "IW_RoomHumidity_1";
+	    #Room[1].arrAI[4] := "IW_RoomHumidity_2";
+	    #Room[1].arrAI[5] := "IW_TankLevel";
+	    #Room[1].arrAI[6] := "IW_NutrientALevel";
+	    #Room[1].arrAI[7] := "IW_NutrientBLevel";
+	    #Room[1].arrAI[8] := "IW_NutrientAcidLevel";
+	    #Room[1].arrAI[9] := "IW_pHSensor";
+	    #Room[1].arrAI[10] := "IW_ECSensor";
+	    #Room[1].arrAI[11] := "IW_ISESensor";
+	    #Room[1].arrAI[12] := "IW_ORPSensor";
+	    #Room[1].arrAI[13] := "IW_CO2Sensor";
+	    
+	    #Room[1].Rack[1].arrAI[1] := "IW_Rack1Level";
+	    #Room[1].Rack[2].arrAI[1] := "IW_Rack2Level";
+	    #Room[1].Rack[3].arrAI[1] := "IW_Rack3Level";
+	    #Room[1].Rack[4].arrAI[1] := "IW_Rack4Level";
+	    #Room[1].Rack[5].arrAI[1] := "IW_Rack5Level";
+	    #Room[1].Rack[6].arrAI[1] := "IW_Rack6Level";
+	    
+	END_REGION
+	
+	
+	REGION Call FBs for all configured rooms
+	    IF #Config.Status.bDone THEN
+	        FOR #iRoomCount := 1 TO #Config.iNumRooms DO
+	            #Room[#iRoomCount](arrAI := #Room[#iRoomCount].arrAI,
+	                               arrDQ => #Room[#iRoomCount].arrDQ);
+	        END_FOR;
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION Combine all room and rack outputs into a single output array
+	    IF #Config.Status.bDone THEN
+	        
+	        FOR #iRoomCount := 1 TO UINT_TO_INT("MAX_ROOMS") DO
+	            
+	            #iPos := 1; // output array is 1 indexed
+	            
+	            MOVE_BLK(IN := #Room[#iRoomCount].arrDQ[1],
+	                     COUNT := "NUM_DQ_ROOM",
+	                     OUT => "GlobalDQ".Room[#iRoomCount].DQ[#iPos]);
+	            
+	            #iPos += "NUM_DQ_ROOM";
+	            
+	            
+	            FOR #iRackCount := 1 TO UINT_TO_INT("MAX_RACKS_PER_ROOM") DO
+	                
+	                MOVE_BLK(IN := #Room[#iRoomCount].Rack[#iRackCount].arrDQ[1],
+	                         COUNT := "NUM_DQ_RACK",
+	                         OUT => "GlobalDQ".Room[#iRoomCount].DQ[#iPos]);
+	                
+	                #iPos += "NUM_DQ_RACK";
+	                
+	            END_FOR;
+	            
+	            #iPos += "EXTRA_DQ_PER_ROOM"; // skip over unused points
+	            
+	        END_FOR;
+	        
+	    END_IF;
+	    
+	END_REGION
+	
+	
+	REGION TEMPORARY- Remap outputs to temporary IO tag table
+	    "Q_MPathSolenoid" := #Room[1].arrDQ[1];
+	    "Q_FreshWaterSolenoid" := #Room[1].arrDQ[2];
+	    "Q_DischargeSolenoid" := #Room[1].arrDQ[3];
+	    "Q_TankReturnSolenoid" := #Room[1].arrDQ[4];
+	    "Q_NutrientAEnable" := #Room[1].arrDQ[5];
+	    "Q_NutrientBEnable" := #Room[1].arrDQ[6];
+	    "Q_NutrientAcidEnable" := #Room[1].arrDQ[7];
+	    "Q_NutrientMixingPumps" := #Room[1].arrDQ[8];
+	    "Q_CO2Solenoid" := #Room[1].arrDQ[9];
+	    
+	    "Q_Rack1Supply" := #Room[1].Rack[1].arrDQ[1];
+	    "Q_Rack1Return" := #Room[1].Rack[1].arrDQ[2];
+	    "Q_Rack1Shelves" := #Room[1].Rack[1].arrDQ[3];
+	    "Q_Rack1Lights" := #Room[1].Rack[1].arrDQ[4];
+	    "Q_Rack2Supply" := #Room[1].Rack[2].arrDQ[1];
+	    "Q_Rack2Return" := #Room[1].Rack[2].arrDQ[2];
+	    "Q_Rack2Shelves" := #Room[1].Rack[2].arrDQ[3];
+	    "Q_Rack2Lights" := #Room[1].Rack[2].arrDQ[4];
+	    "Q_Rack3Supply" := #Room[1].Rack[3].arrDQ[1];
+	    "Q_Rack3Return" := #Room[1].Rack[3].arrDQ[2];
+	    "Q_Rack3Shelves" := #Room[1].Rack[3].arrDQ[3];
+	    "Q_Rack3Lights" := #Room[1].Rack[3].arrDQ[4];
+	    "Q_Rack4Supply" := #Room[1].Rack[4].arrDQ[1];
+	    "Q_Rack4Return" := #Room[1].Rack[4].arrDQ[2];
+	    "Q_Rack4Shelves" := #Room[1].Rack[4].arrDQ[3];
+	    "Q_Rack4Lights" := #Room[1].Rack[4].arrDQ[4];
+	    "Q_Rack5Supply" := #Room[1].Rack[5].arrDQ[1];
+	    "Q_Rack5Return" := #Room[1].Rack[5].arrDQ[2];
+	    "Q_Rack5Shelves" := #Room[1].Rack[5].arrDQ[3];
+	    "Q_Rack5Lights" := #Room[1].Rack[5].arrDQ[4];
+	    "Q_Rack6Supply" := #Room[1].Rack[6].arrDQ[1];
+	    "Q_Rack6Return" := #Room[1].Rack[6].arrDQ[2];
+	    "Q_Rack6Shelves" := #Room[1].Rack[6].arrDQ[3];
+	    "Q_Rack6Lights" := #Room[1].Rack[6].arrDQ[4];
+	    
+	END_REGION
+	
+END_FUNCTION_BLOCK
+

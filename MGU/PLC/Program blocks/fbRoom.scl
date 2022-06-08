@@ -1,0 +1,147 @@
+﻿FUNCTION_BLOCK "fbRoom"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT DB_SPECIFIC
+      arrAI { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."NUM_AI_ROOM"] of Int;
+      AI { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} AT arrAI : "udtRoomAI";
+   END_VAR
+
+   VAR_OUTPUT DB_SPECIFIC
+      arrDQ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."NUM_DQ_ROOM"] of Bool;
+      DQ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} AT arrDQ : "udtRoomDQ";
+   END_VAR
+
+   VAR 
+      Rack { ExternalVisible := 'False'; S7_SetPoint := 'False'} : Array[1.."MAX_RACKS_PER_ROOM"] of "fbRack";
+      Fertigation { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRoomFertigation";
+      HVAC { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbRoomHVAC";
+   END_VAR
+   VAR RETAIN
+      Config { ExternalVisible := 'False'; ExternalWritable := 'False'} : Struct
+         iNumRacks { ExternalVisible := 'False'; ExternalWritable := 'False'} : Int := 1;
+      END_STRUCT;
+   END_VAR
+   VAR 
+      AI_Temperature_1 { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_Temperature_2 { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_Humidity_1 { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_Humidity_2 { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_TankLevel { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_NutrientALevel { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_NutrientBLevel { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_NutrientAcidLevel { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_pHSensor { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_ECSensor { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_ISESensor { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      AI_ORPSensor { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "fbAlarmedSetpoint";
+      DQ_MPathSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_FreshWaterSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_DischargeSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_TankReturnSolenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_NutrientA { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_NutrientB { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_NutrientAcid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_NutrientMixing { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      DQ_CO2Solenoid { ExternalVisible := 'False'; S7_SetPoint := 'False'} : "udtDigitalOutput";
+      arrFertigationSettings { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[0.."MAX_RACKS_PER_ROOM"] of "udtFertigationSettings";
+   END_VAR
+
+   VAR_TEMP 
+      i : Int;   // Index for iterating through racks
+      max_temp : Real;
+   END_VAR
+
+
+BEGIN
+	REGION Process room-level analog inputs
+	    #AI_Temperature_1(#AI.IW_RoomTemperature_1);
+	    #AI_Temperature_2(#AI.IW_RoomTemperature_2);
+	    #AI_Humidity_1(#AI.IW_RoomHumidity_1);
+	    #AI_Humidity_2(#AI.IW_RoomHumidity_2);
+	    #AI_TankLevel(#AI.IW_TankLevel);
+	    #AI_NutrientALevel(#AI.IW_NutrientALevel);
+	    #AI_NutrientBLevel(#AI.IW_NutrientBLevel);
+	    #AI_NutrientAcidLevel(#AI.IW_NutrientAcidLevel);
+	    #AI_pHSensor(#AI.IW_pHSensor);
+	    #AI_ECSensor(#AI.IW_ECSensor);
+	    #AI_ISESensor(#AI.IW_ISESensor);
+	    #AI_ORPSensor(#AI.IW_ORPSensor);
+	    //#AI_CO2Sensor(#AI.IW_CO2Sensor);
+	    
+	END_REGION
+	
+	
+	REGION Call rack FBs
+	    #max_temp := MAX(IN1 := #AI_Temperature_1.rActual, IN2 := #AI_Temperature_2.rActual);
+	    #max_temp := MAX(IN1 := #max_temp, IN2 := #HVAC.Temperature_Cooling.rActual);
+	    
+	    FOR #i := 1 TO #Config.iNumRacks DO
+	        
+	        #Rack[#i](iInMutexLockConfirmation := #Fertigation.arrOutMutexLocks[#i],
+	                  udtInLastNutrientReading := #Fertigation.arrOutNutrientReading[#i],
+	                  bInSupplySolenoidFromRoomFertigation := #Fertigation.arrOutSupplySolenoids[#i],
+	                  bInReturnSolenoidFromRoomFertigation := #Fertigation.arrOutReturnSolenoids[#i],
+	                  iInLightsDelaySecs := #i * 5000, // delay each rack by 5 seconds to prevent current spike
+	                  arrAI := #Rack[#i].arrAI,
+	                  rInCurrentTemperature := #max_temp,
+	                  iOutMutexRequest => #Fertigation.arrInMutexRequests[#i],
+	                  OutFertigationSettings => #arrFertigationSettings[#i],
+	                  arrDQ => #Rack[#i].arrDQ);
+	    END_FOR;
+	    
+	END_REGION
+	
+	
+	REGION Call room-level fertigation control logic and map rack supply and return solenoids
+	    #Fertigation(arrInMutexRequests := #Fertigation.arrInMutexRequests,
+	                 arrInFertigationSettings := #arrFertigationSettings,
+	                 rInTankLevel := #AI_TankLevel.rActual,
+	                 rInNutrientALevel := #AI_NutrientALevel.rActual,
+	                 rInNutrientBLevel := #AI_NutrientBLevel.rActual,
+	                 rInNutrientAcidLevel := #AI_NutrientAcidLevel.rActual,
+	                 rInpHSensor := #AI_pHSensor.rActual,
+	                 rInECSensor := #AI_ECSensor.rActual,
+	                 rInISESensor := #AI_ISESensor.rActual,
+	                 rInORPReading := #AI_ORPSensor.rActual,
+	                 iInNumRacks := #Config.iNumRacks,
+	                 bOutTankReturnSolenoid => #Fertigation.bOutTankReturnSolenoid,
+	                 bOutMPathSolenoid => #Fertigation.bOutMPathSolenoid,
+	                 bOutFreshWaterSolenoid => #Fertigation.bOutFreshWaterSolenoid,
+	                 bOutDischargeSolenoid => #Fertigation.bOutDischargeSolenoid,
+	                 bOutNutrientMixing => #Fertigation.bOutNutrientMixing,
+	                 bOutNutrientA => #Fertigation.bOutNutrientA,
+	                 bOutNutrientB => #Fertigation.bOutNutrientB,
+	                 bOutNutrientAcid => #Fertigation.bOutNutrientAcid,
+	                 arrOutNutrientReading => #Fertigation.arrOutNutrientReading,
+	                 arrOutMutexLocks => #Fertigation.arrOutMutexLocks,
+	                 arrOutSupplySolenoids => #Fertigation.arrOutSupplySolenoids,
+	                 arrOutReturnSolenoids => #Fertigation.arrOutReturnSolenoids);
+	    
+	END_REGION
+	
+	
+	REGION Call HVAC and CO2 control logic
+	    #HVAC(iInCO2ReadingRaw := #AI.IW_CO2Sensor,
+	          bOutCO2Solenoid=>#HVAC.bOutCO2Solenoid);
+	    
+	END_REGION
+	
+	
+	REGION Set room-level outputs
+	    #DQ.Q_MPathSolenoid := "fcDigitalOutput"(bInAutoVal := #Fertigation.bOutMPathSolenoid, InOutUdt := #DQ_MPathSolenoid);
+	    #DQ.Q_FreshWaterSolenoid := "fcDigitalOutput"(bInAutoVal := #Fertigation.bOutFreshWaterSolenoid, InOutUdt := #DQ_FreshWaterSolenoid);
+	    #DQ.Q_DischargeSolenoid := "fcDigitalOutput"(bInAutoVal := #Fertigation.#bOutDischargeSolenoid, InOutUdt := #DQ_DischargeSolenoid);
+	    #DQ.Q_TankReturnSolenoid := "fcDigitalOutput"(bInAutoVal := #Fertigation.bOutTankReturnSolenoid, InOutUdt := #DQ_TankReturnSolenoid);
+	    #DQ.Q_NutrientAEnable := "fcDigitalOutput"(bInAutoVal := #Fertigation.#bOutNutrientA, InOutUdt := #DQ_NutrientA);
+	    #DQ.Q_NutrientBEnable := "fcDigitalOutput"(bInAutoVal := #Fertigation.#bOutNutrientB, InOutUdt := #DQ_NutrientB);
+	    #DQ.Q_NutrientAcidEnable := "fcDigitalOutput"(bInAutoVal := #Fertigation.#bOutNutrientAcid, InOutUdt := #DQ_NutrientAcid);
+	    #DQ.Q_NutrientMixingPumps := "fcDigitalOutput"(bInAutoVal := #Fertigation.#bOutNutrientMixing, InOutUdt := #DQ_NutrientMixing);
+	    
+	    #DQ.Q_CO2Solenoid := "fcDigitalOutput"(bInAutoVal := #HVAC.bOutCO2Solenoid, InOutUdt := #DQ_CO2Solenoid);
+	    
+	END_REGION
+	
+	
+	
+END_FUNCTION_BLOCK
+
