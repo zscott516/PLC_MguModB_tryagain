@@ -1,9 +1,0 @@
-﻿TYPE "udtShelfDQ"
-VERSION : 0.1
-   STRUCT
-      Q_Fill_Solenoid : Bool;
-      Q_Drain_Solenoid : Bool;
-   END_STRUCT;
-
-END_TYPE
-

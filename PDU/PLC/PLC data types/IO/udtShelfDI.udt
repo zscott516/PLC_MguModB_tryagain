@@ -1,8 +1,0 @@
-﻿TYPE "udtShelfDI"
-VERSION : 0.1
-   STRUCT
-      Q_Level_Switch : Bool;
-   END_STRUCT;
-
-END_TYPE
-

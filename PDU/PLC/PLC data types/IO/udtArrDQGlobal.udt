@@ -1,8 +1,0 @@
-﻿TYPE "udtArrDQGlobal"
-VERSION : 0.1
-   STRUCT
-      Room { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'; S7_SetPoint := 'False'} : Array[1.."MAX_ROOMS"] of "udtArrDQRoom";
-   END_STRUCT;
-
-END_TYPE
-

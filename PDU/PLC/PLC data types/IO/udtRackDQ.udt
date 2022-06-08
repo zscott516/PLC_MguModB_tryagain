@@ -1,9 +1,0 @@
-﻿TYPE "udtRackDQ"
-VERSION : 0.1
-   STRUCT
-      Q_RO_BV : Bool;
-      Q_Discharge_BV : Bool;
-   END_STRUCT;
-
-END_TYPE
-

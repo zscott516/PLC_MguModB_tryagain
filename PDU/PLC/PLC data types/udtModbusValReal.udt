@@ -1,9 +1,0 @@
-﻿TYPE "udtModbusValReal"
-VERSION : 0.1
-   STRUCT
-      iRegister { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : UInt;   // Full modbus address (1 indexed, including offset for object type)
-      rVal { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Real;
-   END_STRUCT;
-
-END_TYPE
-

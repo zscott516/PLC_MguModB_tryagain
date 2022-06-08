@@ -1,8 +1,0 @@
-﻿TYPE "udtArrDQRoom"
-VERSION : 0.1
-   STRUCT
-      DQ { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."MAX_DQ_PER_ROOM"] of Bool;
-   END_STRUCT;
-
-END_TYPE
-

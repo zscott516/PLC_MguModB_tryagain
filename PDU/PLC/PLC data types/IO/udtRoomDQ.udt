@@ -1,8 +1,0 @@
-﻿TYPE "udtRoomDQ"
-VERSION : 0.1
-   STRUCT
-      Q_DischargeSolenoid { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
-   END_STRUCT;
-
-END_TYPE
-

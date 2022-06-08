@@ -1,9 +1,0 @@
-﻿TYPE "udtTimeOfDaySetpoint"
-VERSION : 0.1
-   STRUCT
-      TimeOfDaySeconds { ExternalVisible := 'False'} : DInt := -1;   // -1 default for unused setpoint
-      rSetpoint { ExternalVisible := 'False'} : Real;
-   END_STRUCT;
-
-END_TYPE
-

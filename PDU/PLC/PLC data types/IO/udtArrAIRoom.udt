@@ -1,8 +1,0 @@
-﻿TYPE "udtArrAIRoom"
-VERSION : 0.1
-   STRUCT
-      AI { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Array[1.."MAX_AI_PER_ROOM"] of Int;
-   END_STRUCT;
-
-END_TYPE
-
